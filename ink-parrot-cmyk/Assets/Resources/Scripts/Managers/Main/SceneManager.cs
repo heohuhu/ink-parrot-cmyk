@@ -26,7 +26,7 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
-        LoadSceneAdditive("StartMenu");
+        LoadSceneAdditiveAsActive("StartMenu");
     }
 
     /* =====================
@@ -71,6 +71,29 @@ public class SceneController : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
+    //** ActiveScene을 언로드 하기 전에 반드시 Active를 다른 씬에 넘겨주기!
+    public void SetActiveScene(string sceneName)
+    {
+        Scene gameScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(gameScene);
+    }
+
+    public void LoadSceneAdditiveAsActive(string sceneName)
+    {
+        StartCoroutine(SceneAdditiveAsActive(sceneName));
+    }
+
+    private IEnumerator SceneAdditiveAsActive(string sceneName)
+    {
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        while (!loadOp.isDone)
+            yield return null;
+
+        Scene mainScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(mainScene);
+    }
+
     /* =====================
      * Reload
      * ===================== */
@@ -83,6 +106,7 @@ public class SceneController : MonoBehaviour
 
     /* =====================
      * Fade
+     * 근데 필요할 지는 모름
      * ===================== */
 
     private IEnumerator FadeOut()
