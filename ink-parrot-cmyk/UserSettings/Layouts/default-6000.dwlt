@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -593,9 +593,22 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -2676
-      - m_Data: -2462
-      - m_Data: -1316
+      - m_Data: -10100
+      - m_Data: -7868
+      - m_Data: -7716
+      - m_Data: -7516
+      - m_Data: -7314
+      - m_Data: -7112
+      - m_Data: -5980
+      - m_Data: -5012
+      - m_Data: -4796
+      - m_Data: -3284
+      - m_Data: -3156
+      - m_Data: -3140
+      - m_Data: -2660
+      - m_Data: -1318
+      - m_Data: 50062
+      - m_Data: 50070
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -665,7 +678,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 49308
+  m_LastInspectedObjectInstanceID: 49166
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -1281,9 +1294,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.18163186, y: -0.030120943, z: 0.044060968}
+    m_Target: {x: 1165.9337, y: 654.5094, z: -5.970294}
     speed: 2
-    m_Value: {x: -0.18163186, y: -0.030120943, z: 0.044060968}
+    m_Value: {x: 1165.9337, y: 654.5094, z: -5.970294}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1333,9 +1346,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.593914
+    m_Target: 1698.4783
     speed: 2
-    m_Value: 5.593914
+    m_Value: 1698.4783
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1473,7 +1486,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Resources/Images
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1483,21 +1496,21 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 46
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Resources/Images
   m_LastFoldersGridSize: 46
   m_LastProjectPath: D:\unity\Projects\ink_parrot_cmyk\ink-parrot-cmyk
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 19}
+    scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 49088
+    - m_Data: 49172
     m_LastClickedID:
-      m_Data: 49088
+      m_Data: 49172
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 48796
+    - m_Data: 48914
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1530,7 +1543,7 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 48796
+    - m_Data: 48914
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1560,7 +1573,8 @@ MonoBehaviour:
     m_SelectedInstanceIDs: []
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: []
+    m_ExpandedInstanceIDs:
+    - m_Data: 49606
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
