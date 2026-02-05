@@ -4,6 +4,12 @@ using System;
 using TMPro;
 public class Timer : MonoBehaviour
 {
+    public static Timer Instance { get; set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     GameTimer timer = new GameTimer(300);
     public TextMeshProUGUI timeshower;
 
@@ -17,7 +23,22 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timer.Tick();
-        timeshower.text = timer.GetRestTime();
+        timeshower.text = "TIME\n" + timer.GetRestTime();
+    }
+
+    public void Pause()
+    {
+        timer.Pause();
+    }
+
+    public void Resume()
+    {
+        timer.Resume();
+    }
+
+    public void Reset()
+    {
+        timer.Reset();
     }
 }
 public class GameTimer

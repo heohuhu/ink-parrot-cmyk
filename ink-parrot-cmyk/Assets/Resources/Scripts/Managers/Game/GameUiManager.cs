@@ -1,7 +1,15 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameUiManager : MonoBehaviour
 {
+    public static GameUiManager Instance { get; set; }
+    public GameObject PauseMenu;
+    public GameObject ReturnMenu;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +20,25 @@ public class GameUiManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PauseMenuOpen()
+    {
+        PauseMenu.SetActive(true);
+    }
+
+    public void PauseMenuClose()
+    {
+        PauseMenu.SetActive(false);
+    }
+
+    public void ReturnMenuOpen()
+    {
+        ReturnMenu.SetActive(true);
+    }
+
+    public void ReturnMenuClose()
+    {
+        ReturnMenu.SetActive(false);
     }
 }

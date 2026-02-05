@@ -4,6 +4,21 @@ using System.Text;
 
 public class DataManager : MonoBehaviour
 {
+    public static DataManager Instance;
+
+    private void Awake()
+    {
+        // 싱글톤 처리
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public static string FilePath => Application.persistentDataPath;
 
     private void Start()
