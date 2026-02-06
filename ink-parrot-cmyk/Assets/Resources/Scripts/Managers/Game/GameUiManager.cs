@@ -1,8 +1,9 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameUiManager : MonoBehaviour
 {
-    public static GameUiManager Instance { get; set; }
+    public static GameUiManager Instance;
     public GameObject PauseMenu;
     public GameObject ReturnMenu;
     private void Awake()
@@ -25,6 +26,7 @@ public class GameUiManager : MonoBehaviour
     public void PauseMenuOpen()
     {
         PauseMenu.SetActive(true);
+        PauseMenuManager.Instance.OpenMenu();
     }
 
     public void PauseMenuClose()
