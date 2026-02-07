@@ -5,7 +5,7 @@ public class SettingManager : MonoBehaviour
 {
     static public SettingManager Instance;
     
-    public SettingVariable setting;
+    public SettingVariable setting = new SettingVariable();
 
     void Awake()
     {
@@ -26,8 +26,8 @@ public class SettingManager : MonoBehaviour
 
     void Setting()
     {
-        setting.sound = new Settings.Sound();
-        setting.graphicOption = new Settings.GraphicOption();
+        setting.sound.Setting();
+        setting.graphicOption.Setting();
     }
 
     void SettingSave()
@@ -38,6 +38,46 @@ public class SettingManager : MonoBehaviour
 
 public class SettingVariable
 {
-    public Settings.Sound sound;
-    public Settings.GraphicOption graphicOption;
+    public Settings.Sound sound = new Settings.Sound();
+    public Settings.GraphicOption graphicOption = new Settings.GraphicOption();
+}
+
+namespace Settings{
+    public class Sound
+    {
+        public int Master = 100, SFX = 100, BGM = 100, Voice = 100, UI = 100;
+
+        public void Setting()
+        {
+            Master = 100;
+            SFX = 100;
+            BGM = 100;
+            Voice = 100;
+            UI = 100;
+        }
+
+        public Sound()
+        {
+            Setting();
+        }
+    }
+
+    public class GraphicOption
+    {
+        //색약 모드 관련
+        public int ColorWeakness = 0;
+        //쨍함 감소 관련
+        public int ColorStrength = 100;
+
+        public void Setting()
+        {
+            ColorWeakness = 0;
+            ColorStrength = 100;
+        }
+
+        public GraphicOption()
+        {
+            Setting();
+        }
+    }
 }
