@@ -1,6 +1,7 @@
 using UnityEngine;
 
 //여러 설정 값을 저장하고 관리합니다.
+[System.Serializable]
 public class SettingManager : MonoBehaviour
 {
     static public SettingManager Instance;
@@ -26,8 +27,7 @@ public class SettingManager : MonoBehaviour
 
     void Setting()
     {
-        setting.sound.Setting();
-        setting.graphicOption.Setting();
+        setting = new SettingVariable();
     }
 
     void SettingSave()
@@ -36,6 +36,7 @@ public class SettingManager : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class SettingVariable
 {
     public Settings.Sound sound = new Settings.Sound();
@@ -43,6 +44,7 @@ public class SettingVariable
 }
 
 namespace Settings{
+    [System.Serializable]
     public class Sound
     {
         public int Master = 100, SFX = 100, BGM = 100, Voice = 100, UI = 100;
@@ -62,6 +64,7 @@ namespace Settings{
         }
     }
 
+    [System.Serializable]
     public class GraphicOption
     {
         //색약 모드 관련

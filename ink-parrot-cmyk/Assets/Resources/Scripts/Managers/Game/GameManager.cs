@@ -34,4 +34,25 @@ public class GameManager : MonoBehaviour
         SceneController.Instance.LoadSceneAdditiveAsActive("StartMenu");
         SceneController.Instance.UnloadScene("Game");
     }
+
+    //-1 : 없는 상태, 0 : Cyan, 1 : Magenta, 2 : Yellow
+    enum Color { Cyan, Magenta, Yellow }
+    ParrotTemplate [] parrots = new ParrotTemplate[3];
+    int selectedColor = -1;
+    int selectedTemplate = -1;
+    float squeezing = 100f;
+    public void SelectColor(int ColorType)
+    {
+        selectedColor = ColorType;
+    }
+    public void SelectTemplate(int Template)
+    {
+        selectedTemplate = Template;
+        squeezing = (this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] == 0 ? 0f : 100f);
+    }
+    public void SqueezeColor()
+    {
+        if(squeezing > 0f)
+            squeezing -= 0.1f;
+    }
 }

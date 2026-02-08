@@ -3,15 +3,9 @@ using UnityEngine;
 public class ParrotTemplate : MonoBehaviour
 {
     //앵무새 템플릿 부위별로
-    public GameObject body, head, wing;
-    public float body_ink, head_ink, wing_ink;
-    
-    /// <summary>
-    /// 0: Template
-    /// 1: Cyan
-    /// 2: Magenta
-    /// 3: Yellow
-    /// </summary>
-    public int ColorType;
+    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
 
+    //0이면 싹 다 짜낸 상태
+    //1이면 짜내지 않은 상태
+    public int[] BodyTemplatesInk = new int[Constants.TemplateSize];
 }
