@@ -34,6 +34,24 @@ public class SettingManager : MonoBehaviour
     {
         DataManager.Instance.saveJson<SettingVariable>("setting.json", setting);
     }
+
+
+    public Color GetColor(Constants.ColorType color)
+    {
+        Color original = Constants.Instance.GetColor(color);
+        // RGB -> HSV
+        Color.RGBToHSV(original, out float h, out float s, out float v);
+
+        // 쨍함 감소 (채도 감소)
+        float reductionRatio = 1f - (setting.graphicOption.ColorStrength / 100f);
+        s *= reductionRatio;
+
+        // HSV -> RGB
+        Color result = Color.HSVToRGB(h, s, v);
+        result.a = original.a; // 알파값 유지
+
+        return original;
+    }
 }
 
 [System.Serializable]
@@ -70,7 +88,7 @@ namespace Settings{
         //색약 모드 관련
         public int ColorWeakness = 0;
         //쨍함 감소 관련
-        public int ColorStrength = 100;
+        public int ColorStrength = 0;
 
         public void Setting()
         {

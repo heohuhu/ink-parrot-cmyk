@@ -36,14 +36,15 @@ public class GameManager : MonoBehaviour
     }
 
     //-1 : 없는 상태, 0 : Cyan, 1 : Magenta, 2 : Yellow
-    enum Color { Cyan, Magenta, Yellow }
     ParrotTemplate [] parrots = new ParrotTemplate[3];
     int selectedColor = -1;
     int selectedTemplate = -1;
     float squeezing = 100f;
     public void SelectColor(int ColorType)
     {
+        Debug.Log("색상 선택됨");
         selectedColor = ColorType;
+        parrots[ColorType].ObjectSelected();
     }
     public void SelectTemplate(int Template)
     {
@@ -54,5 +55,10 @@ public class GameManager : MonoBehaviour
     {
         if(squeezing > 0f)
             squeezing -= 0.1f;
+    }
+    public void InputDetected(int color)
+    {
+        if(selectedColor == -1)
+            SelectColor(color);
     }
 }
