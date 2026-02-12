@@ -3,8 +3,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ParrotTemplate: MonoBehaviour
+public class ParrotTemplate: MonoBehaviour, InputInterface
 {
+    public static ParrotTemplate Instances;
+    
+    void Awake()
+    {
+        Instances = this;
+    }
+
     public int CMYK;
     Vector3 base_position; //초기 위치 기억
     Vector3 base_size;
@@ -33,12 +40,11 @@ public class ParrotTemplate: MonoBehaviour
     {
         SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
         spr.color = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
-        Debug.Log("오브젝트 색상 지정됨");
     }
 
     public IEnumerator ObjectSelected()
     {
-        yield return StartCoroutine(MoveCoroutine(new Vector3(0, 0, 0), 1.5f));
+        yield return StartCoroutine(MoveCoroutine(new Vector3(0, 0, 1), 1.5f));
         yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 1f));
     }
 
@@ -81,11 +87,12 @@ public class ParrotTemplate: MonoBehaviour
         }
 
         // 오차 방지용 보정
-        transform.position = targetSize;
+        transform.localScale = targetSize;
     }
 
-    void OnMouseDown() //터치 입력
+    public void OnTouch() //터치 입력
     {
+        Debug.Log("터치 감지");
         GameManager.Instance.InputDetected(this.CMYK);
     }
 }

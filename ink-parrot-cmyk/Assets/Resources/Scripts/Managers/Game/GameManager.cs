@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        for(int i = 0; i < 3; i++)
+            this.parrots[i] = parrots_objects[i].GetComponent<ParrotTemplate>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     //-1 : 없는 상태, 0 : Cyan, 1 : Magenta, 2 : Yellow
     ParrotTemplate [] parrots = new ParrotTemplate[3];
+    public GameObject [] parrots_objects = new GameObject[3];
     int selectedColor = -1;
     int selectedTemplate = -1;
     float squeezing = 100f;
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("색상 선택됨");
         selectedColor = ColorType;
-        parrots[ColorType].ObjectSelected();
+        StartCoroutine(parrots[ColorType].ObjectSelected());
     }
     public void SelectTemplate(int Template)
     {
