@@ -65,14 +65,13 @@ namespace Settings{
     [System.Serializable]
     public class Sound
     {
-        public int Master = 100, SFX = 100, BGM = 100, Voice = 100, UI = 100;
+        public int Master = 100, SFX = 100, BGM = 100, UI = 100;
 
         public void Setting()
         {
             Master = 100;
             SFX = 100;
             BGM = 100;
-            Voice = 100;
             UI = 100;
         }
 
