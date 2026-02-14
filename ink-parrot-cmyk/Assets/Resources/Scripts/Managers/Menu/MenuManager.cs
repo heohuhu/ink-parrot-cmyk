@@ -47,5 +47,7 @@ public class MenuManager : MonoBehaviour
     public void unShowSetting()
     {
         setting_ui.SetActive(false);
+        SettingManager.Instance.SettingSave();
+        Debug.Log($"Master {SettingManager.Instance.setting.sound.Master}\nBGM {SettingManager.Instance.setting.sound.BGM}\nSFX {SettingManager.Instance.setting.sound.SFX}\nUI {SettingManager.Instance.setting.sound.UI}\nColorStrength {SettingManager.Instance.setting.graphicOption.ColorStrength}");
     }
 }

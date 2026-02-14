@@ -30,7 +30,7 @@ public class SettingManager : MonoBehaviour
         setting = new SettingVariable();
     }
 
-    void SettingSave()
+    public void SettingSave()
     {
         DataManager.Instance.saveJson<SettingVariable>("setting.json", setting);
     }
