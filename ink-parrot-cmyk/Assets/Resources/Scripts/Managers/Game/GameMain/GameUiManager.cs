@@ -6,21 +6,10 @@ public class GameUiManager : MonoBehaviour
     public static GameUiManager Instance;
     public GameObject PauseMenu;
     public GameObject ReturnMenu;
+
     private void Awake()
     {
         Instance = this;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void PauseMenuOpen()
@@ -42,5 +31,27 @@ public class GameUiManager : MonoBehaviour
     public void ReturnMenuClose()
     {
         ReturnMenu.SetActive(false);
+    }
+
+
+    public GameObject SelectedPanel, GamePanel;
+    public void SelectColor(int ColorType)
+    {
+        GamePanel.SetActive(false);
+        SelectedPanel.SetActive(true);
+    }
+
+    public void UnSelectColor()
+    {
+        extractButton.SetActive(false);
+        SelectedPanel.SetActive(false);
+        GamePanel.SetActive(true);
+    }
+
+    public GameObject extractButton;
+
+    public void SelectTemplate()
+    {
+        extractButton.SetActive(true);
     }
 }

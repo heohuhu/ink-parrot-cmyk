@@ -10,6 +10,7 @@ public class Constants: MonoBehaviour
 
     public const int TemplateSize = 3;
     public enum ColorType { Magenta, Yellow, Cyan }
+    public enum TemplateType { Head1, Head2, Head3, Body1, Body2, Wing1, Wing2 };
 
     public Color GetColor(ColorType color)
     {

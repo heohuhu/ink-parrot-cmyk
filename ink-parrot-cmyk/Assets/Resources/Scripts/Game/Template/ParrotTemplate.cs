@@ -19,39 +19,70 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
 
     //0이면 싹 다 짜낸 상태
-    //1이면 짜내지 않은 상태
+    //1 이상이면 짜내지 않은 상태
     public int[] BodyTemplatesInk = new int[Constants.TemplateSize];
 
     void Start()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 7; i++){
+            BodyTemplatesInk[i] = 3;
             DrawColor(i);
+        }
         base_position = this.transform.position;
         base_size = this.transform.localScale;
     }
 
     public void Resetting(int template)
     {
-        BodyTemplatesInk[template] = 1;
+        BodyTemplatesInk[template] = 3;
         DrawColor(template);
     }
 
     public void DrawColor(int template)
     {
         SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
-        spr.color = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
+        Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
+        int N = 0;
+
+        switch (this.BodyTemplatesInk[template])
+        {
+            case 0:
+            N = 0;
+            break;
+
+            case 1:
+            N = 33;
+            break;
+
+            case 2:
+            N = 66;
+            break;
+
+            case 3:
+            N = 100;
+            break;
+        }
+
+        float t = Mathf.Clamp01(N / 100f);
+        tmp = Color.Lerp(Color.white, tmp, t);
+        spr.color = tmp;
     }
 
     public IEnumerator ObjectSelected()
     {
-        yield return StartCoroutine(MoveCoroutine(new Vector3(0, 0, 1), 1.5f));
-        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 1f));
+        this.transform.position = new Vector3(transform.position.x, transform.position.y, 12);
+        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 12), 1f));
+        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.5f));
+        GameManager.Instance.processing = 0;
     }
 
     public IEnumerator ObjectUnSelected()
     {
-        yield return StartCoroutine(MoveCoroutine(base_position, 1.5f));
-        yield return StartCoroutine(ScalingCoroutine(base_size, 1f));
+        this.transform.position = new Vector3(transform.position.x, transform.position.y, base_position.z);
+        yield return StartCoroutine(MoveCoroutine(base_position, 0.7f));
+        yield return StartCoroutine(ScalingCoroutine(base_size, 0.35f));
+        GameManager.Instance.selectedColor = -1;
+        GameManager.Instance.processing = 0;
     }
 
     private IEnumerator MoveCoroutine(Vector3 targetPosition, float duration)
@@ -61,6 +92,8 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
         while (elapsedTime < duration)
         {
+            if(GameManager.Instance.isTimeStopped)
+                continue;
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
@@ -79,6 +112,8 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
         while (elapsedTime < duration)
         {
+            if(GameManager.Instance.isTimeStopped)
+                continue;
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 
@@ -94,5 +129,12 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     {
         Debug.Log("터치 감지");
         GameManager.Instance.InputDetected(this.CMYK);
+    }
+
+    public void TemplateExtracted(int template)
+    {
+        if(--this.BodyTemplatesInk[template] < 0)
+            this.BodyTemplatesInk[template] = 0;
+        DrawColor(template);
     }
 }

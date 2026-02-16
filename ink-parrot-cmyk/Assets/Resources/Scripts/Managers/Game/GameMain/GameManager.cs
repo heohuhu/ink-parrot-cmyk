@@ -20,15 +20,17 @@ public class GameManager : MonoBehaviour
     {
         
     }
-
+    public bool isTimeStopped = false;
     public void StopTime()
     {
+        isTimeStopped = true;
         Timer.Instance.Pause();
     }
 
     public void ResumeTime()
     {
         Timer.Instance.Resume();
+        isTimeStopped = false;
     }
 
     public void ReturnStartMenu()
@@ -40,27 +42,58 @@ public class GameManager : MonoBehaviour
     //-1 : 없는 상태, 0 : Cyan, 1 : Magenta, 2 : Yellow
     ParrotTemplate [] parrots = new ParrotTemplate[3];
     public GameObject [] parrots_objects = new GameObject[3];
-    int selectedColor = -1;
+    public int selectedColor = -1;
     int selectedTemplate = -1;
     float squeezing = 100f;
+    public int processing = 0;
     public void SelectColor(int ColorType)
     {
-        Debug.Log("색상 선택됨");
+        if(processing == 1)
+            return;
+        processing = 1;
+        selectedTemplate = -1;
         selectedColor = ColorType;
         StartCoroutine(parrots[ColorType].ObjectSelected());
+        GameUiManager.Instance.SelectColor(ColorType);
     }
+
+    public void unSelectColor()
+    {
+        if(processing == 1)
+            return;
+        processing = 1;
+        StartCoroutine(parrots[selectedColor].ObjectUnSelected());
+        GameUiManager.Instance.UnSelectColor();
+        selectedColor = -1;
+        selectedTemplate = -1;
+    }
+
     public void SelectTemplate(int Template)
     {
         selectedTemplate = Template;
         squeezing = (this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] == 0 ? 0f : 100f);
+        GameUiManager.Instance.SelectTemplate();
     }
     public void SqueezeColor()
     {
+        if(selectedTemplate == -1)
+            return;
         if(squeezing > 0f)
             squeezing -= 0.1f;
+        else if(squeezing <= 0f)
+        {
+            SqueezedColor();
+        }
     }
+    public void SqueezedColor()
+    {
+        this.parrots[selectedColor].TemplateExtracted(selectedTemplate);
+    }
+
     public void InputDetected(int color)
     {
+        if(isTimeStopped)
+            return ;
         if(selectedColor == -1)
             SelectColor(color);
     }
