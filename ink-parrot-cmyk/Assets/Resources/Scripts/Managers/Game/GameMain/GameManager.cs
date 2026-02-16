@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         
     }
     public bool isTimeStopped = false;
+    public static float GetdeltaTime => Instance.isTimeStopped == true ? 0f : Time.deltaTime;
     public void StopTime()
     {
         isTimeStopped = true;

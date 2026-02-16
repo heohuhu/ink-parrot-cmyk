@@ -92,9 +92,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
         while (elapsedTime < duration)
         {
-            if(GameManager.Instance.isTimeStopped)
-                continue;
-            elapsedTime += Time.deltaTime;
+            elapsedTime += GameManager.GetdeltaTime;
             float t = elapsedTime / duration;
 
             transform.position = Vector3.Lerp(startPosition, targetPosition, t);
@@ -112,9 +110,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
         while (elapsedTime < duration)
         {
-            if(GameManager.Instance.isTimeStopped)
-                continue;
-            elapsedTime += Time.deltaTime;
+            elapsedTime += GameManager.GetdeltaTime;
             float t = elapsedTime / duration;
 
             transform.localScale = Vector3.Lerp(startSize, targetSize, t);
