@@ -44,14 +44,31 @@ public class GameUiManager : MonoBehaviour
     public void UnSelectColor()
     {
         extractButton.SetActive(false);
+        lightManagingSlider.SetActive(false);
         SelectedPanel.SetActive(false);
         GamePanel.SetActive(true);
     }
 
-    public GameObject extractButton;
+    public GameObject extractButton, lightManagingSlider, refillButton;
 
-    public void SelectTemplate()
+    public void SelectTemplate(int value)
     {
-        extractButton.SetActive(true);
+        if(value == 0){
+            refillButton.SetActive(true);
+            extractButton.SetActive(false);
+        }else{
+            extractButton.SetActive(true);
+            refillButton.SetActive(false);
+        }
+    }
+
+    public void SetLightManagingSlider(int value)
+    {
+        if(value == 0){
+            lightManagingSlider.SetActive(false);
+            return ;
+        }
+        lightManagingSlider.SetActive(true);
+        lightManagingSlider.GetComponent<Slider>().SetValueWithoutNotify(value);
     }
 }

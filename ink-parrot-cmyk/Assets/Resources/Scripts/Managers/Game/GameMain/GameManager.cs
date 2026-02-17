@@ -74,7 +74,8 @@ public class GameManager : MonoBehaviour
     {
         selectedTemplate = Template;
         squeezing = (this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] == 0 ? 0f : 100f);
-        GameUiManager.Instance.SelectTemplate();
+        GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
     }
     public void SqueezeColor()
     {
@@ -90,6 +91,17 @@ public class GameManager : MonoBehaviour
     public void SqueezedColor()
     {
         this.parrots[selectedColor].TemplateExtracted(selectedTemplate);
+        GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+    }
+
+    public void LightManaging(float num)
+    {
+        if(selectedTemplate == -1)
+            return;
+        
+        this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] = (int)num;
+        this.parrots[selectedColor].DrawColor(selectedTemplate);
     }
 
     public void InputDetected(int color)
@@ -98,5 +110,14 @@ public class GameManager : MonoBehaviour
             return ;
         if(selectedColor == -1)
             SelectColor(color);
+    }
+
+    public void RefillButtonClicked()
+    {
+        if(selectedColor != -1 && selectedTemplate != -1){
+            this.parrots[selectedColor].Resetting(selectedTemplate);
+            GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+            GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        }
     }
 }

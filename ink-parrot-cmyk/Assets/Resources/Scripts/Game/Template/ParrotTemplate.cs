@@ -36,15 +36,15 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     {
         BodyTemplatesInk[template] = 3;
         DrawColor(template);
+        GameUiManager.Instance.SetLightManagingSlider(template);
     }
 
-    public void DrawColor(int template)
+    public Color GetColor(int LightType)
     {
-        SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
         Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
         int N = 0;
 
-        switch (this.BodyTemplatesInk[template])
+        switch (LightType)
         {
             case 0:
             N = 0;
@@ -65,22 +65,30 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
         float t = Mathf.Clamp01(N / 100f);
         tmp = Color.Lerp(Color.white, tmp, t);
-        spr.color = tmp;
+
+        return tmp;
+    }
+
+    public void DrawColor(int template)
+    {
+        SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
+        
+        spr.color = this.GetColor(this.BodyTemplatesInk[template]);
     }
 
     public IEnumerator ObjectSelected()
     {
         this.transform.position = new Vector3(transform.position.x, transform.position.y, 12);
-        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 12), 1f));
-        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.5f));
+        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 12), 0.5f));
+        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.3f));
         GameManager.Instance.processing = 0;
     }
 
     public IEnumerator ObjectUnSelected()
     {
         this.transform.position = new Vector3(transform.position.x, transform.position.y, base_position.z);
-        yield return StartCoroutine(MoveCoroutine(base_position, 0.7f));
-        yield return StartCoroutine(ScalingCoroutine(base_size, 0.35f));
+        yield return StartCoroutine(MoveCoroutine(base_position, 0.35f));
+        yield return StartCoroutine(ScalingCoroutine(base_size, 0.2f));
         GameManager.Instance.selectedColor = -1;
         GameManager.Instance.processing = 0;
     }
@@ -129,8 +137,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
     public void TemplateExtracted(int template)
     {
-        if(--this.BodyTemplatesInk[template] < 0)
-            this.BodyTemplatesInk[template] = 0;
+        this.BodyTemplatesInk[template] = 0;
         DrawColor(template);
     }
 }
