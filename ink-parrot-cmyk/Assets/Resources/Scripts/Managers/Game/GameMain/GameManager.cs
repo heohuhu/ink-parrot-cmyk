@@ -120,4 +120,8 @@ public class GameManager : MonoBehaviour
             GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
         }
     }
+
+    
+
+
 }

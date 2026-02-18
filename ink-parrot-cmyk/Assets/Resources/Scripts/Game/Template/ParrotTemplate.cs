@@ -17,19 +17,20 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     Vector3 base_size;
     //앵무새 템플릿 부위별로
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
-
+    int [] base_orderlayer = {0, 1, 1, 0, 1, 0, 1};
     //0이면 싹 다 짜낸 상태
     //1 이상이면 짜내지 않은 상태
     public int[] BodyTemplatesInk = new int[Constants.TemplateSize];
 
     void Start()
     {
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < Constants.TemplateSize; i++){
             BodyTemplatesInk[i] = 3;
             DrawColor(i);
         }
         base_position = this.transform.position;
         base_size = this.transform.localScale;
+        SetBodyTemplatesOrderLayer(-1);
     }
 
     public void Resetting(int template)
@@ -37,6 +38,17 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
         BodyTemplatesInk[template] = 3;
         DrawColor(template);
         GameUiManager.Instance.SetLightManagingSlider(template);
+    }
+
+    public void SetBodyTemplatesOrderLayer(int N)
+    {
+        for(int i = 0; i < Constants.TemplateSize; i++)
+        {
+            if(N == -1)
+                BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = base_orderlayer[i];
+            else
+                BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = N + base_orderlayer[i];
+        }
     }
 
     public Color GetColor(int LightType)
@@ -78,17 +90,17 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
     public IEnumerator ObjectSelected()
     {
-        this.transform.position = new Vector3(transform.position.x, transform.position.y, 12);
-        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 12), 0.5f));
+        SetBodyTemplatesOrderLayer(10);
+        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 0), 0.5f));
         yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.3f));
         GameManager.Instance.processing = 0;
     }
 
     public IEnumerator ObjectUnSelected()
     {
-        this.transform.position = new Vector3(transform.position.x, transform.position.y, base_position.z);
         yield return StartCoroutine(MoveCoroutine(base_position, 0.35f));
         yield return StartCoroutine(ScalingCoroutine(base_size, 0.2f));
+        SetBodyTemplatesOrderLayer(-1);
         GameManager.Instance.selectedColor = -1;
         GameManager.Instance.processing = 0;
     }

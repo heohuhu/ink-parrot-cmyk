@@ -8,7 +8,7 @@ public class Constants: MonoBehaviour
         Instance = this;
     }
 
-    public const int TemplateSize = 3;
+    public const int TemplateSize = 7;
     public enum ColorType { Magenta, Yellow, Cyan }
     public enum TemplateType { Head1, Head2, Head3, Body1, Body2, Wing1, Wing2 };
 
