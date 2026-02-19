@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 public class Constants: MonoBehaviour
 {
     static public Constants Instance;
@@ -25,5 +26,15 @@ public class Constants: MonoBehaviour
             default:
                 return new Color(1f, 0f, 1f, 1f);
         }
+    }
+}
+
+public static class Utility
+{
+    private static System.Random _random = new System.Random();
+
+    public static int GetRandomInt(int min, int max)
+    {
+        return _random.Next(min, max);
     }
 }

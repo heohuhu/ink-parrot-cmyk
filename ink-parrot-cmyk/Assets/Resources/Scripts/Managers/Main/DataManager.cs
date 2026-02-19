@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Text;
-
+using System.Collections;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
@@ -20,7 +20,6 @@ public class DataManager : MonoBehaviour
         }
     }
     public static string FilePath => Application.persistentDataPath;
-
     private void Start()
     {
         Debug.Log("파일 저장 위치는 " + FilePath + "입니다.");
@@ -136,5 +135,44 @@ public class DataManager : MonoBehaviour
 
         if (isFileExisting(fullPath))
             File.Delete(fullPath);
+    }
+
+    public string[,] LoadCSV(string path)
+    {
+        TextAsset csvFile = Resources.Load<TextAsset>(path);
+
+        if (csvFile == null)
+        {
+            Debug.LogError("CSV 파일을 찾을 수 없습니다: " + path);
+            return null;
+        }
+
+        string[] lines = csvFile.text.Trim().Split('\n');
+
+        if (lines.Length == 0)
+            return null;
+
+        string[] firstRow = lines[0].Split(',');
+        int rowCount = lines.Length;
+        int colCount = firstRow.Length;
+
+        string[,] result = new string[rowCount,colCount];
+        string loger = "";
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            string[] columns = lines[i].Trim().Split(',');
+            for (int j = 0; j < colCount; j++)
+            {
+                if (j < columns.Length)
+                    result[i, j] = columns[j];
+                else
+                    result[i, j] = "null";
+                loger += result[i, j] + ",";
+            }
+            loger += "\n";
+        }
+        Debug.Log(loger);
+        return result;
     }
 }

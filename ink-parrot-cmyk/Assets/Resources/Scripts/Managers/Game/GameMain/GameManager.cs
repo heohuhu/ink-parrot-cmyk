@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +14,8 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        AnswerSheet.Instance.DataProcess(DataManager.Instance.LoadCSV("Data/Parrot Data"));
+        AnswerSheet.Instance.MakeAnswer();
     }
 
     // Update is called once per frame
@@ -121,7 +123,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    public int GetCurrentScore()
+    {
+        int [] C = new int[Constants.TemplateSize], M = new int[Constants.TemplateSize], Y = new int[Constants.TemplateSize];
+
+        for(int i = 0; i < Constants.TemplateSize; i++)
+        {
+            C[i] = parrots[0].BodyTemplatesInk[i];
+            M[i] = parrots[1].BodyTemplatesInk[i];
+            Y[i] = parrots[2].BodyTemplatesInk[i];
+        }
+
+        return AnswerSheet.Instance.CompareAnswer(C, M, Y);
+    }
+    public void AnswerSubmit()
+    {
+        int score = GetCurrentScore();
+
+        ScoreManager.Instance.GetScore(score);
+        AnswerSheet.Instance.MakeAnswer();
+
+        parrots[0].Init();
+        parrots[1].Init();
+        parrots[2].Init();
+    }
 
 
 }

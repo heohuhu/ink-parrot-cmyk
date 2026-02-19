@@ -33,6 +33,15 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
         SetBodyTemplatesOrderLayer(-1);
     }
 
+    public void Init()
+    {
+        for(int i = 0; i < Constants.TemplateSize; i++){
+            BodyTemplatesInk[i] = 3;
+            DrawColor(i);
+        }
+        SetBodyTemplatesOrderLayer(-1);
+    }
+
     public void Resetting(int template)
     {
         BodyTemplatesInk[template] = 3;
