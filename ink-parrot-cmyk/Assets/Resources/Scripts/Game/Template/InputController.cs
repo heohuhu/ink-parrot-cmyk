@@ -69,15 +69,10 @@ public class InputController: MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
-        if (results.Count > 0)
+        foreach (var result in results)
         {
-            Debug.Log("입력을 막은 UI 목록:");
-
-            foreach (var result in results)
-            {
-                Debug.Log(" - " + result.gameObject.name);
-            }
-
+            if (result.gameObject.GetComponent<InputInterface>() != null)
+                continue;
             return true;
         }
 
