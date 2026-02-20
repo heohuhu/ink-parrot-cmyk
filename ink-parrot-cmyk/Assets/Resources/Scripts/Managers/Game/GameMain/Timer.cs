@@ -5,25 +5,34 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public static Timer Instance { get; set; }
-
+    public int BasicTime;
     private void Awake()
     {
         Instance = this;
     }
-    GameTimer timer = new GameTimer(300);
+    GameTimer timer;
     public TextMeshProUGUI timeshower;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        timer = new GameTimer(BasicTime);
         timer.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer.Tick();
-        timeshower.text = "TIME\n" + timer.GetRestTime();
+        if (timer.IsFinished())
+        {
+            Debug.Log("Time over");
+            GameManager.Instance.GameEnd();
+        }
+        else
+        {
+            timer.Tick();
+            timeshower.text = "TIME\n" + timer.GetRestTime();
+        }
     }
 
     public void Pause()

@@ -37,7 +37,7 @@ public class InputController: MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                if (CheckUIBlocking(touch.position))
                     return;
 
                 HandleInput(touch.position);

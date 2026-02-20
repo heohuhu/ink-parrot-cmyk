@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     {
         AnswerSheet.Instance.DataProcess(DataManager.Instance.LoadCSV("Data/Parrot Data"));
         AnswerSheet.Instance.MakeAnswer();
+        this.isGameEnd = false;
     }
 
     // Update is called once per frame
@@ -149,4 +150,20 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public bool isGameEnd = false;
+    //시간 초과 발생
+    public void GameEnd()
+    {
+        if(this.isGameEnd)
+            return ;
+        this.isGameEnd = true;
+        StartCoroutine(GameUiManager.Instance.GameEndProcess());
+    }
+
+    //진짜 게임 엔드 처리
+    public void GameEndNext()
+    {
+        if(!this.isGameEnd)
+            return;
+    }
 }

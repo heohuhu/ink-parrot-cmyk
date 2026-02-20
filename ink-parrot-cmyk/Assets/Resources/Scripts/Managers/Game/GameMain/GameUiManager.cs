@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,5 +71,26 @@ public class GameUiManager : MonoBehaviour
         }
         lightManagingSlider.SetActive(true);
         lightManagingSlider.GetComponent<Slider>().SetValueWithoutNotify(value);
+    }
+
+    public GameObject GameMainScene, GameEndScene;
+    public GameObject GameOverPanel;
+    private bool isEndNext = false;
+    public IEnumerator GameEndProcess()
+    {
+        isEndNext = false;
+        GameOverPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        isEndNext = true;
+    }
+
+    public void GameEndNext()
+    {
+        if (isEndNext)
+        {
+            GameMainScene.SetActive(false);
+            GameEndScene.SetActive(true);
+            GameManager.Instance.GameEndNext();
+        }
     }
 }
