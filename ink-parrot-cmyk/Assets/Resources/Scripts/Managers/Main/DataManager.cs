@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
@@ -137,7 +138,7 @@ public class DataManager : MonoBehaviour
             File.Delete(fullPath);
     }
 
-    public string[,] LoadCSV(string path)
+    public List<List<string>> LoadCSV(string path)
     {
         TextAsset csvFile = Resources.Load<TextAsset>(path);
 
@@ -173,6 +174,11 @@ public class DataManager : MonoBehaviour
             loger += "\n";
         }
         Debug.Log(loger);
-        return result;
+
+        List<List<string>> result2 = Utility.ConvertToList(result);
+
+        return result2;
     }
+
+    
 }

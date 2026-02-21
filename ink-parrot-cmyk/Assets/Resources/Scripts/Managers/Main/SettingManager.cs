@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 //여러 설정 값을 저장하고 관리합니다.

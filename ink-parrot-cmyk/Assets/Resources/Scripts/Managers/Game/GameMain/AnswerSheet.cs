@@ -1,34 +1,52 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class AnswerSheet : MonoBehaviour
 {
     static public AnswerSheet Instance;
     public GameObject AnswerImageUI;
+    
     void Awake()
     {
         Instance = this;
+        //기본 앵무새 정보 불러오기
+        List<List<string>> basic_parrot_data = DataManager.Instance.LoadCSV("Data/Parrot Data");
+
+        ParrotsVariable custom_parrot_data = new ParrotsVariable();
+        //커스텀 앵무새 정보 불러오기
+        if(!DataManager.Instance.tryLoadJson<ParrotsVariable>("custom-parrots.json", out custom_parrot_data)){
+            Debug.Log("세이브된 설정 데이터가 없어 새로이 생성합니다.");
+            custom_parrot_data = new ParrotsVariable();
+        }
+        else
+        {
+            Debug.Log("세이브된 설정 데이터가 있어 불러옵니다.");
+        }
+
+        basic_parrot_data.AddRange(custom_parrot_data.parrot_data);
+        DataProcess(basic_parrot_data);
     }
 
     public Sprite[] AnswerImages;
     public ParrotSheetType[] ParrotSheet;
     public AnswerType Answer = new AnswerType();
 
-    public void DataProcess(string [,] data)
+    public void DataProcess(List<List<string>> data)
     {
-        int rowCount = data.GetLength(0);
+        int rowCount = data.Count;
         ParrotSheet = new ParrotSheetType [rowCount - 1];
-        int colCount = data.GetLength(1);
+        int colCount = data[0].Count;
         for(int i = 1; i < rowCount; i++) //idx 날림
         {
             ParrotSheet[i - 1] = new ParrotSheetType();
-            ParrotSheet[i - 1].name = data[i, 1];
+            ParrotSheet[i - 1].name = data[i][1];
             
             for(int t = 0; t < Constants.TemplateSize; t++)
             {
-                ParrotSheet[i - 1].bodyTemplates[t] = Decryption(int.Parse(data[i, t + 2]));
+                ParrotSheet[i - 1].bodyTemplates[t] = Decryption(int.Parse(data[i][t + 2]));
             }
 
-            ParrotSheet[i - 1].score = int.Parse(data[i, 2 + Constants.TemplateSize]);
+            ParrotSheet[i - 1].score = int.Parse(data[i][2 + Constants.TemplateSize]);
         }
     }
 
@@ -123,4 +141,10 @@ public class AnswerType
             Y[i] = (int)answer[i].z;
         }
     }
+}
+
+[System.Serializable]
+public class ParrotsVariable
+{
+    public List<List<string>> parrot_data;
 }

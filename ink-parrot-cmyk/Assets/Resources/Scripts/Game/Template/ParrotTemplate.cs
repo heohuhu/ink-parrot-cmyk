@@ -100,15 +100,15 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     public IEnumerator ObjectSelected()
     {
         SetBodyTemplatesOrderLayer(10);
-        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 0), 0.5f));
-        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.3f));
+        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 0), 0.27f));
+        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.17f));
         GameManager.Instance.processing = 0;
     }
 
     public IEnumerator ObjectUnSelected()
     {
-        yield return StartCoroutine(MoveCoroutine(base_position, 0.35f));
-        yield return StartCoroutine(ScalingCoroutine(base_size, 0.2f));
+        yield return StartCoroutine(MoveCoroutine(base_position, 0.2f));
+        yield return StartCoroutine(ScalingCoroutine(base_size, 0.1f));
         SetBodyTemplatesOrderLayer(-1);
         GameManager.Instance.selectedColor = -1;
         GameManager.Instance.processing = 0;

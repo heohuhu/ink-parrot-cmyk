@@ -10,13 +10,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
         for(int i = 0; i < 3; i++)
             this.parrots[i] = parrots_objects[i].GetComponent<ParrotTemplate>();
+        this.isGameEnd = false;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AnswerSheet.Instance.DataProcess(DataManager.Instance.LoadCSV("Data/Parrot Data"));
         AnswerSheet.Instance.MakeAnswer();
-        this.isGameEnd = false;
+        
     }
 
     // Update is called once per frame
