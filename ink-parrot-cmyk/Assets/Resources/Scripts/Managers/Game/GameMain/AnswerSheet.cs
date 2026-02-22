@@ -5,6 +5,7 @@ public class AnswerSheet : MonoBehaviour
 {
     static public AnswerSheet Instance;
     public GameObject AnswerImageUI;
+    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
     
     void Awake()
     {
@@ -15,12 +16,12 @@ public class AnswerSheet : MonoBehaviour
         ParrotsVariable custom_parrot_data = new ParrotsVariable();
         //커스텀 앵무새 정보 불러오기
         if(!DataManager.Instance.tryLoadJson<ParrotsVariable>("custom-parrots.json", out custom_parrot_data)){
-            Debug.Log("세이브된 설정 데이터가 없어 새로이 생성합니다.");
+            Debug.Log("세이브된 커스텀 앵무새 데이터가 없어 새로이 생성합니다.");
             custom_parrot_data = new ParrotsVariable();
         }
         else
         {
-            Debug.Log("세이브된 설정 데이터가 있어 불러옵니다.");
+            Debug.Log("세이브된 커스텀 앵무새 데이터가 있어 불러옵니다.");
         }
 
         basic_parrot_data.AddRange(custom_parrot_data.parrot_data);
@@ -77,7 +78,55 @@ public class AnswerSheet : MonoBehaviour
 
     public void ShowAnswerImage(int index)
     {
-        AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
+        //AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
+
+        for(int template = 0; template < Constants.TemplateSize; template++)
+        {
+            Color C = GetColor(0, this.Answer.C[template]);
+            Color M = GetColor(0, this.Answer.M[template]);
+            Color Y = GetColor(0, this.Answer.Y[template]);
+
+            Color result = new Color(
+                1f - (1f - C.r) * (1f - M.r) * (1f - Y.r),
+                1f - (1f - C.g) * (1f - M.g) * (1f - Y.g),
+                1f - (1f - C.b) * (1f - M.b) * (1f - Y.b),
+                1f - (1f - C.a) * (1f - M.a) * (1f - Y.a)
+            );
+
+            Image spr = this.BodyTemplates[template].GetComponent<Image>();
+
+            spr.color = result;
+        }
+    }
+
+    public Color GetColor(int CMYK, int LightType)
+    {
+        Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)CMYK);
+        int N = 0;
+
+        switch (LightType)
+        {
+            case 0:
+            N = 0;
+            break;
+
+            case 1:
+            N = 33;
+            break;
+
+            case 2:
+            N = 66;
+            break;
+
+            case 3:
+            N = 100;
+            break;
+        }
+
+        float t = Mathf.Clamp01(N / 100f);
+        tmp = Color.Lerp(Color.white, tmp, t);
+
+        return tmp;
     }
 
     public int CompareAnswer(int [] C, int [] M, int [] Y)
@@ -146,5 +195,5 @@ public class AnswerType
 [System.Serializable]
 public class ParrotsVariable
 {
-    public List<List<string>> parrot_data;
+    public List<List<string>> parrot_data = new List<List<string>>();
 }
