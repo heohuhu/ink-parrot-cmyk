@@ -44,10 +44,14 @@ public class AnswerSheet : MonoBehaviour
             
             for(int t = 0; t < Constants.TemplateSize; t++)
             {
-                ParrotSheet[i - 1].bodyTemplates[t] = Decryption(int.Parse(data[i][t + 2]));
+                ParrotSheet[i - 1].bodyTemplates[t].x = int.Parse(data[i][t * 3 + 2]);
+                ParrotSheet[i - 1].bodyTemplates[t].y = int.Parse(data[i][t * 3 + 3]);
+                ParrotSheet[i - 1].bodyTemplates[t].z = int.Parse(data[i][t * 3 + 4]);
+                Debug.Log($"Name : {ParrotSheet[i - 1].name}\nTemplate : {t}\nC : {ParrotSheet[i - 1].bodyTemplates[t].x}\nM : {ParrotSheet[i - 1].bodyTemplates[t].y}\nY : {ParrotSheet[i - 1].bodyTemplates[t].z}");
+
             }
 
-            ParrotSheet[i - 1].score = int.Parse(data[i][2 + Constants.TemplateSize]);
+            ParrotSheet[i - 1].score = int.Parse(data[i][2 + Constants.TemplateSize * 3]);
         }
     }
 
@@ -72,7 +76,6 @@ public class AnswerSheet : MonoBehaviour
         Answer.answer = randIndex;
         Answer.answerType = 0;
 
-        Debug.Log($"현재 정답 : {this.ParrotSheet[Answer.answer].name}");
         ShowAnswerImage(Answer.answer);
     }
 
@@ -82,15 +85,17 @@ public class AnswerSheet : MonoBehaviour
 
         for(int template = 0; template < Constants.TemplateSize; template++)
         {
-            Color C = GetColor(0, this.Answer.C[template]);
-            Color M = GetColor(0, this.Answer.M[template]);
-            Color Y = GetColor(0, this.Answer.Y[template]);
+            Color C = GetColor((int)Constants.ColorType.Cyan, this.Answer.C[template]);
+            Color M = GetColor((int)Constants.ColorType.Magenta, this.Answer.M[template]);
+            Color Y = GetColor((int)Constants.ColorType.Yellow, this.Answer.Y[template]);
 
+            //Debug.Log($"[{ParrotSheet[Answer.answer].name} 정답 이미지 출력]\nTemplate : {template}\nC : {this.Answer.C[template]}\nM : {this.Answer.M[template]}\nY : {this.Answer.Y[template]}");
+            
             Color result = new Color(
-                1f - (1f - C.r) * (1f - M.r) * (1f - Y.r),
-                1f - (1f - C.g) * (1f - M.g) * (1f - Y.g),
-                1f - (1f - C.b) * (1f - M.b) * (1f - Y.b),
-                1f - (1f - C.a) * (1f - M.a) * (1f - Y.a)
+                C.r * M.r * Y.r,
+                C.g * M.g * Y.g,
+                C.b * M.b * Y.b,
+                1f
             );
 
             Image spr = this.BodyTemplates[template].GetComponent<Image>();
@@ -122,7 +127,6 @@ public class AnswerSheet : MonoBehaviour
             N = 100;
             break;
         }
-
         float t = Mathf.Clamp01(N / 100f);
         tmp = Color.Lerp(Color.white, tmp, t);
 
@@ -181,7 +185,9 @@ public class AnswerType
     {
         int size = answer.GetLength(0);
 
-        C = M = Y = new int[size];
+        C = new int[size];
+        M = new int[size];
+        Y = new int[size];
 
         for(int i = 0; i < size; i++)
         {
