@@ -25,7 +25,6 @@ public class Timer : MonoBehaviour
     {
         if (timer.IsFinished())
         {
-            Debug.Log("Time over");
             GameManager.Instance.GameEnd();
         }
         else

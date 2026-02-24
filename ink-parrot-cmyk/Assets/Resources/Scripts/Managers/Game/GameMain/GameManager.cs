@@ -141,7 +141,10 @@ public class GameManager : MonoBehaviour
     {
         int score = GetCurrentScore();
 
-        ScoreManager.Instance.GetScore(score);
+        if(score == Constants.TemplateSize * 3){ // 모든 부위가 정답일 경우
+            ScoreManager.Instance.GetScore(AnswerSheet.Instance.GetAnswerScore());
+            AnswerSheet.Instance.CorrectAnswer();
+        }
         AnswerSheet.Instance.MakeAnswer();
 
         parrots[0].Init();
