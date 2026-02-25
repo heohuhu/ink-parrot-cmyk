@@ -14,11 +14,21 @@ public class AnswerSheet : MonoBehaviour
     public Sprite[] AnswerImages;
     
     public AnswerType Answer = new AnswerType();
+
+    public void GiveProblem()
+    {
+        int randInt = Utility.GetRandomInt(0, 10);
+
+        if(randInt < 100) { //테스트 단계 - 항상 정답만 제시되도록함
+            MakeAnswer();
+        }
+    }
+
     public void MakeAnswer()
     {
         int size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
-
         int randIndex = Utility.GetRandomInt(0, size);
+
         Answer.SetAnswer(ParrotDataManager.Instance.ParrotSheet[randIndex].bodyTemplates);
         Answer.answer = randIndex;
         Answer.answerType = 0;
@@ -104,7 +114,7 @@ public class AnswerSheet : MonoBehaviour
 
     public void CorrectAnswer()
     {
-        
+        ParrotDataManager.Instance.ParrotCollect(this.Answer.answer);
     }
 }
 
