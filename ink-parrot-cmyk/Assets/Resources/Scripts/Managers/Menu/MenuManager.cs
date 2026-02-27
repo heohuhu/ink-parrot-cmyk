@@ -19,6 +19,12 @@ public class MenuManager : MonoBehaviour
         SceneController.Instance.UnloadScene("StartMenu");
     }
 
+    public void CustomStart()
+    {
+        SceneController.Instance.LoadSceneAdditiveAsActive("CustomPage");
+        SceneController.Instance.UnloadScene("StartMenu");
+    }
+
     public void ShowTutorial()
     {
         tutorial_ui.SetActive(true);

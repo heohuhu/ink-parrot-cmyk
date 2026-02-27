@@ -130,9 +130,9 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < Constants.TemplateSize; i++)
         {
-            C[i] = parrots[0].BodyTemplatesInk[i];
-            M[i] = parrots[1].BodyTemplatesInk[i];
-            Y[i] = parrots[2].BodyTemplatesInk[i];
+            C[i] = parrots[(int)Constants.ColorType.Cyan].BodyTemplatesInk[i];
+            M[i] = parrots[(int)Constants.ColorType.Magenta].BodyTemplatesInk[i];
+            Y[i] = parrots[(int)Constants.ColorType.Yellow].BodyTemplatesInk[i];
         }
 
         return AnswerSheet.Instance.CompareAnswer(C, M, Y);

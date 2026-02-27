@@ -78,6 +78,21 @@ public class DataManager : MonoBehaviour
             Directory.Delete(FilePath, true);
     }
 
+    public static void ClearAllFiles()
+    {
+        string directoryPath = Application.persistentDataPath;
+
+        if (Directory.Exists(directoryPath))
+        {
+            string[] files = Directory.GetFiles(directoryPath);
+
+            foreach (string file in files)
+            {
+                File.Delete(file);
+            }
+        }
+    }
+
     //파일 용량 반환
     public long getFileSize(string relativePath)
     {

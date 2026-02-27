@@ -7480,7 +7480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba9892be6f063042a509c3e8c1345b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnswerSheet
-  AnswerImageUI: {fileID: 1608636004}
   BodyTemplates:
   - {fileID: 1413819440}
   - {fileID: 823118948}
