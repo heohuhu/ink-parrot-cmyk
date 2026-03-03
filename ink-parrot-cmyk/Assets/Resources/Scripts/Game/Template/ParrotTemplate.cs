@@ -63,28 +63,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     public Color GetColor(int LightType)
     {
         Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
-        int N = 0;
-
-        switch (LightType)
-        {
-            case 0:
-            N = 0;
-            break;
-
-            case 1:
-            N = 33;
-            break;
-
-            case 2:
-            N = 66;
-            break;
-
-            case 3:
-            N = 100;
-            break;
-        }
-
-        float t = Mathf.Clamp01(N / 100f);
+        float t = Mathf.Clamp01(Constants.Instance.GetLightTypeData(LightType) / 100f);
         tmp = Color.Lerp(Color.white, tmp, t);
 
         return tmp;

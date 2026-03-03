@@ -29,6 +29,33 @@ public class Constants: MonoBehaviour
                 return new Color(1f, 0f, 1f, 1f);
         }
     }
+
+    //컬러 타입별 밝기
+    public int GetLightTypeData(int colortype)
+    {
+        int N = 0;
+
+        switch (colortype)
+        {
+            case 0:
+            N = 0;
+            break;
+
+            case 1:
+            N = 33;
+            break;
+
+            case 2:
+            N = 66;
+            break;
+
+            case 3:
+            N = 100;
+            break;
+        }
+
+        return N;
+    }
 }
 
 public static class Utility
