@@ -42,9 +42,9 @@ public class AnswerSheet : MonoBehaviour
 
         for(int template = 0; template < Constants.TemplateSize; template++)
         {
-            Color C = GetColor((int)Constants.ColorType.Cyan, this.Answer.C[template]);
-            Color M = GetColor((int)Constants.ColorType.Magenta, this.Answer.M[template]);
-            Color Y = GetColor((int)Constants.ColorType.Yellow, this.Answer.Y[template]);
+            Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, this.Answer.C[template]);
+            Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, this.Answer.M[template]);
+            Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, this.Answer.Y[template]);
 
             Debug.Log($"[{ParrotDataManager.Instance.ParrotSheet[Answer.answer].name} 정답 이미지 출력]\nTemplate : {template}\nC : {this.Answer.C[template]}\nM : {this.Answer.M[template]}\nY : {this.Answer.Y[template]}");
             
@@ -59,35 +59,6 @@ public class AnswerSheet : MonoBehaviour
 
             spr.color = result;
         }
-    }
-
-    public Color GetColor(int CMYK, int LightType)
-    {
-        Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)CMYK);
-        int N = 0;
-
-        switch (LightType)
-        {
-            case 0:
-            N = 0;
-            break;
-
-            case 1:
-            N = 33;
-            break;
-
-            case 2:
-            N = 66;
-            break;
-
-            case 3:
-            N = 100;
-            break;
-        }
-        float t = Mathf.Clamp01(N / 100f);
-        tmp = Color.Lerp(Color.white, tmp, t);
-
-        return tmp;
     }
 
     public int CompareAnswer(int [] C, int [] M, int [] Y)

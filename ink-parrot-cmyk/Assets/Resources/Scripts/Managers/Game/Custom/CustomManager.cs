@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class CustomManager : MonoBehaviour
@@ -15,7 +16,19 @@ public class CustomManager : MonoBehaviour
     void Reset()
     {
         selectedTemplate = -1;
-        parrotName = "이름을 입력해주세요";
+        parrotName = "null";
+
+        CustomParrotShower.Instance.Reset();
+        
+        SetButtonColor(Constants.ColorType.Cyan, 3);
+        SetButtonColor(Constants.ColorType.Magenta, 3);
+        SetButtonColor(Constants.ColorType.Yellow, 3);
+    }
+
+    public void SetButtonColor(Constants.ColorType CMYK, int LightType)
+    {
+        Image spr = MYC[(int)CMYK].GetComponent<Image>();
+        spr.color = Constants.Instance.GetColor(CMYK, LightType);
     }
 
     public void ReturnButtonClicked()
@@ -44,5 +57,7 @@ public class CustomManager : MonoBehaviour
             CustomParrotShower.Instance.ColorData[selectedTemplate, color] = 2;
             CustomParrotShower.Instance.ShowSampleImage();
         }
+
+        SetButtonColor((Constants.ColorType)color, CustomParrotShower.Instance.ColorData[selectedTemplate, color]);
     }
 }

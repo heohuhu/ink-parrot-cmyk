@@ -13,7 +13,7 @@ public class CustomParrotShower : MonoBehaviour
         Instance = this;
     }
 
-    void Reset()
+    public void Reset()
     {
         for(int i = 0; i < Constants.TemplateSize; i++)
         {

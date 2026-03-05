@@ -59,21 +59,11 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
                 BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = N + base_orderlayer[i];
         }
     }
-
-    public Color GetColor(int LightType)
-    {
-        Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)this.CMYK);
-        float t = Mathf.Clamp01(Constants.Instance.GetLightTypeData(LightType) / 100f);
-        tmp = Color.Lerp(Color.white, tmp, t);
-
-        return tmp;
-    }
-
     public void DrawColor(int template)
     {
         SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
         
-        spr.color = this.GetColor(this.BodyTemplatesInk[template]);
+        spr.color = Constants.Instance.GetColor((Constants.ColorType)this.BodyTemplatesInk[template]);
     }
 
     public IEnumerator ObjectSelected()

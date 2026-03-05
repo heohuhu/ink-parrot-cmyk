@@ -15,6 +15,7 @@ public class Constants: MonoBehaviour
     public enum ColorType { Magenta, Yellow, Cyan }
     public enum TemplateType { Head1, Head2, Head3, Body1, Body2, Wing1, Wing2 };
 
+    // 이 함수를 SettingManager의 함수랑 혼동하지 않도록 주의
     public Color GetColor(ColorType color)
     {
         switch (color)
@@ -55,6 +56,15 @@ public class Constants: MonoBehaviour
         }
 
         return N;
+    }
+
+    public Color GetColor(Constants.ColorType CMYK, int LightType)
+    {
+        Color tmp = SettingManager.Instance.GetColor(CMYK);
+        float t = Mathf.Clamp01(this.GetLightTypeData(LightType) / 100f);
+        tmp = Color.Lerp(Color.white, tmp, t);
+
+        return tmp;
     }
 }
 
