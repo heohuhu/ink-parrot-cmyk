@@ -44,7 +44,7 @@ public class SettingManager : MonoBehaviour
         Color.RGBToHSV(original, out float h, out float s, out float v);
 
         // 쨍함 감소 (채도 감소)
-        float reductionRatio = 1f - (setting.graphicOption.ColorStrength / 200f);
+        float reductionRatio = 1f - ((float)setting.graphicOption.ColorStrength / 200f);
         s *= reductionRatio;
 
         // HSV -> RGB

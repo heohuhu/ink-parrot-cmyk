@@ -63,7 +63,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     {
         SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
         
-        spr.color = Constants.Instance.GetColor((Constants.ColorType)this.BodyTemplatesInk[template]);
+        spr.color = Constants.Instance.GetColor((Constants.ColorType)CMYK ,this.BodyTemplatesInk[template]);
     }
 
     public IEnumerator ObjectSelected()

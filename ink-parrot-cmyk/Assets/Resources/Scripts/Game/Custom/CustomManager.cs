@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class CustomManager : MonoBehaviour
 {
+    public static CustomManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     public int selectedTemplate;
     private string parrotName;
     public GameObject ParrotSample;
@@ -52,12 +59,10 @@ public class CustomManager : MonoBehaviour
     {
         if(selectedTemplate == -1)
             return ;
-
         if(--CustomParrotShower.Instance.ColorData[selectedTemplate, color] < 0){
-            CustomParrotShower.Instance.ColorData[selectedTemplate, color] = 2;
-            CustomParrotShower.Instance.ShowSampleImage();
+            CustomParrotShower.Instance.ColorData[selectedTemplate, color] = 3;
         }
-
+        CustomParrotShower.Instance.ShowSampleImage(selectedTemplate);
         SetButtonColor((Constants.ColorType)color, CustomParrotShower.Instance.ColorData[selectedTemplate, color]);
     }
 }

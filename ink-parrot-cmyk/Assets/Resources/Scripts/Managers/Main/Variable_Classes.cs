@@ -98,4 +98,15 @@ public static class Utility
 
         return result;
     }
+
+    //3개 색상 조합
+    public static Color CombineColor(Color C, Color M, Color Y)
+    {
+        return new Color(
+                C.r * M.r * Y.r,
+                C.g * M.g * Y.g,
+                C.b * M.b * Y.b,
+                1f
+            );
+    }
 }

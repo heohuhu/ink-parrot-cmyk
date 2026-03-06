@@ -48,12 +48,7 @@ public class AnswerSheet : MonoBehaviour
 
             Debug.Log($"[{ParrotDataManager.Instance.ParrotSheet[Answer.answer].name} 정답 이미지 출력]\nTemplate : {template}\nC : {this.Answer.C[template]}\nM : {this.Answer.M[template]}\nY : {this.Answer.Y[template]}");
             
-            Color result = new Color(
-                C.r * M.r * Y.r,
-                C.g * M.g * Y.g,
-                C.b * M.b * Y.b,
-                1f
-            );
+            Color result = Utility.CombineColor(C, M, Y);
 
             Image spr = this.BodyTemplates[template].GetComponent<Image>();
 

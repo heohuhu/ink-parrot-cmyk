@@ -6,7 +6,7 @@ public class CustomParrotShower : MonoBehaviour
 {
     public int[,] ColorData = new int [Constants.TemplateSize, 3];
     static public CustomParrotShower Instance;
-    private GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
+    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
     
     void Awake()
     {
@@ -27,21 +27,29 @@ public class CustomParrotShower : MonoBehaviour
     {
         for(int template = 0; template < Constants.TemplateSize; template++)
         {
-            Color C = GetColor((int)Constants.ColorType.Cyan, this.ColorData[template, (int)Constants.ColorType.Cyan]);
-            Color M = GetColor((int)Constants.ColorType.Magenta, this.ColorData[template, (int)Constants.ColorType.Magenta]);
-            Color Y = GetColor((int)Constants.ColorType.Yellow, this.ColorData[template, (int)Constants.ColorType.Yellow]);
+            Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, this.ColorData[template, (int)Constants.ColorType.Cyan]);
+            Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, this.ColorData[template, (int)Constants.ColorType.Magenta]);
+            Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, this.ColorData[template, (int)Constants.ColorType.Yellow]);
 
-            Color result = new Color(
-                C.r * M.r * Y.r,
-                C.g * M.g * Y.g,
-                C.b * M.b * Y.b,
-                1f
-            );
+            // 색깔 조합
+            Color result = Utility.CombineColor(C, M, Y);
 
-            Image spr = this.BodyTemplates[template].GetComponent<Image>();
-
+            SpriteRenderer spr = this.BodyTemplates[template].GetComponent<SpriteRenderer>();
             spr.color = result;
         }
+    }
+
+    public void ShowSampleImage(int template)
+    {
+        Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, this.ColorData[template, (int)Constants.ColorType.Cyan]);
+        Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, this.ColorData[template, (int)Constants.ColorType.Magenta]);
+        Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, this.ColorData[template, (int)Constants.ColorType.Yellow]);
+
+        // 색깔 조합
+        Color result = Utility.CombineColor(C, M, Y);
+
+        SpriteRenderer spr = this.BodyTemplates[template].GetComponent<SpriteRenderer>();
+        spr.color = result;
     }
 
     public Color GetColor(int CMYK, int LightType)
