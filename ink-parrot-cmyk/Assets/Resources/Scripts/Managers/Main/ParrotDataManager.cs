@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Android.Gradle.Manifest;
 public class ParrotDataManager : MonoBehaviour
 {
     static public ParrotDataManager Instance;
@@ -75,6 +76,25 @@ public class ParrotDataManager : MonoBehaviour
         parrots_collected_data.have_corrected[index] = true;
         Debug.Log($"{this.ParrotSheet[index].name} 앵무새를 처음으로 완성했습니다!");
         DataManager.Instance.saveJson<ParrotsCorrectedVariable>("parrots-corrected.json", parrots_collected_data);
+    }
+
+    public void NewCustomParrotAdd(List<string> data)
+    {
+        ParrotsVariable custom_parrot_data = new ParrotsVariable();
+
+        //커스텀 앵무새 정보 불러오기
+        if(!DataManager.Instance.tryLoadJson<ParrotsVariable>("custom-parrots.json", out custom_parrot_data)){
+            Debug.Log("세이브된 커스텀 앵무새 데이터가 없어 새로이 생성합니다.");
+            custom_parrot_data = new ParrotsVariable();
+        }
+        else
+        {
+            Debug.Log("세이브된 커스텀 앵무새 데이터가 있어 불러옵니다.");
+        }
+
+        custom_parrot_data.parrot_data.Add(data);
+
+        DataManager.Instance.saveJson<ParrotsVariable>("custom-parrots.json", custom_parrot_data);
     }
 }
 

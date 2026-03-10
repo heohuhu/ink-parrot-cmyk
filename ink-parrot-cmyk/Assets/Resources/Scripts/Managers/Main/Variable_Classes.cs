@@ -109,4 +109,36 @@ public static class Utility
                 1f
             );
     }
+
+    public static void PrintRecursive(object data, int depth)
+    {
+        if (data == null)
+        {
+            Debug.Log("null");
+            return;
+        }
+
+        // 문자열은 IEnumerable이지만 배열처럼 처리하면 안됨
+        if (data is string)
+        {
+            Debug.Log(new string(' ', depth * 2) + data);
+            return;
+        }
+
+        // List / Array 등 IEnumerable 처리
+        if (data is IEnumerable<object> enumerable)
+        {
+            int index = 0;
+            foreach (var item in enumerable)
+            {
+                Debug.Log(new string(' ', depth * 2) + $"[{index}]");
+                PrintRecursive(item, depth + 1);
+                index++;
+            }
+        }
+        else
+        {
+            Debug.Log(new string(' ', depth * 2) + data.ToString());
+        }
+    }
 }

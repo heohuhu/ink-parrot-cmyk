@@ -47,12 +47,21 @@ public class CustomManager : MonoBehaviour
     public void TemplateSelected(int template)
     {
         selectedTemplate = template;
+
+        SetButtonColor(Constants.ColorType.Cyan, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Cyan]);
+        SetButtonColor(Constants.ColorType.Magenta, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Magenta]);
+        SetButtonColor(Constants.ColorType.Yellow, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Yellow]);
     }
 
     public void SaveParrot()
     {
         List<string> result = new List<string>();
+        result.Add("0");
+        result.Add(CustomUIManager.Instance.inputField.text);
+        result.AddRange(CustomParrotShower.Instance.getParrotData());
 
+        ParrotDataManager.Instance.NewCustomParrotAdd(result);
+        Utility.PrintRecursive(result, 0);
     }
 
     public void ColorTouched(int color)
@@ -64,5 +73,21 @@ public class CustomManager : MonoBehaviour
         }
         CustomParrotShower.Instance.ShowSampleImage(selectedTemplate);
         SetButtonColor((Constants.ColorType)color, CustomParrotShower.Instance.ColorData[selectedTemplate, color]);
+    }
+
+    public void SaveParrotStart()
+    {
+        CustomUIManager.Instance.InputPanelOpen();
+    }
+
+    public void SaveParrotComplete()
+    {
+        Reset();
+        CustomUIManager.Instance.InputPanelClose();
+    }
+
+    public void SaveParrotEnd()
+    {
+        CustomUIManager.Instance.InputPanelClose();
     }
 }

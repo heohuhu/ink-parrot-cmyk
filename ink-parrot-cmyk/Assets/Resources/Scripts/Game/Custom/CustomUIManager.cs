@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class CustomUIManager : MonoBehaviour
 {
@@ -10,8 +12,8 @@ public class CustomUIManager : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject returnPanel;
-
+    public GameObject returnPanel, InputPanel;
+    public TMP_InputField inputField;
     public void ReturnButtonClicked()
     {
         returnPanel.SetActive(true);
@@ -22,5 +24,14 @@ public class CustomUIManager : MonoBehaviour
         returnPanel.SetActive(false);
     }
 
+    public void InputPanelOpen()
+    {
+        inputField.text = "";
+        InputPanel.SetActive(true);
+    }
 
+    public void InputPanelClose()
+    {
+        InputPanel.SetActive(true);
+    }
 }
