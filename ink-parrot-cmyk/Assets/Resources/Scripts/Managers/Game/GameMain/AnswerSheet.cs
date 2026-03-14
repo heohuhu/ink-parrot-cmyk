@@ -5,7 +5,7 @@ public class AnswerSheet : MonoBehaviour
 {
     static public AnswerSheet Instance;
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
-    
+    public List<bool> is_corrected = new List<bool>();
     void Awake()
     {
         Instance = this;
@@ -14,6 +14,15 @@ public class AnswerSheet : MonoBehaviour
     public Sprite[] AnswerImages;
     
     public AnswerType Answer = new AnswerType();
+
+    public void Setting()
+    {
+        int Size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
+        is_corrected = new List<bool>(Size);
+
+        for(int i = 0; i < Size; i++)
+            is_corrected[i] = false;
+    }
 
     public void GiveProblem()
     {
@@ -81,6 +90,7 @@ public class AnswerSheet : MonoBehaviour
     public void CorrectAnswer()
     {
         ParrotDataManager.Instance.ParrotCollect(this.Answer.answer);
+        is_corrected[this.Answer.answer] = true;
     }
 }
 

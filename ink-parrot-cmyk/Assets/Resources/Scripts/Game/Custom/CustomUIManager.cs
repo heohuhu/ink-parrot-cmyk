@@ -32,6 +32,6 @@ public class CustomUIManager : MonoBehaviour
 
     public void InputPanelClose()
     {
-        InputPanel.SetActive(true);
+        InputPanel.SetActive(false);
     }
 }
