@@ -6743,13 +6743,14 @@ GameObject:
   - component: {fileID: 843941025}
   - component: {fileID: 843941027}
   - component: {fileID: 843941026}
+  - component: {fileID: 843941028}
   m_Layer: 0
   m_Name: Parrot Sample Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &843941025
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6808,6 +6809,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843941024}
   m_CullTransparentMesh: 1
+--- !u!114 &843941028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843941024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7691055b16234fb2f7ac380ebaa3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParrotTemplateContent
+  BodyTemplates:
+  - {fileID: 1069643279}
+  - {fileID: 1573568617}
+  - {fileID: 72906655}
+  - {fileID: 1286714281}
+  - {fileID: 772377611}
+  - {fileID: 577725585}
+  - {fileID: 1413712972}
 --- !u!1 &880085087
 GameObject:
   m_ObjectHideFlags: 0
@@ -9104,6 +9125,9 @@ MonoBehaviour:
   selectedColor: -1
   processing: 0
   isGameEnd: 0
+  GameEndParrotTemplate: {fileID: 843941024}
+  targetParent: {fileID: 1491825075}
+  AnswerParrots: []
 --- !u!114 &1385740249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9527,7 +9551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79bf544397e517438418c03cea48665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  BasicTime: 300
+  BasicTime: 30
   timeshower: {fileID: 1450172504}
 --- !u!114 &1450172504
 MonoBehaviour:

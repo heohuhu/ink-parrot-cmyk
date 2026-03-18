@@ -96,6 +96,20 @@ public class ParrotDataManager : MonoBehaviour
 
         DataManager.Instance.saveJson<ParrotsVariable>("custom-parrots.json", custom_parrot_data);
     }
+
+    public List<int> GetParrotBodyDataIntoInt(int index)
+    {
+        List<int> tmp = new List<int>();
+
+        for(int i = 0; i < Constants.TemplateSize; i++)
+        {
+            tmp.Add((int)ParrotSheet[index].bodyTemplates[i].x);
+            tmp.Add((int)ParrotSheet[index].bodyTemplates[i].y);
+            tmp.Add((int)ParrotSheet[index].bodyTemplates[i].z);
+        }
+
+        return tmp;
+    }
 }
 
 [System.Serializable]

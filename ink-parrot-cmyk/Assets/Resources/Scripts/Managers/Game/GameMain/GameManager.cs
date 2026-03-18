@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -140,6 +141,9 @@ public class GameManager : MonoBehaviour
     public void AnswerSubmit()
     {
         int score = GetCurrentScore();
+        
+        //테스트용
+        score = Constants.TemplateSize * 3;
 
         if(score == Constants.TemplateSize * 3){ // 모든 부위가 정답일 경우
             ScoreManager.Instance.GetScore(AnswerSheet.Instance.GetAnswerScore());
@@ -168,5 +172,23 @@ public class GameManager : MonoBehaviour
     {
         if(!this.isGameEnd)
             return;
+
+        List<List<int>> parrotData = AnswerSheet.Instance.GetAllCorrectedParrotData();
+        AnswerParrots = new List<GameObject>();
+
+        for(int i = 0; i < parrotData.Count; i++)
+        {
+            GameObject newObject = Instantiate(GameEndParrotTemplate, targetParent);
+            ParrotTemplateContent code = newObject.GetComponent<ParrotTemplateContent>();
+            code.SetUp(parrotData[i]);
+            newObject.SetActive(true);
+        }
+
+
     }
+
+    public GameObject GameEndParrotTemplate;
+    public Transform targetParent;
+    public List<GameObject> AnswerParrots;
+
 }

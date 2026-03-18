@@ -15,13 +15,17 @@ public class AnswerSheet : MonoBehaviour
     
     public AnswerType Answer = new AnswerType();
 
+    void Start()
+    {
+        Setting();
+    }
     public void Setting()
     {
         int Size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
-        is_corrected = new List<bool>(Size);
+        is_corrected = new List<bool>();
 
         for(int i = 0; i < Size; i++)
-            is_corrected[i] = false;
+            is_corrected.Add(false);
     }
 
     public void GiveProblem()
@@ -55,7 +59,7 @@ public class AnswerSheet : MonoBehaviour
             Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, this.Answer.M[template]);
             Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, this.Answer.Y[template]);
 
-            Debug.Log($"[{ParrotDataManager.Instance.ParrotSheet[Answer.answer].name} 정답 이미지 출력]\nTemplate : {template}\nC : {this.Answer.C[template]}\nM : {this.Answer.M[template]}\nY : {this.Answer.Y[template]}");
+            Debug.Log($"[{ParrotDataManager.Instance.ParrotSheet[Answer.answer].name} 정답 이미지 출력]\nTemplate : {template}\nM : {this.Answer.M[template]}\nY : {this.Answer.Y[template]}\nC : {this.Answer.C[template]}\n");
             
             Color result = Utility.CombineColor(C, M, Y);
 
@@ -89,8 +93,25 @@ public class AnswerSheet : MonoBehaviour
 
     public void CorrectAnswer()
     {
+        Debug.Log($"Answer : {Answer.answer}");
         ParrotDataManager.Instance.ParrotCollect(this.Answer.answer);
         is_corrected[this.Answer.answer] = true;
+    }
+
+    public List<List<int>> GetAllCorrectedParrotData()
+    {
+        List<List<int>> result = new List<List<int>>();
+        int Size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
+
+        for(int i = 0; i < Size; i++)
+        {
+            if(is_corrected[i] == true)
+            {
+                result.Add(ParrotDataManager.Instance.GetParrotBodyDataIntoInt(i));
+            }
+        }
+
+        return result;
     }
 }
 
