@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -75,6 +76,7 @@ public class GameUiManager : MonoBehaviour
 
     public GameObject GameMainScene, GameEndScene;
     public GameObject GameOverPanel;
+    public GameObject GameEndScore;
     private bool isEndNext = false;
     public IEnumerator GameEndProcess()
     {
@@ -91,6 +93,7 @@ public class GameUiManager : MonoBehaviour
             GameMainScene.SetActive(false);
             GameEndScene.SetActive(true);
             GameManager.Instance.GameEndNext();
+            GameEndScore.GetComponent<TextMeshProUGUI>().text = "스코어: " + ScoreManager.Instance.score.ToString() + "점";
         }
     }
 }

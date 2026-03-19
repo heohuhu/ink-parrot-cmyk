@@ -104,6 +104,12 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(current.name);
     }
 
+    public void ReloadScene(string CurrentSceneName)
+    {
+        UnloadScene(CurrentSceneName);
+        LoadSceneAdditiveAsActive(CurrentSceneName);
+    }
+
     /* =====================
      * Fade
      * 근데 필요할 지는 모름

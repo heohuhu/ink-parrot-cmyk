@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -185,6 +186,11 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+
+    public void ReStartGame()
+    {
+        SceneController.Instance.ReloadScene("Game");
     }
 
     public GameObject GameEndParrotTemplate;
