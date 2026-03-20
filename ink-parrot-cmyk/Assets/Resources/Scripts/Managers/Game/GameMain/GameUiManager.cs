@@ -3,6 +3,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 public class GameUiManager : MonoBehaviour
 {
     public static GameUiManager Instance;
@@ -76,7 +77,8 @@ public class GameUiManager : MonoBehaviour
 
     public GameObject GameMainScene, GameEndScene;
     public GameObject GameOverPanel;
-    public GameObject GameEndScore;
+    public GameObject GameEndScore, RankingPanel;
+    public GameObject[] RankingText = new GameObject[3];
     private bool isEndNext = false;
     public IEnumerator GameEndProcess()
     {
@@ -84,6 +86,37 @@ public class GameUiManager : MonoBehaviour
         GameOverPanel.SetActive(true);
         yield return new WaitForSeconds(1f);
         isEndNext = true;
+    }
+
+    public IEnumerator RankingPanelOn()
+    {
+        isEndNext = false;
+        RankingPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        isEndNext = true;
+    }
+
+    public void RankingShow(List<Ranking_Type> rankings)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            if(rankings[i].score == -1)
+            {
+                RankingText[i].GetComponent<TextMeshProUGUI>().text = (i + 1).ToString() + "위: -점(--/--)";
+            }
+            else
+            {
+                RankingText[i].GetComponent<TextMeshProUGUI>().text = (i + 1).ToString() + "위: " + rankings[i].score + "점(" + rankings[i].date+")";
+            }
+        }
+    }
+
+    public void RankingPanelClose()
+    {
+        if (isEndNext)
+        {
+            RankingPanel.SetActive(false);
+        }
     }
 
     public void GameEndNext()

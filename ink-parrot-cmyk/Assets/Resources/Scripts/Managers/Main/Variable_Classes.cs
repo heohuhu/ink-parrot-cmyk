@@ -141,4 +141,9 @@ public static class Utility
             Debug.Log(new string(' ', depth * 2) + data.ToString());
         }
     }
+
+    public static string GetCurrentDateMMDD()
+    {
+            return DateTime.Now.ToString("MM/dd");
+    }
 }

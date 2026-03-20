@@ -18,7 +18,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         AnswerSheet.Instance.GiveProblem();
-        
+        Ranking = DataManager.Instance.loadJson<List<Ranking_Type>>("ranking.json");
+
+        if(Ranking == null || Ranking.Count == 0)
+        {
+            Ranking = new List<Ranking_Type>();
+            Ranking.Add(new Ranking_Type(-1, "null"));
+            Ranking.Add(new Ranking_Type(-1, "null"));
+            Ranking.Add(new Ranking_Type(-1, "null"));
+        }
     }
 
     // Update is called once per frame
@@ -185,7 +193,7 @@ public class GameManager : MonoBehaviour
             newObject.SetActive(true);
         }
 
-
+        Ranking_Update(ScoreManager.Instance.score);
     }
 
     public void ReStartGame()
@@ -196,5 +204,39 @@ public class GameManager : MonoBehaviour
     public GameObject GameEndParrotTemplate;
     public Transform targetParent;
     public List<GameObject> AnswerParrots;
+    private List<Ranking_Type> Ranking;
 
+    public void Ranking_Update(int score)
+    {
+        bool isRankingUpdated = false;
+        for(int i = 0; i < Ranking.Count; i++)
+        {
+            if(score > Ranking[i].score)
+            {
+                Ranking[i].score = score;
+                Ranking[i].date = Utility.GetCurrentDateMMDD();
+                isRankingUpdated = true;
+                break;
+            }
+        }
+
+        if (isRankingUpdated)
+        {
+            StartCoroutine(GameUiManager.Instance.RankingPanelOn());
+            GameUiManager.Instance.RankingShow(this.Ranking);
+            //DataManager.Instance.saveJson<List<Ranking_Type>>("ranking.json", Ranking);
+        }
+    }
+}
+
+public class Ranking_Type
+{
+    public int score;
+    public string date;
+
+    public Ranking_Type(int score, string date)
+    {
+        this.score = score;
+        this.date = date;
+    }
 }
