@@ -10249,7 +10249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79bf544397e517438418c03cea48665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  BasicTime: 30
+  BasicTime: 10
   timeshower: {fileID: 1450172504}
 --- !u!114 &1450172504
 MonoBehaviour:

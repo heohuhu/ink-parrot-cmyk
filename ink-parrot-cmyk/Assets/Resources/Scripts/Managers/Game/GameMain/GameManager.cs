@@ -213,8 +213,11 @@ public class GameManager : MonoBehaviour
         {
             if(score > Ranking[i].score)
             {
-                Ranking[i].score = score;
-                Ranking[i].date = Utility.GetCurrentDateMMDD();
+                Ranking.Insert(i, new Ranking_Type(score, Utility.GetCurrentDateMMDD()));
+
+                if(Ranking.Count > 3)
+                    Ranking.RemoveAt(3);
+
                 isRankingUpdated = true;
                 break;
             }
@@ -224,7 +227,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(GameUiManager.Instance.RankingPanelOn());
             GameUiManager.Instance.RankingShow(this.Ranking);
-            //DataManager.Instance.saveJson<List<Ranking_Type>>("ranking.json", Ranking);
+            DataManager.Instance.saveJson<List<Ranking_Type>>("ranking.json", Ranking);
         }
     }
 }
