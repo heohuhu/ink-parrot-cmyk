@@ -25,6 +25,7 @@ public class Timer : MonoBehaviour
     {
         if (timer.IsFinished())
         {
+            timeshower.text = "TIME\n" + timer.GetRestTime();
             GameManager.Instance.GameEnd();
         }
         else
@@ -43,22 +44,30 @@ public class Timer : MonoBehaviour
     {
         timer.Resume();
     }
-
+    
     public void Reset()
     {
         timer.Reset();
     }
+
+    public void TimeModify(float seconds)
+    {
+        timer.ModifyTime(seconds);
+    }
 }
 public class GameTimer
 {
-    private float totalTime;     // 전체 시간 (초)
-    private float elapsedTime;   // 경과 시간 (초)
+    private float totalTime;     
+    private float elapsedTime;   
     private bool isRunning;
     private bool isPaused;
+
+    private float maxTotalTime;   // 추가: 최대 시간
 
     public GameTimer(float seconds)
     {
         totalTime = Mathf.Max(0f, seconds);
+        maxTotalTime = totalTime;   // 최대값 저장
         elapsedTime = 0f;
         isRunning = false;
         isPaused = false;
@@ -75,7 +84,15 @@ public class GameTimer
         elapsedTime += Time.unscaledDeltaTime;
         elapsedTime = Mathf.Min(elapsedTime, totalTime);
     }
+    public void ModifyTime(float seconds)
+    {
+        float remaining = totalTime - elapsedTime;
+        remaining += seconds;
 
+        remaining = Mathf.Clamp(remaining, 0f, maxTotalTime);
+
+        elapsedTime = totalTime - remaining;
+    }
     public void Start()
     {
         isRunning = true;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public GameObject menu_ui;
     public GameObject tutorial_ui;
     public GameObject setting_ui;
     public GameObject collection_ui;
@@ -17,6 +18,8 @@ public class MenuManager : MonoBehaviour
     {
         SceneController.Instance.LoadSceneAdditiveAsActive("Game");
         SceneController.Instance.UnloadScene("StartMenu");
+
+        menu_ui.SetActive(true);
     }
 
     public void CustomStart()
@@ -38,10 +41,13 @@ public class MenuManager : MonoBehaviour
     public void ShowCollection()
     {
         collection_ui.SetActive(true);
+        menu_ui.SetActive(false);
+        CollectionManager.Instance.CollectionOn();
     }
 
     public void unShowCollection()
     {
+        menu_ui.SetActive(true);
         collection_ui.SetActive(false);
     }
 

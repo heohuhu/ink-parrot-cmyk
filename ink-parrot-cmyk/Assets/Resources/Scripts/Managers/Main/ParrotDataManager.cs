@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
+//using Unity.Android.Gradle.Manifest;
 public class ParrotDataManager : MonoBehaviour
 {
     static public ParrotDataManager Instance;
@@ -109,6 +109,18 @@ public class ParrotDataManager : MonoBehaviour
         }
 
         return tmp;
+    }
+
+    public string getParrotName(int index)
+    {
+        if(index >= getParrotCount())
+            return null;
+        return ParrotSheet[index].name;
+    }
+
+    public int getParrotCount()
+    {
+        return ParrotSheet.GetLength(0);
     }
 }
 

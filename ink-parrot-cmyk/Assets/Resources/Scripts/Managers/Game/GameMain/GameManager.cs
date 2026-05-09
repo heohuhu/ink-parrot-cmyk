@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Unity.Android.Gradle.Manifest;
+//using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -149,16 +149,12 @@ public class GameManager : MonoBehaviour
     }
     public void AnswerSubmit()
     {
-        int score = GetCurrentScore();
-        
-        //테스트용
-        score = Constants.TemplateSize * 3;
-
-        if(score == Constants.TemplateSize * 3){ // 모든 부위가 정답일 경우
-            ScoreManager.Instance.GetScore(AnswerSheet.Instance.GetAnswerScore());
-            AnswerSheet.Instance.CorrectAnswer();
+        if(AnswerSheet.Instance.Answer.answerType == 0){
+            AnswerSheet.Instance.AnswerSubmit();
+        }else if(AnswerSheet.Instance.Answer.answerType == 1)
+        {
+            AnswerSheet.Instance.AnswerSubmit();
         }
-        AnswerSheet.Instance.MakeAnswer();
 
         parrots[0].Init();
         parrots[1].Init();

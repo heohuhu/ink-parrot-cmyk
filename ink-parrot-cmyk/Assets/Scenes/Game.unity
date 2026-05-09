@@ -9853,6 +9853,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba9892be6f063042a509c3e8c1345b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnswerSheet
+  AnswerImageUI: {fileID: 1608636004}
+  BodyTemplates_Parents: {fileID: 1564783215}
   BodyTemplates:
   - {fileID: 1413819440}
   - {fileID: 823118948}
@@ -9863,10 +9865,8 @@ MonoBehaviour:
   - {fileID: 514290061}
   is_corrected: 
   AnswerImages:
-  - {fileID: 6911902842914023753, guid: 96bef7551f66d154fbec418efc9cea3b, type: 3}
-  - {fileID: -3623664422336458887, guid: 6ac98e6f6f5a85845b6f69027c8af2de, type: 3}
-  - {fileID: -6470460504253458178, guid: 040bfe26272dd7e40b250a398c595832, type: 3}
-  - {fileID: -4178046375966092550, guid: 3fcf4a6d185730342bcd74e768413b35, type: 3}
+  - {fileID: -1708770582230685836, guid: a2aa8fcce63909f449a574be93b04a92, type: 3}
+  - {fileID: 3367933947777401865, guid: a98138f2d9a7ddd4fb5981669698b853, type: 3}
 --- !u!1 &1408598567
 GameObject:
   m_ObjectHideFlags: 0
@@ -10249,7 +10249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79bf544397e517438418c03cea48665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  BasicTime: 10
+  BasicTime: 300
   timeshower: {fileID: 1450172504}
 --- !u!114 &1450172504
 MonoBehaviour:
@@ -11299,7 +11299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1608636005
 RectTransform:
   m_ObjectHideFlags: 0

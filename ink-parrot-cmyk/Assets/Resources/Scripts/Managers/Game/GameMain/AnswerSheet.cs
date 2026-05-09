@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class AnswerSheet : MonoBehaviour
 {
     static public AnswerSheet Instance;
+
+    public GameObject AnswerImageUI;
+    public GameObject BodyTemplates_Parents;
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
     public List<bool> is_corrected = new List<bool>();
     void Awake()
@@ -30,11 +33,22 @@ public class AnswerSheet : MonoBehaviour
 
     public void GiveProblem()
     {
-        int randInt = Utility.GetRandomInt(0, 10);
+        int randInt = Utility.GetRandomInt(0, 10); // 0 ~ 9
 
-        if(randInt < 100) { //테스트 단계 - 항상 정답만 제시되도록함
+        if(randInt < 7) { //테스트 단계 - 항상 정답만 제시되도록함
             MakeAnswer();
+        }else if(randInt < 10)
+        {
+            MakeItem();
         }
+    }
+
+    public void MakeItem()
+    {
+        Answer.answer = Utility.GetRandomInt(0, 2);;
+        Answer.answerType = 1;
+
+        ShowItemImage(Answer.answer);
     }
 
     public void MakeAnswer()
@@ -49,8 +63,44 @@ public class AnswerSheet : MonoBehaviour
         ShowAnswerImage(Answer.answer);
     }
 
+    public void AnswerSubmit()
+    {
+        if(Answer.answerType == 0)
+        {
+            int score = GameManager.Instance.GetCurrentScore();
+
+            if(score == Constants.TemplateSize * 3){ // 모든 부위가 정답일 경우
+                ScoreManager.Instance.GetScore(this.GetAnswerScore());
+                this.CorrectAnswer();
+            }
+            this.GiveProblem();
+        }else if(Answer.answerType == 1)
+        {
+            switch (Answer.answer)
+            {
+                case 0:
+                Timer.Instance.TimeModify(5f);
+                break;
+
+                case 1:
+                Timer.Instance.TimeModify(-5f);
+                break;
+            }
+            this.GiveProblem();
+        }
+    }
+
+    public void ShowItemImage(int index)
+    {
+        AnswerImageUI.SetActive(true);
+        BodyTemplates_Parents.SetActive(false);
+        AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
+    }
+
     public void ShowAnswerImage(int index)
     {
+        BodyTemplates_Parents.SetActive(true);
+        AnswerImageUI.SetActive(false);
         //AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
 
         for(int template = 0; template < Constants.TemplateSize; template++)

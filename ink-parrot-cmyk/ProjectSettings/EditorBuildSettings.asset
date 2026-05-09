@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CustomPage.unity
     guid: 515da9cf7d18232459bbdd8d419c945e
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 768f10d38b7b4b64eaeaa96414b67c47
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
