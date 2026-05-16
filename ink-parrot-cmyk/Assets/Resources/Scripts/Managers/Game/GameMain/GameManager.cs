@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AnswerSheet.Instance.GiveProblem();
+        AnswerSheet.Instance.GiveProblem(1);
         Ranking = DataManager.Instance.loadJson<List<Ranking_Type>>("ranking.json");
 
         if(Ranking == null || Ranking.Count == 0)

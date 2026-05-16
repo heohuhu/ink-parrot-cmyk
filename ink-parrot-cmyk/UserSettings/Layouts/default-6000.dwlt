@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 43.2
+    y: 0
     width: 1536
     height: 36
   m_SerializedDataModeController:
@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79.200005
+    y: 24
     width: 343
     height: 476.4
   m_SerializedDataModeController:
@@ -705,8 +705,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 344
-    y: 79.200005
+    x: 345
+    y: 24
     width: 902
     height: 476.4
   m_SerializedDataModeController:
@@ -1477,9 +1477,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 581.60004
+    y: 526.4
     width: 1247
-    height: 188.4
+    height: 188.39996
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1537,8 +1537,6 @@ MonoBehaviour:
     - m_Data: 49136
     - m_Data: 49138
     - m_Data: 49140
-    - m_Data: 49746
-    - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1765,8 +1763,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1248
-    y: 79.200005
+    x: 1249
+    y: 24
     width: 287
     height: 690.8
   m_SerializedDataModeController:
@@ -1893,7 +1891,7 @@ MonoBehaviour:
       height: 1536
     m_MinimalGUI: 1
   m_defaultScale: 0.29648438
-  m_LastWindowPixelSize: {x: 1127.5, y: 595.5}
+  m_LastWindowPixelSize: {x: 902, y: 476.4}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 00000000000000000000

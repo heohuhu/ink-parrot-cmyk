@@ -19,6 +19,11 @@ public class CollectionManager : MonoBehaviour
 
     void Start()
     {
+        Reset();
+    }
+
+    public void Reset()
+    {
         ParrotsSize = ParrotDataManager.Instance.getParrotCount();
         page[0] = page[1] = 0;
         current_page = 0;
@@ -82,7 +87,7 @@ public class CollectionManager : MonoBehaviour
         if(current_page == 0)
         {
             page[current_page]++;
-            if(page[current_page] * 3 >= Constants.BasicParrotsSize)
+            if(page[current_page] >= Mathf.Ceil((float)Constants.BasicParrotsSize / 3))
                 page[current_page]--;
             else {
                 collectionGIF.SetReversing(false);
@@ -91,7 +96,7 @@ public class CollectionManager : MonoBehaviour
         }else if(current_page == 1)
         {
             page[current_page]++;
-            if(page[current_page] * 3 + Constants.BasicParrotsSize >= ParrotsSize)
+            if((page[current_page] * 3 + Constants.BasicParrotsSize) / 3 >= Mathf.Ceil((float)ParrotsSize / 3))
                 page[current_page]--;
             else {
                 collectionGIF.SetReversing(false);

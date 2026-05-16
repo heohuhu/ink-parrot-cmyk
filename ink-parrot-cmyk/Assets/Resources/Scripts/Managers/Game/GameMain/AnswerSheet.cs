@@ -31,9 +31,21 @@ public class AnswerSheet : MonoBehaviour
             is_corrected.Add(false);
     }
 
+    //option이 1이면 항상 정답만 제시되도록 함
+    public void GiveProblem(int option)
+    {
+        int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 7
+
+        if(option == 1 || randInt < 7) { //테스트 단계 - 항상 정답만 제시되도록함
+            MakeAnswer();
+        }else if(randInt < 10)
+        {
+            MakeItem();
+        }
+    }
     public void GiveProblem()
     {
-        int randInt = Utility.GetRandomInt(0, 10); // 0 ~ 9
+        int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 9
 
         if(randInt < 7) { //테스트 단계 - 항상 정답만 제시되도록함
             MakeAnswer();

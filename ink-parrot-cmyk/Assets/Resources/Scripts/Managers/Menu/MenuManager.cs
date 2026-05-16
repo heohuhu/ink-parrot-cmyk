@@ -42,6 +42,7 @@ public class MenuManager : MonoBehaviour
     {
         collection_ui.SetActive(true);
         menu_ui.SetActive(false);
+        CollectionManager.Instance.Reset();
         CollectionManager.Instance.CollectionOn();
     }
 

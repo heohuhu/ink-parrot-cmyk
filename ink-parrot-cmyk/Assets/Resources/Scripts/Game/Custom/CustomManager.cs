@@ -55,13 +55,14 @@ public class CustomManager : MonoBehaviour
 
     public void SaveParrot()
     {
-        List<string> result = new List<string>();
-        result.Add("0");
-        result.Add(CustomUIManager.Instance.inputField.text);
-        result.AddRange(CustomParrotShower.Instance.getParrotData());
+        ParrotInfo result = new ParrotInfo();
+        result.data.Add("0");
+        result.data.Add(CustomUIManager.Instance.inputField.text);
+        result.data.AddRange(CustomParrotShower.Instance.getParrotData());
 
         ParrotDataManager.Instance.NewCustomParrotAdd(result);
         Utility.PrintRecursive(result, 0);
+        CustomUIManager.Instance.InputPanelClose();
     }
 
     public void ColorTouched(int color)

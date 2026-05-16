@@ -13,6 +13,11 @@ public class ParrotDataManager : MonoBehaviour
     }
     void Start()
     {
+        ParrotSheetUpdate();
+    }
+
+    public void ParrotSheetUpdate()
+    {
         List<List<string>> basic_parrot_data = DataManager.Instance.LoadCSV("Data/Parrot Data");
 
         ParrotsVariable custom_parrot_data = new ParrotsVariable();
@@ -37,7 +42,7 @@ public class ParrotDataManager : MonoBehaviour
             Debug.Log("세이브된 앵무새 정답 여부 정보 데이터가 있어 불러옵니다.");
         }
 
-        basic_parrot_data.AddRange(custom_parrot_data.parrot_data);
+        basic_parrot_data.AddRange(custom_parrot_data.GetListData());
         DataProcess(basic_parrot_data);
     }
 
@@ -45,9 +50,9 @@ public class ParrotDataManager : MonoBehaviour
     {
         int rowCount = data.Count;
         ParrotSheet = new ParrotSheetType [rowCount - 1];
-        int colCount = data[0].Count;
         for(int i = 1; i < rowCount; i++) //idx 날림
         {
+            int colCount = data[i].Count;
             ParrotSheet[i - 1] = new ParrotSheetType();
             ParrotSheet[i - 1].name = data[i][1];
             
@@ -59,15 +64,21 @@ public class ParrotDataManager : MonoBehaviour
                 //Debug.Log($"Name : {ParrotSheet[i - 1].name}\nTemplate : {t}\nC : {ParrotSheet[i - 1].bodyTemplates[t].x}\nM : {ParrotSheet[i - 1].bodyTemplates[t].y}\nY : {ParrotSheet[i - 1].bodyTemplates[t].z}");
             }
 
-            ParrotSheet[i - 1].score = int.Parse(data[i][Constants.TemplateSize * 3 + 2]);
-            ParrotSheet[i - 1].difficulty = data[i][Constants.TemplateSize * 3 + 3];
+            if(colCount <= Constants.TemplateSize * 3 + 2)
+            {
+                ParrotSheet[i - 1].score = 30;
+                ParrotSheet[i - 1].difficulty = "easy";
+            }else{
+                ParrotSheet[i - 1].score = int.Parse(data[i][Constants.TemplateSize * 3 + 2]);
+                ParrotSheet[i - 1].difficulty = data[i][Constants.TemplateSize * 3 + 3];
+            }
             ParrotSheet[i - 1].isCompleted = false;
         }
     }
 
     public void ParrotCollect(int index)
     {
-        if(index > parrots_collected_data.have_corrected.Count)
+        if(index >= parrots_collected_data.have_corrected.Count)
             return ;
 
         if(parrots_collected_data.have_corrected[index] == true)
@@ -78,7 +89,7 @@ public class ParrotDataManager : MonoBehaviour
         DataManager.Instance.saveJson<ParrotsCorrectedVariable>("parrots-corrected.json", parrots_collected_data);
     }
 
-    public void NewCustomParrotAdd(List<string> data)
+    public void NewCustomParrotAdd(ParrotInfo data)
     {
         ParrotsVariable custom_parrot_data = new ParrotsVariable();
 
@@ -95,6 +106,8 @@ public class ParrotDataManager : MonoBehaviour
         custom_parrot_data.parrot_data.Add(data);
 
         DataManager.Instance.saveJson<ParrotsVariable>("custom-parrots.json", custom_parrot_data);
+
+        ParrotSheetUpdate();
     }
 
     public List<int> GetParrotBodyDataIntoInt(int index)
@@ -124,10 +137,29 @@ public class ParrotDataManager : MonoBehaviour
     }
 }
 
+
+[System.Serializable]
+public class ParrotInfo
+{
+    public List<string> data = new List<string>();
+}
+
 [System.Serializable]
 public class ParrotsVariable
 {
-    public List<List<string>> parrot_data = new List<List<string>>();
+    public List<ParrotInfo> parrot_data = new List<ParrotInfo>();
+
+    public List<List<string>> GetListData()
+    {
+        List<List<string>> result = new List<List<string>>();
+
+        foreach (ParrotInfo info in parrot_data)
+        {
+            result.Add(new List<string>(info.data));
+        }
+
+        return result;
+    }
 }
 
 public class ParrotsCorrectedVariable
