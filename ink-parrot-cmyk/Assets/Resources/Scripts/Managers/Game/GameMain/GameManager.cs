@@ -40,12 +40,14 @@ public class GameManager : MonoBehaviour
     {
         isTimeStopped = true;
         Timer.Instance.Pause();
+        BackgroundManager.Instance.SetBackgroundStop(true);
     }
 
     public void ResumeTime()
     {
         Timer.Instance.Resume();
         isTimeStopped = false;
+        BackgroundManager.Instance.SetBackgroundStop(false);
     }
 
     public void ReturnStartMenu()
@@ -178,6 +180,13 @@ public class GameManager : MonoBehaviour
         if(!this.isGameEnd)
             return;
 
+        if(ScoreManager.Instance.score == 0)
+        {
+            targetParent_Object.SetActive(false);
+            return;
+        }else
+            targetParent_Object.SetActive(true);
+
         List<List<int>> parrotData = AnswerSheet.Instance.GetAllCorrectedParrotData();
         AnswerParrots = new List<GameObject>();
 
@@ -199,8 +208,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameEndParrotTemplate;
     public Transform targetParent;
+    public GameObject targetParent_Object;
     public List<GameObject> AnswerParrots;
-    private List<Ranking_Type> Ranking;
+    private List<Ranking_Type> Ranking = new List<Ranking_Type>();
 
     public void Ranking_Update(int score)
     {

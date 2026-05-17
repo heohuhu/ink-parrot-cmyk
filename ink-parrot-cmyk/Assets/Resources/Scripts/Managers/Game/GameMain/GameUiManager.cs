@@ -9,6 +9,7 @@ public class GameUiManager : MonoBehaviour
     public static GameUiManager Instance;
     public GameObject PauseMenu;
     public GameObject ReturnMenu;
+    private bool isWindowOpened = false;
 
     private void Awake()
     {
@@ -17,6 +18,9 @@ public class GameUiManager : MonoBehaviour
 
     public void PauseMenuOpen()
     {
+        if(isWindowOpened)
+            return;
+        isWindowOpened = true;
         PauseMenu.SetActive(true);
         PauseMenuManager.Instance.OpenMenu();
     }
@@ -24,16 +28,21 @@ public class GameUiManager : MonoBehaviour
     public void PauseMenuClose()
     {
         PauseMenu.SetActive(false);
+        isWindowOpened = false;
     }
 
     public void ReturnMenuOpen()
     {
+        if(isWindowOpened)
+            return;
+        isWindowOpened = true;
         ReturnMenu.SetActive(true);
     }
 
     public void ReturnMenuClose()
     {
         ReturnMenu.SetActive(false);
+        isWindowOpened = false;
     }
 
 

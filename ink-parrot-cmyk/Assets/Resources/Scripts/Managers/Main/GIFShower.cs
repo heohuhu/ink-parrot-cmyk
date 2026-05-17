@@ -15,6 +15,7 @@ public class GIFShower : MonoBehaviour
     private int CurrentIndex;
     private int GifSize;
     private bool isPlaying = false;
+    private bool isPause = false;
     enum PlayType
     {
       forward, backward  
@@ -71,6 +72,16 @@ public class GIFShower : MonoBehaviour
         ChangeImage(CurrentIndex);
     }
 
+    public void Stop()
+    {
+        isPause = true;
+    }
+
+    public void Pause()
+    {
+        isPause = false;
+    }
+
     void Awake()
     {
         if (TargetSprite != null)
@@ -83,6 +94,8 @@ public class GIFShower : MonoBehaviour
 
     void Update()
     {
+        if(isPause)
+            return;
         if(AlwaysPlay || isPlaying){
             RemainDelay -= Time.deltaTime;
 

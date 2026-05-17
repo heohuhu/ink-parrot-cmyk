@@ -2,16 +2,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-
+using System;
 public class CollectionManager : MonoBehaviour
 {
     static public CollectionManager Instance;
+    private const int UnitPerPage = 3;
+
+
     public GIFShower collectionGIF;
     private int ParrotsSize;
     private int [] page = new int[2];
     private int current_page; // 0이면 사전 설정된 앵무새 목록, 1이면 커스텀 앵무새 목록
-    public GameObject [] collection_showcase = new GameObject[3];
+    public GameObject [] collection_showcase = new GameObject[UnitPerPage];
     public GameObject [] page_select = new GameObject[2];
+    public TextMeshProUGUI PageText;
     void Awake()
     {
         Instance = this;
@@ -32,7 +36,7 @@ public class CollectionManager : MonoBehaviour
 
     public void CollectionOn()
     {
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < UnitPerPage; i++){
             CanvasGroup cg = collection_showcase[i].GetComponent<CanvasGroup>();
             if (cg == null) cg = collection_showcase[i].AddComponent<CanvasGroup>();
             cg.alpha = 0f;
@@ -55,7 +59,7 @@ public class CollectionManager : MonoBehaviour
     {
         isPageUpdating = true;
         if(option == 1){
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < UnitPerPage; i++)
             {
                 StartFadeOut(i, 200);
             }
@@ -72,7 +76,8 @@ public class CollectionManager : MonoBehaviour
                 break;
         }
         
-        for(int i = 0; i < 3; i++)
+        PageText.text = (page[current_page] + 1).ToString() + "/" + getTotalPage(current_page).ToString();
+        for(int i = 0; i < UnitPerPage; i++)
         {
             TextChange(collection_showcase[i], i);
             ImageChange(collection_showcase[i], i);
@@ -87,7 +92,7 @@ public class CollectionManager : MonoBehaviour
         if(current_page == 0)
         {
             page[current_page]++;
-            if(page[current_page] >= Mathf.Ceil((float)Constants.BasicParrotsSize / 3))
+            if(page[current_page] >= Mathf.Ceil((float)Constants.BasicParrotsSize / UnitPerPage))
                 page[current_page]--;
             else {
                 collectionGIF.SetReversing(false);
@@ -96,12 +101,24 @@ public class CollectionManager : MonoBehaviour
         }else if(current_page == 1)
         {
             page[current_page]++;
-            if((page[current_page] * 3 + Constants.BasicParrotsSize) / 3 >= Mathf.Ceil((float)ParrotsSize / 3))
+            if((page[current_page] * UnitPerPage + Constants.BasicParrotsSize) / UnitPerPage >= Mathf.Ceil((float)ParrotsSize / UnitPerPage))
                 page[current_page]--;
             else {
                 collectionGIF.SetReversing(false);
                 StartPageChange();
             }
+        }
+    }
+
+    private int getTotalPage(int page_type)
+    {
+        if(page_type == 0)
+        {
+            return (int)Mathf.Ceil((float)Constants.BasicParrotsSize / 3);
+        }
+        else
+        {
+            return (int)Mathf.Ceil((float)(ParrotsSize - Constants.BasicParrotsSize) / 3);
         }
     }
 
@@ -125,9 +142,9 @@ public class CollectionManager : MonoBehaviour
         int index = 0;
         
         if(current_page == 0) //사전 등록 앵무새
-            index = page[0] * 3 + target_index;
+            index = page[0] * UnitPerPage + target_index;
         else if(current_page == 1) //커스텀 앵무새
-            index = Constants.BasicParrotsSize + page[1] * 3 + target_index;
+            index = Constants.BasicParrotsSize + page[1] * UnitPerPage + target_index;
         
         text = ParrotDataManager.Instance.getParrotName(index);
 
@@ -151,7 +168,7 @@ public class CollectionManager : MonoBehaviour
 
     }
 
-    Coroutine [] fadeRoutine = new Coroutine[3];
+    Coroutine [] fadeRoutine = new Coroutine[UnitPerPage];
 
     public void StartFadeIn(int index, int time)
     {
