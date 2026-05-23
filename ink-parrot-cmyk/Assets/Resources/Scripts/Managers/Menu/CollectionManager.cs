@@ -26,6 +26,11 @@ public class CollectionManager : MonoBehaviour
         Reset();
     }
 
+    void Update()
+    {
+        PageText.text = (page[current_page] + 1).ToString() + "/" + getTotalPage(current_page).ToString();
+    }
+
     public void Reset()
     {
         ParrotsSize = ParrotDataManager.Instance.getParrotCount();
@@ -43,6 +48,7 @@ public class CollectionManager : MonoBehaviour
         }
         collectionGIF.Setting();
         PageChanging = StartCoroutine(PageUpdate(0));
+
     }
 
     Coroutine PageChanging;
@@ -76,7 +82,6 @@ public class CollectionManager : MonoBehaviour
                 break;
         }
         
-        PageText.text = (page[current_page] + 1).ToString() + "/" + getTotalPage(current_page).ToString();
         for(int i = 0; i < UnitPerPage; i++)
         {
             TextChange(collection_showcase[i], i);
