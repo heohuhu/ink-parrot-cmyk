@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 public class AnswerSheet : MonoBehaviour
@@ -35,8 +36,9 @@ public class AnswerSheet : MonoBehaviour
     public void GiveProblem(int option)
     {
         int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 7
+        AudioManager.Instance.PlaySFX("문조지저귐");
 
-        if(option == 1 || randInt < 7) { //테스트 단계 - 항상 정답만 제시되도록함
+        if(option == 1 || randInt < 7) {
             MakeAnswer();
         }else if(randInt < 10)
         {
@@ -45,14 +47,22 @@ public class AnswerSheet : MonoBehaviour
     }
     public void GiveProblem()
     {
-        int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 9
+        int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 7
+        AudioManager.Instance.PlaySFX("문조지저귐");
 
-        if(randInt < 7) { //테스트 단계 - 항상 정답만 제시되도록함
+        if(randInt < 7) {
             MakeAnswer();
+            StartCoroutine(PlaySoundAfterSeconds(0.5f, "문제넘기기"));
         }else if(randInt < 10)
         {
             MakeItem();
         }
+    }
+    
+    private IEnumerator PlaySoundAfterSeconds(float delay, string Name)
+    {
+        yield return new WaitForSeconds(delay);
+        AudioManager.Instance.Play(Name);
     }
 
     public void MakeItem()

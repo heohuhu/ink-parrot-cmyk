@@ -34,6 +34,7 @@ public class SettingManager : MonoBehaviour
     public void SettingSave()
     {
         DataManager.Instance.saveJson<SettingVariable>("setting.json", setting);
+        AudioManager.Instance.ApplyVolumeSettings();
     }
 
 

@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         isTimeStopped = true;
         Timer.Instance.Pause();
         BackgroundManager.Instance.SetBackgroundStop(true);
+        AudioManager.Instance.PauseALLBGM();
     }
 
     public void ResumeTime()
@@ -48,10 +49,12 @@ public class GameManager : MonoBehaviour
         Timer.Instance.Resume();
         isTimeStopped = false;
         BackgroundManager.Instance.SetBackgroundStop(false);
+        AudioManager.Instance.ResumeALLBGM();
     }
 
     public void ReturnStartMenu()
     {
+        AudioManager.Instance.ResumeALLBGM();
         SceneController.Instance.LoadSceneAdditiveAsActive("StartMenu");
         SceneController.Instance.UnloadScene("Game");
     }
@@ -180,6 +183,9 @@ public class GameManager : MonoBehaviour
         if(!this.isGameEnd)
             return;
 
+        AudioManager.Instance.PauseALLBGM();
+        AudioManager.Instance.PlaySFX("게임종료뿅");
+
         if(ScoreManager.Instance.score == 0)
         {
             targetParent_Object.SetActive(false);
@@ -203,6 +209,13 @@ public class GameManager : MonoBehaviour
 
     public void ReStartGame()
     {
+        AudioManager.Instance.PlayBGMPlaylist(
+        new List<string>()
+        {
+            "기본브금1",
+            "기본브금2",
+            "기본브금3"
+        });
         SceneController.Instance.ReloadScene("Game");
     }
 

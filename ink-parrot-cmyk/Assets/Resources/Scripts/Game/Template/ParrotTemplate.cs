@@ -17,7 +17,8 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     Vector3 base_size;
     //앵무새 템플릿 부위별로
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
-    int [] base_orderlayer = {0, 1, 1, 0, 1, 0, 1};
+    int [] base_orderlayer = {5, 7, 6, 0, 1, 3, 2};
+
     //0이면 싹 다 짜낸 상태
     //1 이상이면 짜내지 않은 상태
     public int[] BodyTemplatesInk = new int[Constants.TemplateSize];

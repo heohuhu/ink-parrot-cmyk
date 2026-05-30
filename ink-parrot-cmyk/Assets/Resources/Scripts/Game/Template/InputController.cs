@@ -30,6 +30,7 @@ public class InputController: MonoBehaviour
             if (CheckUIBlocking(Input.mousePosition))
                 return;
             HandleInput(Input.mousePosition);
+            AudioManager.Instance.PlayUI("터치");
         }
     #else
         if (Input.touchCount > 0)
@@ -41,6 +42,7 @@ public class InputController: MonoBehaviour
                     return;
 
                 HandleInput(touch.position);
+                AudioManager.Instance.PlayUI("터치");
             }
         }
     #endif

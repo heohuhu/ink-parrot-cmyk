@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 public class Constants: MonoBehaviour
 {
     static public Constants Instance;

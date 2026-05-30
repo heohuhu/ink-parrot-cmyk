@@ -40,6 +40,15 @@ public class CustomManager : MonoBehaviour
 
     public void ReturnButtonClicked()
     {
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayBGMPlaylist(
+        new List<string>()
+        {
+            "기본브금1",
+            "기본브금2",
+            "기본브금3"
+        });
+        AudioManager.Instance.PlaySubBGM("백그라운드새소리");
         SceneController.Instance.LoadSceneAdditiveAsActive("StartMenu");
         SceneController.Instance.UnloadScene("CustomPage");
     }
@@ -63,6 +72,7 @@ public class CustomManager : MonoBehaviour
         ParrotDataManager.Instance.NewCustomParrotAdd(result);
         Utility.PrintRecursive(result, 0);
         CustomUIManager.Instance.InputPanelClose();
+        AudioManager.Instance.PlayUI("정답");
     }
 
     public void ColorTouched(int color)

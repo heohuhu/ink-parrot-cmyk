@@ -73,6 +73,8 @@ public class CollectionManager : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
 
+        AudioManager.Instance.PlayUI("컬렉션페이지변경");
+
         collectionGIF.ActivatingPlay();
 
         while(true){

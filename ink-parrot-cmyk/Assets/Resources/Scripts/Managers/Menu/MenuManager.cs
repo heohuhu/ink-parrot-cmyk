@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
@@ -24,6 +25,12 @@ public class MenuManager : MonoBehaviour
 
     public void CustomStart()
     {
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayBGMPlaylist(
+        new List<string>()
+        {
+            "커스텀백그라운드"
+        });
         SceneController.Instance.LoadSceneAdditiveAsActive("CustomPage");
         SceneController.Instance.UnloadScene("StartMenu");
     }
