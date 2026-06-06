@@ -74,7 +74,6 @@ public class CollectionManager : MonoBehaviour
         }
 
         AudioManager.Instance.PlayUI("컬렉션페이지변경");
-
         collectionGIF.ActivatingPlay();
 
         while(true){

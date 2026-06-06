@@ -949,6 +949,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 55ecd33e27fc2924a984ccf3cc05b9f7, type: 3}
     defaultVolume: 1
     loop: 0
+  - key: "\uD719"
+    type: 0
+    clip: {fileID: 8300000, guid: 630a2a42f7644534fb15f02b9eb6e6d9, type: 3}
+    defaultVolume: 1
+    loop: 0
   bgmSource: {fileID: 1330180499}
   subbgmSource: {fileID: 2073866484}
   sfxSource: {fileID: 1927593439}

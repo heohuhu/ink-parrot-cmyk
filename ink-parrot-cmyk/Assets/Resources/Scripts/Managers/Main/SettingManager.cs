@@ -61,6 +61,7 @@ public class SettingVariable
 {
     public Settings.Sound sound = new Settings.Sound();
     public Settings.GraphicOption graphicOption = new Settings.GraphicOption();
+    public Settings.Debuger debuger = new Settings.Debuger();
 }
 
 namespace Settings{
@@ -101,5 +102,12 @@ namespace Settings{
         {
             Setting();
         }
+    }
+
+    [System.Serializable]
+    public class Debuger
+    {
+        public bool isDebuging = false;
+        public bool isAnswerProcessing = false;
     }
 }

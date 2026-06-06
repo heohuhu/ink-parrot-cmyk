@@ -32,6 +32,15 @@ public class Timer : MonoBehaviour
         {
             timer.Tick();
             timeshower.text = "TIME\n" + timer.GetRestTime();
+
+            if(timer.GetRestTimeSeconds() <= 10f)
+            {
+                timeshower.color = Color.softRed;
+            }
+            else
+            {
+                timeshower.color = Color.black;
+            }
         }
     }
 

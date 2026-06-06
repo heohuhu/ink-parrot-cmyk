@@ -2,6 +2,7 @@ using NUnit.Framework;
 //using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     public void ReturnStartMenu()
     {
+        if(gameendCoroutine != null)
+            StopCoroutine(gameendCoroutine);
         AudioManager.Instance.ResumeALLBGM();
         SceneController.Instance.LoadSceneAdditiveAsActive("StartMenu");
         SceneController.Instance.UnloadScene("Game");
@@ -141,6 +144,10 @@ public class GameManager : MonoBehaviour
 
     public int GetCurrentScore()
     {
+        if (SettingManager.Instance.setting.debuger.isAnswerProcessing)
+        {
+            return Constants.TemplateSize * 3;
+        }
         int [] C = new int[Constants.TemplateSize], M = new int[Constants.TemplateSize], Y = new int[Constants.TemplateSize];
 
         for(int i = 0; i < Constants.TemplateSize; i++)
@@ -178,6 +185,7 @@ public class GameManager : MonoBehaviour
     }
 
     //진짜 게임 엔드 처리
+    Coroutine gameendCoroutine;
     public void GameEndNext()
     {
         if(!this.isGameEnd)
@@ -192,23 +200,34 @@ public class GameManager : MonoBehaviour
             return;
         }else
             targetParent_Object.SetActive(true);
+        Ranking_Update(ScoreManager.Instance.score);
+    }
 
+    public void StartCompletedParrotsShow()
+    {
+        gameendCoroutine = StartCoroutine(CompletedParrotsShow());
+    }
+
+    private IEnumerator CompletedParrotsShow()
+    {
         List<List<int>> parrotData = AnswerSheet.Instance.GetAllCorrectedParrotData();
         AnswerParrots = new List<GameObject>();
 
-        for(int i = 0; i < parrotData.Count; i++)
+        for(int i = parrotData.Count - 1; i >= 0; i--)
         {
             GameObject newObject = Instantiate(GameEndParrotTemplate, targetParent);
             ParrotTemplateContent code = newObject.GetComponent<ParrotTemplateContent>();
             code.SetUp(parrotData[i]);
             newObject.SetActive(true);
+            AudioManager.Instance.PlaySFX("휙");
+            yield return new WaitForSeconds(0.1f);
         }
-
-        Ranking_Update(ScoreManager.Instance.score);
     }
 
     public void ReStartGame()
     {
+        if(gameendCoroutine != null)
+            StopCoroutine(gameendCoroutine);
         AudioManager.Instance.PlayBGMPlaylist(
         new List<string>()
         {
@@ -247,6 +266,10 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GameUiManager.Instance.RankingPanelOn());
             GameUiManager.Instance.RankingShow(this.Ranking);
             DataManager.Instance.saveJson<List<Ranking_Type>>("ranking.json", Ranking);
+        }
+        else
+        {
+            StartCompletedParrotsShow();
         }
     }
 }

@@ -9,6 +9,7 @@ public class GameUiManager : MonoBehaviour
     public static GameUiManager Instance;
     public GameObject PauseMenu;
     public GameObject ReturnMenu;
+    public GameObject RealReturnMenu;
     private bool isWindowOpened = false;
 
     private void Awake()
@@ -41,8 +42,19 @@ public class GameUiManager : MonoBehaviour
 
     public void ReturnMenuClose()
     {
+        RealReturnMenu.SetActive(false);
         ReturnMenu.SetActive(false);
         isWindowOpened = false;
+    }
+
+    public void ReturnButtonClicked()
+    {
+        if(ScoreManager.Instance.score > 0)
+        {
+            ReturnMenu.SetActive(false);
+            RealReturnMenu.SetActive(true);
+        }else
+            GameManager.Instance.ReturnStartMenu();
     }
 
 
@@ -125,6 +137,7 @@ public class GameUiManager : MonoBehaviour
         if (isEndNext)
         {
             RankingPanel.SetActive(false);
+            GameManager.Instance.StartCompletedParrotsShow();
         }
     }
 

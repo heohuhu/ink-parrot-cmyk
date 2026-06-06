@@ -16,8 +16,8 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     Vector3 base_position; //초기 위치 기억
     Vector3 base_size;
     //앵무새 템플릿 부위별로
-    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
-    int [] base_orderlayer = {5, 7, 6, 0, 1, 3, 2};
+    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize + 1]; //마지막 인덱스는 윤곽선
+    int [] base_orderlayer = {5, 7, 6, 0, 1, 3, 2, 8};
 
     //0이면 싹 다 짜낸 상태
     //1 이상이면 짜내지 않은 상태
@@ -52,7 +52,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
 
     public void SetBodyTemplatesOrderLayer(int N)
     {
-        for(int i = 0; i < Constants.TemplateSize; i++)
+        for(int i = 0; i < Constants.TemplateSize + 1; i++)
         {
             if(N == -1)
                 BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = base_orderlayer[i];
@@ -71,7 +71,7 @@ public class ParrotTemplate: MonoBehaviour, InputInterface
     {
         SetBodyTemplatesOrderLayer(10);
         yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 0), 0.27f));
-        yield return StartCoroutine(ScalingCoroutine(new Vector3(5, 5, 1), 0.17f));
+        yield return StartCoroutine(ScalingCoroutine(new Vector3(-2, 2, 1), 0.17f));
         GameManager.Instance.processing = 0;
     }
 
