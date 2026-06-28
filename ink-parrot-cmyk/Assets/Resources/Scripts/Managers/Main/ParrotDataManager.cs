@@ -114,6 +114,9 @@ public class ParrotDataManager : MonoBehaviour
     {
         List<int> tmp = new List<int>();
 
+        if(getParrotCount() <= index)
+            return tmp;
+
         for(int i = 0; i < Constants.TemplateSize; i++)
         {
             tmp.Add((int)ParrotSheet[index].bodyTemplates[i].x);

@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 public class CollectionManager : MonoBehaviour
 {
     static public CollectionManager Instance;
     private const int UnitPerPage = 3;
-
+    private int[] templateToIndex = {3, 0, 1, 2, 6, 4, 5};
 
     public GIFShower collectionGIF;
     private int ParrotsSize;
@@ -164,7 +165,30 @@ public class CollectionManager : MonoBehaviour
 
     public void ImageChange(GameObject target, int target_index) //이건 앵무새 이미지 에셋 잘 적용한 뒤에 하는걸로
     {
-        
+        Image [] images = target.GetComponentsInChildren<Image>();
+
+        int index = 0;
+        if(current_page == 0) //사전 등록 앵무새
+            index = page[0] * UnitPerPage + target_index;
+        else if(current_page == 1) //커스텀 앵무새
+            index = Constants.BasicParrotsSize + page[1] * UnitPerPage + target_index;
+
+        List<int> bodytemplates = ParrotDataManager.Instance.GetParrotBodyDataIntoInt(index);
+        if(bodytemplates.Count == 0)
+            target.SetActive(false);
+        else{
+            for(int i = 0; i < Constants.TemplateSize; i++)
+            {
+                Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Cyan]);
+                Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Magenta]);
+                Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Yellow]);
+
+                // 색깔 조합
+                Color result = Utility.CombineColor(C, M, Y);
+                images[i + 1].color = result;
+            }
+            target.SetActive(true);
+        }
     }
 
     public void pageSelect(int n)
