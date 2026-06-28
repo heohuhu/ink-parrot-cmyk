@@ -483,6 +483,9 @@ MonoBehaviour:
     graphicOption:
       ColorWeakness: 0
       ColorStrength: 100
+    debuger:
+      isDebuging: 0
+      isAnswerProcessing: 0
 --- !u!4 &600517353
 Transform:
   m_ObjectHideFlags: 0
@@ -916,7 +919,7 @@ MonoBehaviour:
     loop: 0
   - key: "\uCEEC\uB809\uC158\uD398\uC774\uC9C0\uBCC0\uACBD"
     type: 2
-    clip: {fileID: 8300000, guid: 2254c7ff45b09a943840846138629d3d, type: 3}
+    clip: {fileID: 8300000, guid: 9e2beed562f37054a8fd99ef6299435b, type: 3}
     defaultVolume: 1
     loop: 0
   - key: "\uCEE4\uC2A4\uD140\uBC31\uADF8\uB77C\uC6B4\uB4DC"
@@ -952,6 +955,11 @@ MonoBehaviour:
   - key: "\uD719"
     type: 0
     clip: {fileID: 8300000, guid: 630a2a42f7644534fb15f02b9eb6e6d9, type: 3}
+    defaultVolume: 1
+    loop: 0
+  - key: "15\uCD08"
+    type: 1
+    clip: {fileID: 8300000, guid: 79bf5ebc1bf27d94eb2cf9e3aacaf1d8, type: 3}
     defaultVolume: 1
     loop: 0
   bgmSource: {fileID: 1330180499}
