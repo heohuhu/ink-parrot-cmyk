@@ -20,6 +20,7 @@ public class PauseMenuManager : MonoBehaviour
         ResumePanel.SetActive(false);
         MenuPanel.SetActive(true);
         ResumeCountdownPanel.SetActive(false);
+        GameManager.Instance.StopTime();
     }
 
     public void OpenTutorial()
@@ -40,7 +41,6 @@ public class PauseMenuManager : MonoBehaviour
         ResumePanel.SetActive(true);
         TutorialPanel.SetActive(false);
         MenuPanel.SetActive(false);
-        GameManager.Instance.StopTime();
     }
     
     public void ResumeUIUnload() 

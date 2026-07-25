@@ -10,9 +10,9 @@ public class ParrotTemplateContent : MonoBehaviour
     {
         for(int i = 0; i < Constants.TemplateSize; i++)
         {
-            ColorData[i, 0] = bodyTemplate[i * 3];
-            ColorData[i, 1] = bodyTemplate[i * 3 + 1];
-            ColorData[i, 2] = bodyTemplate[i * 3 + 2];
+            ColorData[i, (int)Constants.ColorType.Cyan] = bodyTemplate[i * 3 + (int)Constants.ColorType.Cyan];
+            ColorData[i, (int)Constants.ColorType.Magenta] = bodyTemplate[i * 3 + (int)Constants.ColorType.Magenta];
+            ColorData[i, (int)Constants.ColorType.Yellow] = bodyTemplate[i * 3 + (int)Constants.ColorType.Yellow];
         }
 
         ShowSampleImage();

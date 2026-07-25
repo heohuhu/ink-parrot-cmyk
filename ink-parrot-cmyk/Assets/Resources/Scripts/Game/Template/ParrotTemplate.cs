@@ -1,134 +1,233 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ParrotTemplate: MonoBehaviour, InputInterface
+public class ParrotTemplate : MonoBehaviour
 {
-    public static ParrotTemplate Instances;
-    
-    void Awake()
+    public static ParrotTemplate Instance;
+
+    private void Awake()
     {
-        Instances = this;
+        Instance = this;
     }
 
-    public int CMYK;
-    Vector3 base_position; //초기 위치 기억
-    Vector3 base_size;
-    //앵무새 템플릿 부위별로
-    public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize + 1]; //마지막 인덱스는 윤곽선
-    int [] base_orderlayer = {5, 7, 6, 0, 1, 3, 2, 8};
+    //==================================================
+    // 선택 애니메이션 설정
+    //==================================================
 
-    //0이면 싹 다 짜낸 상태
-    //1 이상이면 짜내지 않은 상태
+    // 선택 시 이동할 위치(SelectedArea 기준)
+    public static readonly Vector2 SelectedPosition = Vector2.zero;
+
+    // 선택 시 확대 배율
+    public static readonly Vector3 SelectedScale = new Vector3(2f, 2f, 1f);
+
+    public const float MoveDuration = 0.27f;
+    public const float ScaleDuration = 0.17f;
+
+    //==================================================
+
+    public int CMYK;
+
+    private RectTransform rectTransform;
+
+    // 선택 시 이동할 부모(Inspector에서 지정)
+    [Header("선택 시 이동할 부모")]
+    [SerializeField] private RectTransform selectedArea;
+
+    // 원래 부모
+    private Transform originalParent;
+
+    // 원래 위치와 크기
+    private Vector2 basePosition;
+    private Vector3 baseScale;
+
+    // 마지막 인덱스는 윤곽선
+    public GameObject[] BodyTemplates = new GameObject[Constants.TemplateSize + 1];
+
+    // 원래의 형제 순서 저장
+    private int[] baseSiblingIndex = new int[Constants.TemplateSize + 1];
+
+    // 0이면 잉크 없음
+    // 1 이상이면 잉크 있음
     public int[] BodyTemplatesInk = new int[Constants.TemplateSize];
 
-    void Start()
+    private void Start()
     {
-        for(int i = 0; i < Constants.TemplateSize; i++){
+        rectTransform = GetComponent<RectTransform>();
+
+        originalParent = transform.parent;
+
+        basePosition = rectTransform.anchoredPosition;
+        baseScale = rectTransform.localScale;
+
+        for (int i = 0; i < Constants.TemplateSize; i++)
+        {
             BodyTemplatesInk[i] = 3;
             DrawColor(i);
         }
-        base_position = this.transform.position;
-        base_size = this.transform.localScale;
-        SetBodyTemplatesOrderLayer(-1);
+
+        SaveSiblingOrder();
     }
 
     public void Init()
     {
-        for(int i = 0; i < Constants.TemplateSize; i++){
+        for (int i = 0; i < Constants.TemplateSize; i++)
+        {
             BodyTemplatesInk[i] = 3;
             DrawColor(i);
         }
-        SetBodyTemplatesOrderLayer(-1);
+
+        RestoreSiblingOrder();
     }
 
     public void Resetting(int template)
     {
         BodyTemplatesInk[template] = 3;
         DrawColor(template);
+
         GameUiManager.Instance.SetLightManagingSlider(template);
     }
 
-    public void SetBodyTemplatesOrderLayer(int N)
+    /// <summary>
+    /// 처음 형제 순서를 저장
+    /// </summary>
+    private void SaveSiblingOrder()
     {
-        for(int i = 0; i < Constants.TemplateSize + 1; i++)
+        for (int i = 0; i < BodyTemplates.Length; i++)
         {
-            if(N == -1)
-                BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = base_orderlayer[i];
-            else
-                BodyTemplates[i].GetComponent<SpriteRenderer>().sortingOrder = N + base_orderlayer[i];
+            baseSiblingIndex[i] =
+                BodyTemplates[i].transform.GetSiblingIndex();
         }
     }
+
+    /// <summary>
+    /// 선택 시 가장 앞으로 이동
+    /// </summary>
+    private void BringToFront()
+    {
+        foreach (GameObject obj in BodyTemplates)
+        {
+            obj.transform.SetAsLastSibling();
+        }
+    }
+
+    /// <summary>
+    /// 원래 순서 복원
+    /// </summary>
+    private void RestoreSiblingOrder()
+    {
+        for (int i = 0; i < BodyTemplates.Length; i++)
+        {
+            BodyTemplates[i].transform.SetSiblingIndex(baseSiblingIndex[i]);
+        }
+    }
+
     public void DrawColor(int template)
     {
-        SpriteRenderer spr = BodyTemplates[template].GetComponent<SpriteRenderer>();
-        
-        spr.color = Constants.Instance.GetColor((Constants.ColorType)CMYK ,this.BodyTemplatesInk[template]);
+        Image image = BodyTemplates[template].GetComponent<Image>();
+
+        image.color = Constants.Instance.GetColor(
+            (Constants.ColorType)CMYK,
+            BodyTemplatesInk[template]);
     }
 
     public IEnumerator ObjectSelected()
     {
-        SetBodyTemplatesOrderLayer(10);
-        yield return StartCoroutine(MoveCoroutine(new Vector3(3, 3, 0), 0.27f));
-        yield return StartCoroutine(ScalingCoroutine(new Vector3(-2, 2, 1), 0.17f));
+        BringToFront();
+
+        // 선택 전 부모 저장
+        originalParent = transform.parent;
+
+        // SelectedArea로 이동
+        transform.SetParent(selectedArea, false);
+
+        // 중앙 정렬
+        rectTransform.anchoredPosition = basePosition;
+
+        yield return MoveCoroutine(
+            SelectedPosition,
+            MoveDuration);
+
+        yield return ScalingCoroutine(
+            SelectedScale,
+            ScaleDuration);
+
         GameManager.Instance.processing = 0;
     }
 
     public IEnumerator ObjectUnSelected()
     {
-        yield return StartCoroutine(MoveCoroutine(base_position, 0.2f));
-        yield return StartCoroutine(ScalingCoroutine(base_size, 0.1f));
-        SetBodyTemplatesOrderLayer(-1);
+        yield return MoveCoroutine(
+            basePosition,
+            0.2f);
+
+        yield return ScalingCoroutine(
+            baseScale,
+            0.1f);
+
+        // 원래 부모로 복귀
+        transform.SetParent(originalParent, false);
+
+        // 원래 위치 복원
+        rectTransform.anchoredPosition = basePosition;
+
+        RestoreSiblingOrder();
+
         GameManager.Instance.selectedColor = -1;
         GameManager.Instance.processing = 0;
     }
 
-    private IEnumerator MoveCoroutine(Vector3 targetPosition, float duration)
+    private IEnumerator MoveCoroutine(Vector2 targetPosition, float duration)
     {
-        Vector3 startPosition = transform.position;
-        float elapsedTime = 0f;
+        Vector2 start = rectTransform.anchoredPosition;
 
-        while (elapsedTime < duration)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            elapsedTime += GameManager.GetdeltaTime;
-            float t = elapsedTime / duration;
+            elapsed += GameManager.GetdeltaTime;
 
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            float t = elapsed / duration;
+
+            rectTransform.anchoredPosition =
+                Vector2.Lerp(start, targetPosition, t);
+
             yield return null;
         }
 
-        // 오차 방지용 보정
-        transform.position = targetPosition;
+        rectTransform.anchoredPosition = targetPosition;
     }
 
-    private IEnumerator ScalingCoroutine(Vector3 targetSize, float duration)
+    private IEnumerator ScalingCoroutine(Vector3 targetScale, float duration)
     {
-        Vector3 startSize = transform.localScale;
-        float elapsedTime = 0f;
+        Vector3 start = rectTransform.localScale;
 
-        while (elapsedTime < duration)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            elapsedTime += GameManager.GetdeltaTime;
-            float t = elapsedTime / duration;
+            elapsed += GameManager.GetdeltaTime;
 
-            transform.localScale = Vector3.Lerp(startSize, targetSize, t);
+            float t = elapsed / duration;
+
+            rectTransform.localScale =
+                Vector3.Lerp(start, targetScale, t);
+
             yield return null;
         }
 
-        // 오차 방지용 보정
-        transform.localScale = targetSize;
+        rectTransform.localScale = targetScale;
     }
 
-    public void OnTouch() //터치 입력
+    public void OnTouch()
     {
         Debug.Log("터치 감지");
-        GameManager.Instance.InputDetected(this.CMYK);
+        GameManager.Instance.InputDetected(CMYK);
     }
 
     public void TemplateExtracted(int template)
     {
-        this.BodyTemplatesInk[template] = 0;
+        BodyTemplatesInk[template] = 0;
         DrawColor(template);
     }
 }

@@ -91,8 +91,8 @@ public class AnswerSheet : MonoBehaviour
         {
             int score = GameManager.Instance.GetCurrentScore();
 
-            if(score == Constants.TemplateSize * 3){ // 모든 부위가 정답일 경우
-                ScoreManager.Instance.GetScore(this.GetAnswerScore());
+            if(score == Constants.TemplateSize){ // 모든 부위가 정답일 경우
+                ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
                 this.CorrectAnswer();
             }
             this.GiveProblem();
@@ -147,20 +147,22 @@ public class AnswerSheet : MonoBehaviour
 
         for(int i = 0; i < Constants.TemplateSize; i++)
         {
-            if(Answer.C[i] == C[i])
-                result++;
-            if(Answer.M[i] == M[i])
-                result++;
-            if(Answer.Y[i] == Y[i])
+            if(Answer.C[i] == C[i] && Answer.M[i] == M[i] && Answer.Y[i] == Y[i])
                 result++;
         }
 
         return result;
     }
 
-    public int GetAnswerScore()
+    public int GetAnswerScore(int parts)
     {
-        return ParrotDataManager.Instance.ParrotSheet[this.Answer.answer].score;
+        int result = 0;
+        result += Constants.Instance.Difficulty_to_Score_Per_Part(ParrotDataManager.Instance.ParrotSheet[this.Answer.answer].difficulty) * parts;
+        
+        if(parts == Constants.TemplateSize)
+            result += Constants.Instance.Difficulty_to_Score_Complete(ParrotDataManager.Instance.ParrotSheet[this.Answer.answer].difficulty);
+
+        return result;
     }
 
     public void CorrectAnswer()

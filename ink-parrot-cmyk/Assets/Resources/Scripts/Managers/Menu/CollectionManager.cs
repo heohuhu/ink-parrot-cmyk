@@ -10,7 +10,7 @@ public class CollectionManager : MonoBehaviour
     private const int UnitPerPage = 3;
     private int[] templateToIndex = {3, 0, 1, 2, 6, 4, 5};
 
-    public GIFShower collectionGIF;
+    public PageGIFShower collectionGIF;
     private int ParrotsSize;
     private int [] page = new int[2];
     private int current_page; // 0이면 사전 설정된 앵무새 목록, 1이면 커스텀 앵무새 목록

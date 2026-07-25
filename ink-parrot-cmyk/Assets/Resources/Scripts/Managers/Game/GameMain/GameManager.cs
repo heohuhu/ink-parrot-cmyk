@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
     {
         if (SettingManager.Instance.setting.debuger.isAnswerProcessing)
         {
-            return Constants.TemplateSize * 3;
+            return Constants.TemplateSize;
         }
         int [] C = new int[Constants.TemplateSize], M = new int[Constants.TemplateSize], Y = new int[Constants.TemplateSize];
 
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
         List<List<int>> parrotData = AnswerSheet.Instance.GetAllCorrectedParrotData();
         AnswerParrots = new List<GameObject>();
 
-        for(int i = parrotData.Count - 1; i >= 0; i--)
+        for(int i = 0; i < parrotData.Count; i++)
         {
             GameObject newObject = Instantiate(GameEndParrotTemplate, targetParent);
             ParrotTemplateContent code = newObject.GetComponent<ParrotTemplateContent>();

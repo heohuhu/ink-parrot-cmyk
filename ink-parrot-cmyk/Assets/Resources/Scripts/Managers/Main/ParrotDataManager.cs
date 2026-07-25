@@ -58,9 +58,9 @@ public class ParrotDataManager : MonoBehaviour
             
             for(int t = 0; t < Constants.TemplateSize; t++)
             {
-                ParrotSheet[i - 1].bodyTemplates[t].x = int.Parse(data[i][t * 3 + 2]);
-                ParrotSheet[i - 1].bodyTemplates[t].y = int.Parse(data[i][t * 3 + 3]);
-                ParrotSheet[i - 1].bodyTemplates[t].z = int.Parse(data[i][t * 3 + 4]);
+                ParrotSheet[i - 1].bodyTemplates[t].x = int.Parse(data[i][t * 3 + 3]);
+                ParrotSheet[i - 1].bodyTemplates[t].y = int.Parse(data[i][t * 3 + 4]);
+                ParrotSheet[i - 1].bodyTemplates[t].z = int.Parse(data[i][t * 3 + 2]);
                 //Debug.Log($"Name : {ParrotSheet[i - 1].name}\nTemplate : {t}\nC : {ParrotSheet[i - 1].bodyTemplates[t].x}\nM : {ParrotSheet[i - 1].bodyTemplates[t].y}\nY : {ParrotSheet[i - 1].bodyTemplates[t].z}");
             }
 

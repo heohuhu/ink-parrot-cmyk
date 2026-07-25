@@ -67,6 +67,29 @@ public class Constants: MonoBehaviour
 
         return tmp;
     }
+
+    public int Difficulty_to_Score_Per_Part(string difficulty)
+    {
+        if(difficulty == "easy")
+            return 30;
+        else if(difficulty == "normal")
+            return 60;
+        else if(difficulty == "hard")
+            return 80;
+        else
+            return 0;
+    }
+    public int Difficulty_to_Score_Complete(string difficulty)
+    {
+        if(difficulty == "easy")
+            return 90;
+        else if(difficulty == "normal")
+            return 80;
+        else if(difficulty == "hard")
+            return 140;
+        else
+            return 0;
+    }
 }
 
 public static class Utility
