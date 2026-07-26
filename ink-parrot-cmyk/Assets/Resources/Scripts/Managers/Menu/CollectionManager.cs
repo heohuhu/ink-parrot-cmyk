@@ -10,7 +10,7 @@ public class CollectionManager : MonoBehaviour
     private const int UnitPerPage = 3;
     private int[] templateToIndex = {3, 0, 1, 2, 6, 4, 5};
 
-    public PageGIFShower collectionGIF;
+    public GIFShower collectionGIF;
     private int ParrotsSize;
     private int [] page = new int[2];
     private int current_page; // 0이면 사전 설정된 앵무새 목록, 1이면 커스텀 앵무새 목록
@@ -148,13 +148,15 @@ public class CollectionManager : MonoBehaviour
         string text;
         int index = 0;
         
-        if(current_page == 0) //사전 등록 앵무새
+        if(current_page == 0){ //사전 등록 앵무새 
             index = page[0] * UnitPerPage + target_index;
-        else if(current_page == 1) //커스텀 앵무새
+            tmpro.horizontalAlignment = HorizontalAlignmentOptions.Left;
+        }else if(current_page == 1){ //커스텀 앵무새
             index = Constants.BasicParrotsSize + page[1] * UnitPerPage + target_index;
-        
+            tmpro.horizontalAlignment = HorizontalAlignmentOptions.Right;
+        }
         text = ParrotDataManager.Instance.getParrotName(index);
-
+        Debug.Log(tmpro.alignment);
         if(text == null)
             target.SetActive(false);
         else {

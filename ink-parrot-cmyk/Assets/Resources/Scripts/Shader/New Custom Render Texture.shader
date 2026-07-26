@@ -28,7 +28,8 @@ Shader "CustomRenderTexture/New Custom Render Texture"
                 float2 uv = IN.localTexcoord.xy;
                 float4 color = tex2D(_MainTex, uv) * _Color;
 
-                //clip(color.a - 0.001);
+                
+
                 return color;
             }
             ENDCG
