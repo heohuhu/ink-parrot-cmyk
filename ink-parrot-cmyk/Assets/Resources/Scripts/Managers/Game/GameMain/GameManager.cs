@@ -168,6 +168,8 @@ public class GameManager : MonoBehaviour
             StartCoroutine(AnswerSubmitProcess());
         }else if(AnswerSheet.Instance.Answer.answerType == 1)
         {
+            if(processing == 1)
+                return;
             AnswerSheet.Instance.AnswerSubmit();
             parrots[0].Init();
             parrots[1].Init();
