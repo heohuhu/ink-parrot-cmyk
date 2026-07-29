@@ -102,20 +102,20 @@ public class GIFShower : MonoBehaviour
             if(RemainDelay <= 0)
             {
                 if(PlayReverse == false){
-                    if(CurrentIndex == (EndingFrameIndex == -1 ? GifSize - 1 : EndingFrameIndex)){ //종료 조건 달성
+                    if(CurrentIndex == (EndingFrameIndex == -1 ? GifSize - 1 : EndingFrameIndex) && AlwaysPlay == false){ //종료 조건 달성
                         isPlaying = false;
                         CurrentIndex = BaseFrameIndex;
                         ChangeImage(CurrentIndex);
-                        return;
+                        return ;
                     }
                 }
                 else
                 {
-                    if(CurrentIndex == (StartingFrameIndex == -1 ? GifSize - 1 : StartingFrameIndex)){ //종료 조건 달성
+                    if(CurrentIndex == (StartingFrameIndex == -1 ? GifSize - 1 : StartingFrameIndex) && AlwaysPlay == false){ //종료 조건 달성
                         isPlaying = false;
                         CurrentIndex = BaseFrameIndex;
                         ChangeImage(CurrentIndex);
-                        return;
+                        return ;
                     }
                 }
 
@@ -147,6 +147,7 @@ public class GIFShower : MonoBehaviour
         }
         else
         {
+            Debug.Log("출력 시도");
             TargetImage.sprite = GifImages[index];
         }
     }

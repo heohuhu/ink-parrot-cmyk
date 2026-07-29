@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 62522163}
   - component: {fileID: 62522162}
   - component: {fileID: 62522161}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 72754445}
   - component: {fileID: 72754447}
   - component: {fileID: 72754446}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2294,7 +2294,7 @@ GameObject:
   - component: {fileID: 182117615}
   - component: {fileID: 182117614}
   - component: {fileID: 182117613}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2573,7 +2573,7 @@ GameObject:
   - component: {fileID: 207621207}
   - component: {fileID: 207621209}
   - component: {fileID: 207621208}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2724,7 +2724,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 241640523}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3894,7 +3894,7 @@ GameObject:
   - component: {fileID: 406913798}
   - component: {fileID: 406913800}
   - component: {fileID: 406913799}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Parrot_template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3934,9 +3934,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParrotTemplate
   CMYK: 0
-  selectedAreaTarget: {fileID: 0}
+  selectedAreaTarget: {fileID: 468600706}
   assembledAreaTarget: {fileID: 1101885992}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials:
+  - {fileID: 0}
+  - {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   BodyTemplates:
   - {fileID: 182117612}
   - {fileID: 1200726202}
@@ -4183,7 +4185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468600707}
   - component: {fileID: 468600708}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Target Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4199,7 +4201,7 @@ RectTransform:
   m_GameObject: {fileID: 468600706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: -1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1028671726}
@@ -4208,7 +4210,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 162, y: -18}
-  m_SizeDelta: {x: 756, y: 396}
+  m_SizeDelta: {x: 540, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &468600708
 CanvasRenderer:
@@ -5294,7 +5296,7 @@ GameObject:
   - component: {fileID: 525548693}
   - component: {fileID: 525548695}
   - component: {fileID: 525548694}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5332,7 +5334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5369,7 +5371,7 @@ GameObject:
   - component: {fileID: 534872668}
   - component: {fileID: 534872670}
   - component: {fileID: 534872669}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5407,7 +5409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.5346833, g: 0.78113204, b: 0.346351, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5581,7 +5583,7 @@ GameObject:
   - component: {fileID: 550788051}
   - component: {fileID: 550788053}
   - component: {fileID: 550788052}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Parrot_template (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5621,9 +5623,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParrotTemplate
   CMYK: 2
-  selectedAreaTarget: {fileID: 0}
+  selectedAreaTarget: {fileID: 468600706}
   assembledAreaTarget: {fileID: 1101885992}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials:
+  - {fileID: 0}
+  - {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   BodyTemplates:
   - {fileID: 1415880045}
   - {fileID: 742415287}
@@ -6416,7 +6420,7 @@ GameObject:
   - component: {fileID: 650177267}
   - component: {fileID: 650177269}
   - component: {fileID: 650177268}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6454,7 +6458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.83726966, b: 0.35283017, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -7051,7 +7055,7 @@ MonoBehaviour:
   CMYK: 0
   selectedAreaTarget: {fileID: 0}
   assembledAreaTarget: {fileID: 0}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials: []
   BodyTemplates:
   - {fileID: 439945920}
   - {fileID: 1848801558}
@@ -7896,7 +7900,7 @@ MonoBehaviour:
   CMYK: 1
   selectedAreaTarget: {fileID: 0}
   assembledAreaTarget: {fileID: 0}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials: []
   BodyTemplates:
   - {fileID: 1224358762}
   - {fileID: 1769391687}
@@ -8056,7 +8060,7 @@ GameObject:
   - component: {fileID: 742415288}
   - component: {fileID: 742415290}
   - component: {fileID: 742415289}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8094,7 +8098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.26412788, g: 0.554717, b: 0.024072563, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -8662,6 +8666,7 @@ GameObject:
   - component: {fileID: 799455170}
   - component: {fileID: 799455172}
   - component: {fileID: 799455171}
+  - component: {fileID: 799455173}
   m_Layer: 6
   m_Name: Parrots Shower
   m_TagString: Untagged
@@ -8684,10 +8689,10 @@ RectTransform:
   - {fileID: 981290785}
   m_Father: {fileID: 1512924791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 1080}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -121}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799455171
 MonoBehaviour:
@@ -8724,6 +8729,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799455169}
   m_CullTransparentMesh: 1
+--- !u!114 &799455173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799455169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 1
+  m_AspectRatio: 1
 --- !u!1 &802934657
 GameObject:
   m_ObjectHideFlags: 0
@@ -9852,7 +9871,7 @@ GameObject:
   - component: {fileID: 913821283}
   - component: {fileID: 913821285}
   - component: {fileID: 913821284}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9890,7 +9909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.88292587, g: 1, b: 0.51886785, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -9927,7 +9946,7 @@ GameObject:
   - component: {fileID: 915535718}
   - component: {fileID: 915535717}
   - component: {fileID: 915535716}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10331,7 +10350,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &960684692
 RectTransform:
@@ -11098,7 +11117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1028671726}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11489,7 +11508,7 @@ GameObject:
   - component: {fileID: 1098480994}
   - component: {fileID: 1098480996}
   - component: {fileID: 1098480995}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11527,7 +11546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.26412788, g: 0.554717, b: 0.024072563, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -11564,7 +11583,7 @@ GameObject:
   - component: {fileID: 1101885995}
   - component: {fileID: 1101885994}
   - component: {fileID: 1101885993}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Parrot_template (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11584,9 +11603,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParrotTemplate
   CMYK: 1
-  selectedAreaTarget: {fileID: 0}
+  selectedAreaTarget: {fileID: 468600706}
   assembledAreaTarget: {fileID: 1101885992}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials:
+  - {fileID: 0}
+  - {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   BodyTemplates:
   - {fileID: 1385815119}
   - {fileID: 1098480993}
@@ -11636,7 +11657,7 @@ GameObject:
   - component: {fileID: 1120956230}
   - component: {fileID: 1120956229}
   - component: {fileID: 1120956228}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11655,7 +11676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.5117658, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -11754,7 +11775,7 @@ GameObject:
   - component: {fileID: 1144665799}
   - component: {fileID: 1144665801}
   - component: {fileID: 1144665800}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11998,7 +12019,7 @@ GameObject:
   - component: {fileID: 1200726205}
   - component: {fileID: 1200726204}
   - component: {fileID: 1200726203}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12017,7 +12038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.26412788, g: 0.554717, b: 0.024072563, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -12545,7 +12566,7 @@ GameObject:
   - component: {fileID: 1265006414}
   - component: {fileID: 1265006416}
   - component: {fileID: 1265006415}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12583,7 +12604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.5346833, g: 0.78113204, b: 0.346351, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -12967,7 +12988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1318614848}
   - component: {fileID: 1318614850}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Parrots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13673,6 +13694,7 @@ MonoBehaviour:
   - {fileID: 550788050}
   selectedColor: -1
   processing: 0
+  isAssembling: 0
   isGameEnd: 0
   GameEndParrotTemplate: {fileID: 843941024}
   targetParent: {fileID: 1491825075}
@@ -13730,7 +13752,7 @@ GameObject:
   - component: {fileID: 1385815120}
   - component: {fileID: 1385815122}
   - component: {fileID: 1385815121}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13768,7 +13790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.7810926, g: 0.97735846, b: 0.58825916, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -13883,7 +13905,7 @@ GameObject:
   - component: {fileID: 1407105238}
   - component: {fileID: 1407105240}
   - component: {fileID: 1407105239}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14199,7 +14221,7 @@ GameObject:
   - component: {fileID: 1415880046}
   - component: {fileID: 1415880048}
   - component: {fileID: 1415880047}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14237,7 +14259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.7810926, g: 0.97735846, b: 0.58825916, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -14747,7 +14769,7 @@ GameObject:
   - component: {fileID: 1468113495}
   - component: {fileID: 1468113497}
   - component: {fileID: 1468113496}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14785,7 +14807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.83726966, b: 0.35283017, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -14822,7 +14844,7 @@ GameObject:
   - component: {fileID: 1479009788}
   - component: {fileID: 1479009787}
   - component: {fileID: 1479009786}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14970,7 +14992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1504363781}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15294,7 +15316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1543814221}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15567,7 +15589,7 @@ GameObject:
   - component: {fileID: 1570332402}
   - component: {fileID: 1570332404}
   - component: {fileID: 1570332403}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16134,7 +16156,7 @@ GameObject:
   - component: {fileID: 1624218865}
   - component: {fileID: 1624218867}
   - component: {fileID: 1624218866}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16172,7 +16194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.5117658, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -16346,7 +16368,7 @@ GameObject:
   - component: {fileID: 1643143228}
   - component: {fileID: 1643143230}
   - component: {fileID: 1643143229}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16384,7 +16406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -16710,7 +16732,7 @@ GameObject:
   - component: {fileID: 1691691649}
   - component: {fileID: 1691691648}
   - component: {fileID: 1691691647}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16729,7 +16751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 0.5346833, g: 0.78113204, b: 0.346351, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -16785,7 +16807,7 @@ GameObject:
   - component: {fileID: 1719581496}
   - component: {fileID: 1719581498}
   - component: {fileID: 1719581497}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16994,7 +17016,7 @@ GameObject:
   - component: {fileID: 1721077583}
   - component: {fileID: 1721077585}
   - component: {fileID: 1721077584}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17698,7 +17720,7 @@ MonoBehaviour:
   CMYK: 0
   selectedAreaTarget: {fileID: 0}
   assembledAreaTarget: {fileID: 0}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials: []
   BodyTemplates:
   - {fileID: 2001830520}
   - {fileID: 26810128}
@@ -17809,7 +17831,7 @@ GameObject:
   - component: {fileID: 1780165864}
   - component: {fileID: 1780165866}
   - component: {fileID: 1780165865}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18385,7 +18407,7 @@ GameObject:
   - component: {fileID: 1843204915}
   - component: {fileID: 1843204914}
   - component: {fileID: 1843204913}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18404,7 +18426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.83726966, b: 0.35283017, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -18754,7 +18776,7 @@ MonoBehaviour:
   CMYK: 2
   selectedAreaTarget: {fileID: 0}
   assembledAreaTarget: {fileID: 0}
-  selectedScale: {x: 0, y: 0, z: 0}
+  target_Materials: []
   BodyTemplates:
   - {fileID: 1437775367}
   - {fileID: 1278054092}
@@ -18909,7 +18931,7 @@ GameObject:
   - component: {fileID: 1863258016}
   - component: {fileID: 1863258018}
   - component: {fileID: 1863258017}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18984,7 +19006,7 @@ GameObject:
   - component: {fileID: 1867898822}
   - component: {fileID: 1867898821}
   - component: {fileID: 1867898820}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Wing2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19003,7 +19025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -19989,7 +20011,7 @@ GameObject:
   - component: {fileID: 1988744227}
   - component: {fileID: 1988744229}
   - component: {fileID: 1988744228}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Head3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20027,7 +20049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: db7d3d6359bc1e74dbfb694a237e5017, type: 2}
   m_Color: {r: 1, g: 0.5117658, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -20300,7 +20322,7 @@ GameObject:
   - component: {fileID: 2004174515}
   - component: {fileID: 2004174517}
   - component: {fileID: 2004174516}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Body1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

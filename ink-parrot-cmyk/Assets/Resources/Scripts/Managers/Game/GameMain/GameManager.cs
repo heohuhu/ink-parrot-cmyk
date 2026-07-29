@@ -162,17 +162,48 @@ public class GameManager : MonoBehaviour
     public void AnswerSubmit()
     {
         if(AnswerSheet.Instance.Answer.answerType == 0){
-            AnswerSheet.Instance.AnswerSubmit();
+            if(processing == 1)
+                return;
+            processing = 1;
+            StartCoroutine(AnswerSubmitProcess());
         }else if(AnswerSheet.Instance.Answer.answerType == 1)
         {
             AnswerSheet.Instance.AnswerSubmit();
+            parrots[0].Init();
+            parrots[1].Init();
+            parrots[2].Init();
+        }
+    }
+
+    public bool isAssembling = false;
+    private IEnumerator AnswerSubmitProcess()
+    {
+        isAssembling = true;
+        
+        for(int i = 0; i < 3; i++)
+        {
+            Timer.Instance.Pause();
+            parrots[i].ChangeMaterial(1);
+            yield return parrots[i].ObjectAssembled();
         }
 
+        AnswerSheet.Instance.AnswerSubmit();
+        yield return new WaitForSeconds(0.5f);
+        
+        for(int i = 0; i < 3; i++)
+        {
+            yield return parrots[i].ObjectPositionInit();
+        }
         parrots[0].Init();
         parrots[1].Init();
         parrots[2].Init();
+        parrots[0].ChangeMaterial(0);
+        parrots[1].ChangeMaterial(0);
+        parrots[2].ChangeMaterial(0);
+        Timer.Instance.Resume();
+        processing = 0;
+        isAssembling = false;
     }
-
 
     public bool isGameEnd = false;
     //시간 초과 발생

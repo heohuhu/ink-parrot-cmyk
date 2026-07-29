@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,9 @@ public class ParrotTemplate : MonoBehaviour
 
     [SerializeField] private GameObject selectedAreaTarget;
     [SerializeField] private GameObject assembledAreaTarget;
+
+    // 0이 가장 기본 material
+    [SerializeField] private List<Material> target_Materials = new List<Material>();
     private Vector2 selectedArea;
     private Vector2 assembledArea;
     private Vector3 selectedScale;
@@ -29,6 +33,7 @@ public class ParrotTemplate : MonoBehaviour
     // 원래 위치와 크기
     private Vector2 basePosition;
     private Vector3 baseScale;
+    private int baseSiblingIndex;
 
     // 마지막 인덱스는 윤곽선
     public GameObject[] BodyTemplates = new GameObject[Constants.TemplateSize + 1];
@@ -41,11 +46,15 @@ public class ParrotTemplate : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
 
-        basePosition = rectTransform.position;
+        basePosition = rectTransform.localPosition;
         baseScale = rectTransform.localScale;
-        selectedArea = selectedAreaTarget.GetComponent<RectTransform>().position;
+        baseSiblingIndex = rectTransform.GetSiblingIndex();
+        selectedArea = selectedAreaTarget.GetComponent<RectTransform>().localPosition;
         selectedScale = selectedAreaTarget.GetComponent<RectTransform>().localScale;
-        assembledArea = assembledAreaTarget.GetComponent<RectTransform>().position;
+        assembledArea = assembledAreaTarget.GetComponent<RectTransform>().localPosition;
+
+        ChangeMaterial(0);
+
         for (int i = 0; i < Constants.TemplateSize; i++)
         {
             BodyTemplatesInk[i] = 3;
@@ -81,6 +90,8 @@ public class ParrotTemplate : MonoBehaviour
 
     public IEnumerator ObjectSelected()
     {
+        ChangeSiblingLast(true);
+
         yield return MoveCoroutine(
             selectedArea,
             MoveDuration);
@@ -103,31 +114,53 @@ public class ParrotTemplate : MonoBehaviour
             0.1f);
 
         // 원래 위치 복원
-        rectTransform.position = basePosition;
+        rectTransform.localPosition = basePosition;
+
+        ChangeSiblingLast(false);
 
         GameManager.Instance.selectedColor = -1;
         GameManager.Instance.processing = 0;
     }
 
+    public IEnumerator ObjectAssembled()
+    {
+        yield return MoveCoroutine(
+            assembledArea,
+            0.2f);
+        
+        rectTransform.localPosition = assembledArea;
+    }
+
+    public IEnumerator ObjectPositionInit()
+    {
+        yield return MoveCoroutine(
+            basePosition,
+            0.2f);
+    }
+
     private IEnumerator MoveCoroutine(Vector2 targetPosition, float duration)
     {
-        Vector2 start = rectTransform.position;
+        Vector2 start = rectTransform.localPosition;
 
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
+            if(GameManager.Instance.isTimeStopped) {
+                yield return null;
+                continue;
+            }
             elapsed += GameManager.GetdeltaTime;
 
             float t = elapsed / duration;
 
-            rectTransform.anchoredPosition =
+            rectTransform.localPosition =
                 Vector2.Lerp(start, targetPosition, t);
 
             yield return null;
         }
 
-        rectTransform.position = targetPosition;
+        rectTransform.localPosition = targetPosition;
     }
 
     private IEnumerator ScalingCoroutine(Vector3 targetScale, float duration)
@@ -138,6 +171,10 @@ public class ParrotTemplate : MonoBehaviour
 
         while (elapsed < duration)
         {
+            if(GameManager.Instance.isTimeStopped) {
+                yield return null;
+                continue;
+            }
             elapsed += GameManager.GetdeltaTime;
 
             float t = elapsed / duration;
@@ -161,5 +198,22 @@ public class ParrotTemplate : MonoBehaviour
     {
         BodyTemplatesInk[template] = 0;
         DrawColor(template);
+    }
+
+    public void ChangeMaterial(int target_material_index)
+    {
+        for (int i = 0; i < Constants.TemplateSize; i++)
+        {
+            BodyTemplates[i].GetComponent<Image>().material = target_Materials[target_material_index];
+        }
+    }
+
+    //isLast 가 true면 가장 뒤로, isLast가 false면 원래 위치로
+    public void ChangeSiblingLast(bool isLast)
+    {
+        if(isLast)
+            GetComponent<RectTransform>().SetAsLastSibling();
+        else
+            GetComponent<RectTransform>().SetSiblingIndex(baseSiblingIndex);
     }
 }

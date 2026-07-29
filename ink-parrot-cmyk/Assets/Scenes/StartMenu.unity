@@ -2004,7 +2004,7 @@ GameObject:
   - component: {fileID: 337000409}
   - component: {fileID: 337000411}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Page Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &337000410
 CanvasRenderer:
@@ -2079,9 +2079,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 337000406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 029456ee195f9694e986a906ef169565, type: 3}
+  m_Script: {fileID: 11500000, guid: 79fac3f9ec5702f4db73a6ff62468b13, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GIFShower
+  m_EditorClassIdentifier: Assembly-CSharp::PageGIFShower
   GifImages:
   - {fileID: 7518847591770146933, guid: f2e71490827fb8a40a5fe472b9efb5b9, type: 3}
   - {fileID: 3961382398755292176, guid: 17298d391adb60f41a4535adbaf27116, type: 3}
