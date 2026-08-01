@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
             Ranking.Add(new Ranking_Type(-1, "null"));
             Ranking.Add(new Ranking_Type(-1, "null"));
         }
+
+        //GameUiManager.Instance.DisableEveryThing();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         
     }
     public bool isTimeStopped = false;
+    public bool isTutorial = false;
     public static float GetdeltaTime => Instance.isTimeStopped == true ? 0f : Time.deltaTime;
     public void StopTime()
     {

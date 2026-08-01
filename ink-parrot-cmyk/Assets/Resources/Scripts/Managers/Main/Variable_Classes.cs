@@ -12,6 +12,8 @@ public class Constants: MonoBehaviour
     }
 
     public const int TemplateSize = 7;
+    [SerializeField]
+    public int PlayTime = 20;
     public const int BasicParrotsSize = 24; // 기본 앵무새 수
     public enum ColorType { Magenta, Yellow, Cyan };
     public enum TemplateType { Head1, Head2, Head3, Body1, Body2, Wing1, Wing2 };

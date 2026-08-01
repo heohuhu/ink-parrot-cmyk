@@ -10,6 +10,7 @@ public class GameUiManager : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject ReturnMenu;
     public GameObject RealReturnMenu;
+    public GameObject ParrotsRenderImage;
     private bool isWindowOpened = false;
 
     private void Awake()
@@ -17,6 +18,18 @@ public class GameUiManager : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        
+    }
+
+    public void DisableEveryThing()
+    {
+        HighlightManager.Instance.RegisterFromParent(GameMainScene);
+        HighlightManager.Instance.AddException(ParrotsRenderImage);
+        HighlightManager.Instance.DisableFromParent(GameMainScene);
+        HighlightManager.Instance.UpdateFromParent(GameMainScene);
+    }
     public void PauseMenuOpen()
     {
         if(isWindowOpened)
@@ -68,6 +81,7 @@ public class GameUiManager : MonoBehaviour
     public void UnSelectColor()
     {
         extractButton.SetActive(false);
+        refillButton.SetActive(false);
         lightManagingSlider.SetActive(false);
         SelectedPanel.SetActive(false);
         GamePanel.SetActive(true);

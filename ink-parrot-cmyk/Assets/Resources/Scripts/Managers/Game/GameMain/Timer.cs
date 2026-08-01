@@ -5,7 +5,6 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public static Timer Instance { get; set; }
-    public int BasicTime;
     private void Awake()
     {
         Instance = this;
@@ -16,7 +15,7 @@ public class Timer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        timer = new GameTimer(BasicTime);
+        timer = new GameTimer(Constants.Instance.PlayTime);
         timer.Start();
     }
 
@@ -33,7 +32,7 @@ public class Timer : MonoBehaviour
             timer.Tick();
             timeshower.text = "TIME\n" + timer.GetRestTime();
 
-            if(timer.GetRestTimeSeconds() <= 10f)
+            if(timer.GetRestTimeSeconds() <= 15f)
             {
                 timeshower.color = Color.softRed;
             }

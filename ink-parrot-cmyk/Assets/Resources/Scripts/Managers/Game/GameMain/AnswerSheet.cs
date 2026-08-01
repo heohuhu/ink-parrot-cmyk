@@ -94,6 +94,16 @@ public class AnswerSheet : MonoBehaviour
             if(score == Constants.TemplateSize){ // 모든 부위가 정답일 경우
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
                 this.CorrectAnswer();
+                AudioManager.Instance.PlaySFX("정답");
+            }
+            else if(score > 0)
+            {
+                ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
+                AudioManager.Instance.PlaySFX("부분정답");
+            }
+            else
+            {
+                AudioManager.Instance.PlaySFX("오답");
             }
             this.GiveProblem();
         }else if(Answer.answerType == 1)
@@ -101,11 +111,11 @@ public class AnswerSheet : MonoBehaviour
             switch (Answer.answer)
             {
                 case 0:
-                Timer.Instance.TimeModify(5f);
+                Timer.Instance.TimeModify(10f);
                 break;
 
                 case 1:
-                Timer.Instance.TimeModify(-5f);
+                Timer.Instance.TimeModify(-10f);
                 break;
             }
             this.GiveProblem();
@@ -212,9 +222,9 @@ public class AnswerType
 
         for(int i = 0; i < size; i++)
         {
-            C[i] = (int)answer[i].x;
-            M[i] = (int)answer[i].y;
-            Y[i] = (int)answer[i].z;
+            M[i] = (int)answer[i].x;
+            Y[i] = (int)answer[i].y;
+            C[i] = (int)answer[i].z;
         }
     }
 }

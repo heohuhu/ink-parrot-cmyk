@@ -89,6 +89,14 @@ public class ParrotDataManager : MonoBehaviour
         DataManager.Instance.saveJson<ParrotsCorrectedVariable>("parrots-corrected.json", parrots_collected_data);
     }
 
+    public bool isParrotCollected(int index)
+    {
+        if(index >= parrots_collected_data.have_corrected.Count)
+            return false;
+
+        return parrots_collected_data.have_corrected[index];
+    }
+
     public void NewCustomParrotAdd(ParrotInfo data)
     {
         ParrotsVariable custom_parrot_data = new ParrotsVariable();

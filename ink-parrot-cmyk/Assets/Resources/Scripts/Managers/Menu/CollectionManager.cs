@@ -15,6 +15,8 @@ public class CollectionManager : MonoBehaviour
     private int [] page = new int[2];
     private int current_page; // 0이면 사전 설정된 앵무새 목록, 1이면 커스텀 앵무새 목록
     public GameObject [] collection_showcase = new GameObject[UnitPerPage];
+    public GameObject [] collection_showcase_parrots = new GameObject[UnitPerPage];
+    public GameObject [] collection_showcase_locked = new GameObject[UnitPerPage];
     public GameObject [] page_select = new GameObject[2];
     public TextMeshProUGUI PageText;
     void Awake()
@@ -168,29 +170,39 @@ public class CollectionManager : MonoBehaviour
 
     public void ImageChange(GameObject target, int target_index) //이건 앵무새 이미지 에셋 잘 적용한 뒤에 하는걸로
     {
-        Image [] images = target.GetComponentsInChildren<Image>();
-
         int index = 0;
         if(current_page == 0) //사전 등록 앵무새
             index = page[0] * UnitPerPage + target_index;
         else if(current_page == 1) //커스텀 앵무새
             index = Constants.BasicParrotsSize + page[1] * UnitPerPage + target_index;
 
-        List<int> bodytemplates = ParrotDataManager.Instance.GetParrotBodyDataIntoInt(index);
-        if(bodytemplates.Count == 0)
-            target.SetActive(false);
-        else{
-            for(int i = 0; i < Constants.TemplateSize; i++)
-            {
-                Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Cyan]);
-                Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Magenta]);
-                Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Yellow]);
+        if(ParrotDataManager.Instance.isParrotCollected(index) == false)
+        {
+            collection_showcase_locked[target_index].SetActive(true);
+            collection_showcase_parrots[target_index].SetActive(false);
+        }
+        else
+        {
+            collection_showcase_locked[target_index].SetActive(false);
+            collection_showcase_parrots[target_index].SetActive(true);
 
-                // 색깔 조합
-                Color result = Utility.CombineColor(C, M, Y);
-                images[i + 1].color = result;
+            Image [] images = collection_showcase_parrots[target_index].GetComponentsInChildren<Image>();
+            List<int> bodytemplates = ParrotDataManager.Instance.GetParrotBodyDataIntoInt(index);
+            if(bodytemplates.Count == 0)
+                target.SetActive(false);
+            else{
+                for(int i = 0; i < Constants.TemplateSize; i++)
+                {
+                    Color C = Constants.Instance.GetColor(Constants.ColorType.Cyan, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Cyan]);
+                    Color M = Constants.Instance.GetColor(Constants.ColorType.Magenta, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Magenta]);
+                    Color Y = Constants.Instance.GetColor(Constants.ColorType.Yellow, bodytemplates[templateToIndex[i] * 3 + (int)Constants.ColorType.Yellow]);
+
+                    // 색깔 조합
+                    Color result = Utility.CombineColor(C, M, Y);
+                    images[i].color = result;
+                }
+                target.SetActive(true);
             }
-            target.SetActive(true);
         }
     }
 
