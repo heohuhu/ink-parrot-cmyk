@@ -8,20 +8,23 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        timer = new GameTimer(Constants.Instance.PlayTime);
     }
     GameTimer timer;
     public TextMeshProUGUI timeshower;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void TimerStart()
     {
-        timer = new GameTimer(Constants.Instance.PlayTime);
+        timeshower.text = "TIME\n00:00";
         timer.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(timer.isPaused || !timer.isRunning)
+            return;
         if (timer.IsFinished())
         {
             timeshower.text = "TIME\n" + timer.GetRestTime();
@@ -67,8 +70,8 @@ public class GameTimer
 {
     private float totalTime;     
     private float elapsedTime;   
-    private bool isRunning;
-    private bool isPaused;
+    public bool isRunning;
+    public bool isPaused;
 
     private float maxTotalTime;   // 추가: 최대 시간
 

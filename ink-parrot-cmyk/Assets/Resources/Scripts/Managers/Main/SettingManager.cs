@@ -109,5 +109,6 @@ namespace Settings{
     {
         public bool isDebuging = false;
         public bool isAnswerProcessing = false;
+        public bool isTutorial = false;
     }
 }

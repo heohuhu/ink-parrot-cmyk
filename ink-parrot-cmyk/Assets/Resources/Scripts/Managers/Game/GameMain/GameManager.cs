@@ -29,7 +29,12 @@ public class GameManager : MonoBehaviour
             Ranking.Add(new Ranking_Type(-1, "null"));
         }
 
-        //GameUiManager.Instance.DisableEveryThing();
+        Timer.Instance.TimerStart();
+
+        if (SettingManager.Instance.setting.debuger.isTutorial)
+        {
+            TutorialManager.Instance.TutorialStart();
+        }
     }
 
     // Update is called once per frame
