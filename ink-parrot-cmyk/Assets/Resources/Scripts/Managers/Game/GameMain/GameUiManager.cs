@@ -113,7 +113,8 @@ public class GameUiManager : MonoBehaviour
 
     public GameObject GameMainScene, GameEndScene;
     public GameObject GameOverPanel;
-    public GameObject GameEndScore, RankingPanel;
+    
+    public GameObject GameEndScore, RankingPanel, NewParrotPanel;
     public GameObject[] RankingText = new GameObject[3];
     private bool isEndNext = false;
     public IEnumerator GameEndProcess()
@@ -164,6 +165,25 @@ public class GameUiManager : MonoBehaviour
             GameEndScene.SetActive(true);
             GameManager.Instance.GameEndNext();
             GameEndScore.GetComponent<TextMeshProUGUI>().text = "스코어: " + ScoreManager.Instance.score.ToString() + "점";
+        }
+    }
+
+    public GameObject [] NewParrotEffect = new GameObject [2];
+    private Coroutine EffectMoveCoroutine = null;
+
+    public void NewParrotPanelOpen()
+    {
+        NewParrotPanel.SetActive(true);
+    }
+
+    private IEnumerator EffectMove()
+    {
+        while (true)
+        {
+            for(int i = 0; i < 2; i++)
+            {
+
+            }
         }
     }
 }

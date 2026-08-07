@@ -221,19 +221,24 @@ public class TutorialManager : MonoBehaviour
             "자, 이제 진짜 앵무새들을 만들러 떠나보자!"
         },
 
-        new List<string>() //36 종료
+        new List<string>() //36 MainGame Tutorial 종료
+        {
+            ""
+        },
+
+        new List<string>() // 37
+        {
+            "여기는 커스텀 앵무새를 제작할 수 있는 곳이야!",
+            "자신만의 색깔인 담긴 앵무새를 마음대로 제작할 수 있어.",
+            "다 만들면 이름도 지어줄 수 있다구!",
+            "게임 플레이하면서 낮은 확률로 등장하기도 해.",
+            "너의 창의력을 마음껏 발휘해봐"
+        },
+
+        new List<string>() //38 Custom Tutorial 종료
         {
             ""
         }
-
-        //new List<string>() //
-        //{
-        //    "여기는 커스텀 앵무새를 제작할 수 있는 곳이야!",
-        //    "자신만의 색깔인 담긴 앵무새를 마음대로 제작할 수 있어.",
-        //    "다 만들면 이름도 지어줄 수 있다구!",
-        //    "게임 플레이하면서 낮은 확률로 등장하기도 해.",
-        //    "너의 창의력을 마음껏 발휘해봐"
-        //}
     };
 
     void Awake()
@@ -241,16 +246,21 @@ public class TutorialManager : MonoBehaviour
         Instance = this;
     }
 
-    public void TutorialStart()
+    public void TutorialStart(int type) //0 : MainGame / 1 : Custom
     {
         TutorialUIManager.Instance.Init();
         //GameManager.Instance.StopTime();
         //GameUiManager.Instance.DisableEveryThing();
         //HighlightManager.Instance.AddException(TutorialUIManager.Instance.TutorialCanvas);
         
-
-        Dialogue_x = 0;
-        Dialogue_y = -1;
+        if(type == 0){
+            Dialogue_x = 0;
+            Dialogue_y = -1;
+        }else if(type == 1)
+        {
+            Dialogue_x = 37;
+            Dialogue_y = -1;
+        }
         is_event_fulfilled = true;
         current_question = "none";
 
@@ -418,13 +428,18 @@ public class TutorialManager : MonoBehaviour
                 current_question = "tmp";
                 GameManager.Instance.AnswerSubmit();
                 current_question = "none";
-                yield return new WaitForSeconds(2f);
             break;
 
             case "36-0":
                 SettingManager.Instance.setting.isTutorial = false;
                 SettingManager.Instance.SettingSave();
                 GameManager.Instance.ReturnStartMenu();
+            break;
+
+            case "38-0":
+                SettingManager.Instance.setting.isCustomTutorial = false;
+                SettingManager.Instance.SettingSave();
+                CustomManager.Instance.ReturnButtonClicked();
             break;
 
             default:

@@ -3,13 +3,21 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
+    static public MenuManager Instance;
     public GameObject menu_ui;
     public GameObject tutorial_ui;
     public GameObject setting_ui;
     public GameObject collection_ui;
+    public GameObject notification_panel;
+
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         
@@ -25,6 +33,11 @@ public class MenuManager : MonoBehaviour
 
     public void CustomStart()
     {
+        if (SettingManager.Instance.setting.isTutorial)
+        {
+            PrintNotification("먼저 메인 게임 튜토리얼을 완료해주세요.");
+            return;
+        }
         AudioManager.Instance.StopBGM();
         AudioManager.Instance.PlayBGMPlaylist(
         new List<string>()
@@ -69,5 +82,12 @@ public class MenuManager : MonoBehaviour
         setting_ui.SetActive(false);
         SettingManager.Instance.SettingSave();
         Debug.Log($"Master {SettingManager.Instance.setting.sound.Master}\nBGM {SettingManager.Instance.setting.sound.BGM}\nSFX {SettingManager.Instance.setting.sound.SFX}\nUI {SettingManager.Instance.setting.sound.UI}\nColorStrength {SettingManager.Instance.setting.graphicOption.ColorStrength}");
+    }
+
+    public void PrintNotification(string text)
+    {
+        notification_panel.SetActive(true);
+        notification_panel.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        notification_panel.GetComponent<FadeShower>().Play();
     }
 }

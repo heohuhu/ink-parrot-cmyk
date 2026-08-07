@@ -18,6 +18,11 @@ public class CustomManager : MonoBehaviour
     void Start()
     {
         Reset();
+
+        if (SettingManager.Instance.setting.isCustomTutorial)
+        {
+            TutorialManager.Instance.TutorialStart(1);
+        }
     }
 
     void Reset()

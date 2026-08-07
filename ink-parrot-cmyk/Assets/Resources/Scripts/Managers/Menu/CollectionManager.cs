@@ -18,7 +18,6 @@ public class CollectionManager : MonoBehaviour
     public GameObject [] collection_showcase_parrots = new GameObject[UnitPerPage];
     public GameObject [] collection_showcase_locked = new GameObject[UnitPerPage];
     public GameObject [] page_select = new GameObject[2];
-    public GameObject notification_panel;
     public TextMeshProUGUI PageText;
     void Awake()
     {
@@ -213,8 +212,7 @@ public class CollectionManager : MonoBehaviour
         {
             if(getTotalPage(n) == 0)
             {
-                notification_panel.SetActive(true);
-                notification_panel.GetComponent<FadeShower>().Play();
+                MenuManager.Instance.PrintNotification("아직 커스텀 앵무새가 없습니다.");
                 return;
             }
         }

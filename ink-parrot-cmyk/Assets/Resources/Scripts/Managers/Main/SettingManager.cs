@@ -63,6 +63,7 @@ public class SettingVariable
     public Settings.GraphicOption graphicOption = new Settings.GraphicOption();
     public Settings.Debuger debuger = new Settings.Debuger();
     public bool isTutorial = true;
+    public bool isCustomTutorial = true;
 }
 
 namespace Settings{
@@ -110,6 +111,5 @@ namespace Settings{
     {
         public bool isDebuging = false;
         public bool isAnswerProcessing = false;
-        public bool isTutorial = false;
     }
 }

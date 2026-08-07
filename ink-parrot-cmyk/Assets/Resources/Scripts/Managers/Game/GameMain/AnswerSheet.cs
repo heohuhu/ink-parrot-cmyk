@@ -29,6 +29,7 @@ public class AnswerSheet : MonoBehaviour
         int Size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
         is_corrected = new List<bool>();
         isTouched = false;
+        isNewParrotCollected = false;
 
         for(int i = 0; i < Size; i++)
             is_corrected.Add(false);
@@ -114,18 +115,21 @@ public class AnswerSheet : MonoBehaviour
             if(score == Constants.TemplateSize){ // 모든 부위가 정답일 경우
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
                 this.CorrectAnswer();
+                this.ShowItemImage(2);
                 AudioManager.Instance.PlaySFX("정답");
             }
             else if(score > 0)
             {
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
+                this.ShowItemImage(4);
                 AudioManager.Instance.PlaySFX("부분정답");
             }
             else
             {
+                this.ShowItemImage(3);
                 AudioManager.Instance.PlaySFX("오답");
             }
-            this.GiveProblem();
+            //this.GiveProblem();
         }else if(Answer.answerType == 1)
         {
             switch (Answer.answer)
@@ -196,10 +200,13 @@ public class AnswerSheet : MonoBehaviour
         return result;
     }
 
+    public bool isNewParrotCollected = false;
+
     public void CorrectAnswer()
     {
         Debug.Log($"Answer : {Answer.answer}");
-        ParrotDataManager.Instance.ParrotCollect(this.Answer.answer);
+        if(ParrotDataManager.Instance.ParrotCollect(this.Answer.answer))
+            isNewParrotCollected = true;
         is_corrected[this.Answer.answer] = true;
     }
 

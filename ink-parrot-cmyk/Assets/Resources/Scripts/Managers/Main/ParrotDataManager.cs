@@ -77,17 +77,18 @@ public class ParrotDataManager : MonoBehaviour
         }
     }
 
-    public void ParrotCollect(int index)
+    public bool ParrotCollect(int index)
     {
         if(index >= parrots_collected_data.have_corrected.Count)
-            return ;
+            return false;
 
         if(parrots_collected_data.have_corrected[index] == true)
-            return ;
+            return false;
 
         parrots_collected_data.have_corrected[index] = true;
         Debug.Log($"{this.ParrotSheet[index].name} 앵무새를 처음으로 완성했습니다!");
         DataManager.Instance.saveJson<ParrotsCorrectedVariable>("parrots-corrected.json", parrots_collected_data);
+        return true;
     }
 
     public bool isParrotCollected(int index)

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         if (SettingManager.Instance.setting.isTutorial)
         {
             isTutorial = true;
-            TutorialManager.Instance.TutorialStart();
+            TutorialManager.Instance.TutorialStart(0);
         }else
             Timer.Instance.TimerStart();
     }
@@ -373,6 +373,7 @@ public class GameManager : MonoBehaviour
             TutorialManager.Instance.NextDialogue();
         }else{
             Timer.Instance.Resume();
+            AnswerSheet.Instance.GiveProblem();
         }
         processing = 0;
         isAssembling = false;
