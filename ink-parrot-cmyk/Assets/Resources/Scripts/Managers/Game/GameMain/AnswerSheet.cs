@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using NUnit.Framework;
 public class AnswerSheet : MonoBehaviour
 {
     static public AnswerSheet Instance;
@@ -16,7 +17,7 @@ public class AnswerSheet : MonoBehaviour
     }
 
     public Sprite[] AnswerImages;
-    
+    public bool isTouched = false;
     public AnswerType Answer = new AnswerType();
 
     void Start()
@@ -27,6 +28,7 @@ public class AnswerSheet : MonoBehaviour
     {
         int Size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
         is_corrected = new List<bool>();
+        isTouched = false;
 
         for(int i = 0; i < Size; i++)
             is_corrected.Add(false);
@@ -35,6 +37,8 @@ public class AnswerSheet : MonoBehaviour
     //option이 1이면 항상 정답만 제시되도록 함
     public void GiveProblem(int option)
     {
+        isTouched = false;
+
         int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 7
         AudioManager.Instance.PlaySFX("문조지저귐");
 
@@ -47,6 +51,8 @@ public class AnswerSheet : MonoBehaviour
     }
     public void GiveProblem()
     {
+        isTouched = false;
+
         int randInt = Utility.GetRandomInt(0, 8); // 0 ~ 7
         AudioManager.Instance.PlaySFX("문조지저귐");
 
@@ -85,11 +91,25 @@ public class AnswerSheet : MonoBehaviour
         ShowAnswerImage(Answer.answer);
     }
 
+    public void MakeAnswer(int index)
+    {
+        Answer.SetAnswer(ParrotDataManager.Instance.ParrotSheet[index].bodyTemplates);
+        Answer.answer = index;
+        Answer.answerType = 0;
+
+        ShowAnswerImage(Answer.answer);
+    }
+
     public void AnswerSubmit()
     {
         if(Answer.answerType == 0)
         {
-            int score = GameManager.Instance.GetCurrentScore();
+            int score;
+
+            if(isTouched)
+                score = GameManager.Instance.GetCurrentScore();
+            else
+                score = 0;
 
             if(score == Constants.TemplateSize){ // 모든 부위가 정답일 경우
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
@@ -115,7 +135,8 @@ public class AnswerSheet : MonoBehaviour
                 break;
 
                 case 1:
-                Timer.Instance.TimeModify(-10f);
+                if(!isTouched)
+                    Timer.Instance.TimeModify(-10f);
                 break;
             }
             this.GiveProblem();

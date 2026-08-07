@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Data.Common;
 //using Unity.Android.Gradle.Manifest;
 public class ParrotDataManager : MonoBehaviour
 {
@@ -92,7 +93,7 @@ public class ParrotDataManager : MonoBehaviour
     public bool isParrotCollected(int index)
     {
         if(index >= parrots_collected_data.have_corrected.Count)
-            return false;
+            return true;
 
         return parrots_collected_data.have_corrected[index];
     }

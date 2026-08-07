@@ -62,6 +62,7 @@ public class SettingVariable
     public Settings.Sound sound = new Settings.Sound();
     public Settings.GraphicOption graphicOption = new Settings.GraphicOption();
     public Settings.Debuger debuger = new Settings.Debuger();
+    public bool isTutorial = true;
 }
 
 namespace Settings{

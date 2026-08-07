@@ -12,6 +12,8 @@ public class ParrotTemplate : MonoBehaviour
         Instance = this;
     }
 
+    private const float outline_size = 1.5f;
+
     public const float MoveDuration = 0.27f;
     public const float ScaleDuration = 0.17f;
 
@@ -57,6 +59,10 @@ public class ParrotTemplate : MonoBehaviour
 
         for (int i = 0; i < Constants.TemplateSize; i++)
         {
+            Outline outline = BodyTemplates[i].GetComponent<Outline>();
+            outline.effectDistance = new Vector2(outline_size, outline_size);
+            outline.enabled = false;
+
             BodyTemplatesInk[i] = 3;
             DrawColor(i);
         }
@@ -215,5 +221,19 @@ public class ParrotTemplate : MonoBehaviour
             GetComponent<RectTransform>().SetAsLastSibling();
         else
             GetComponent<RectTransform>().SetSiblingIndex(baseSiblingIndex);
+    }
+
+    public void TemplateSelected(int template)
+    {
+        Outline outline = BodyTemplates[template].GetComponent<Outline>();
+        outline.enabled = true;
+    }
+
+    public void TemplateUnselected()
+    {
+        for(int template = 0; template < Constants.TemplateSize; template++){
+            Outline outline = BodyTemplates[template].GetComponent<Outline>();
+            outline.enabled = false;
+        }
     }
 }

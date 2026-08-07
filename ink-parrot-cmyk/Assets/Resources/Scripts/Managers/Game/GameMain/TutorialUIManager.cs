@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
+using System;
 
 public class TutorialUIManager : MonoBehaviour
 {
@@ -9,7 +11,9 @@ public class TutorialUIManager : MonoBehaviour
     [SerializeField]
     public GameObject TutorialCanvas;
     [SerializeField]
-    public TextMeshProUGUI dialogueArea;
+    public GameObject dialogueArea;
+    [SerializeField]
+    public GameObject ButtonArea;
 
     void Awake()
     {
@@ -22,8 +26,22 @@ public class TutorialUIManager : MonoBehaviour
 
     }
 
-    public void PrintDialogue(string text)
+    public IEnumerator PrintDialogue(string text)
     {
-        dialogueArea.text = text;
+        if(text == "" || text == null)
+        {
+            TutorialCanvas.SetActive(false);
+            return null;
+        }
+        TutorialCanvas.SetActive(true);
+        TextMeshProUGUI tmpro = dialogueArea.GetComponentInChildren<TextMeshProUGUI>();
+        tmpro.text = text;
+        return null;
+    }
+
+    public void SetDialogueButton(bool isEnabled)
+    {
+        ButtonArea.GetComponent<Image>().raycastTarget = isEnabled;
+        ButtonArea.GetComponent<Button>().interactable = isEnabled;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,12 +30,12 @@ public class GameManager : MonoBehaviour
             Ranking.Add(new Ranking_Type(-1, "null"));
         }
 
-        Timer.Instance.TimerStart();
-
-        if (SettingManager.Instance.setting.debuger.isTutorial)
+        if (SettingManager.Instance.setting.isTutorial)
         {
+            isTutorial = true;
             TutorialManager.Instance.TutorialStart();
-        }
+        }else
+            Timer.Instance.TimerStart();
     }
 
     // Update is called once per frame
@@ -79,8 +80,23 @@ public class GameManager : MonoBehaviour
     public int processing = 0;
     public void SelectColor(int ColorType)
     {
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question.StartsWith("Color"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+
+                if(ColorType != target)
+                    return ;
+                TutorialManager.Instance.current_question = "none";
+                TutorialManager.Instance.is_event_fulfilled = true;
+                TutorialManager.Instance.NextDialogue();
+            }else
+                return ;
+        }
         if(processing == 1)
             return;
+        AnswerSheet.Instance.isTouched = true;
         processing = 1;
         selectedTemplate = -1;
         selectedColor = ColorType;
@@ -90,9 +106,17 @@ public class GameManager : MonoBehaviour
 
     public void unSelectColor()
     {
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question == "tmp")
+            {
+            }else
+                return ;
+        }
         if(processing == 1)
             return;
         processing = 1;
+        parrots[selectedColor].TemplateUnselected();
         StartCoroutine(parrots[selectedColor].ObjectUnSelected());
         GameUiManager.Instance.UnSelectColor();
         selectedColor = -1;
@@ -101,8 +125,30 @@ public class GameManager : MonoBehaviour
 
     public void SelectTemplate(int Template)
     {
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question.StartsWith("Template"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+                if(Template != target)
+                    return;
+
+                TutorialManager.Instance.current_question = "none";
+                TutorialManager.Instance.is_event_fulfilled = true;
+                TutorialManager.Instance.NextDialogue();
+            }else if(TutorialManager.Instance.current_question.StartsWith("Answer"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+
+                if(Template != target)
+                    return;
+            }else
+                return ;
+        }
         selectedTemplate = Template;
         squeezing = (this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] == 0 ? 0f : 100f);
+        parrots[selectedColor].TemplateUnselected();
+        parrots[selectedColor].TemplateSelected(selectedTemplate);
         GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
         GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
     }
@@ -119,6 +165,42 @@ public class GameManager : MonoBehaviour
     }
     public void SqueezedColor()
     {
+        if(selectedTemplate == -1)
+            return;
+
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question.StartsWith("색상조작"))
+            {
+                string[] temp = TutorialManager.Instance.current_question.Split("-");
+
+                temp[2] = "1";
+
+                TutorialManager.Instance.current_question = string.Join("-", temp);
+
+                if(TutorialManager.Instance.current_question == "색상조작-1-1"){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            } else if(TutorialManager.Instance.current_question.StartsWith("Template")) {}
+            else if(TutorialManager.Instance.current_question.StartsWith("Answer"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+                if(selectedTemplate != target)
+                    return;
+
+                int target_value = int.Parse(TutorialManager.Instance.current_question.Split("-")[2]);
+                
+                if(0 == target_value){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            }else
+                return;
+        }
+
         this.parrots[selectedColor].TemplateExtracted(selectedTemplate);
         GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
         GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
@@ -128,6 +210,38 @@ public class GameManager : MonoBehaviour
     {
         if(selectedTemplate == -1)
             return;
+
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question.StartsWith("색상조작"))
+            {
+                string[] temp = TutorialManager.Instance.current_question.Split("-");
+
+                temp[1] = "1";
+
+                TutorialManager.Instance.current_question = string.Join("-", temp);
+
+                if(TutorialManager.Instance.current_question == "색상조작-1-1"){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            }else if(TutorialManager.Instance.current_question.StartsWith("Answer"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+                if(selectedTemplate != target)
+                    return;
+
+                int target_value = int.Parse(TutorialManager.Instance.current_question.Split("-")[2]);
+                
+                if((int)num == target_value){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            }else
+                return;
+        }
         
         this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] = (int)num;
         this.parrots[selectedColor].DrawColor(selectedTemplate);
@@ -143,11 +257,46 @@ public class GameManager : MonoBehaviour
 
     public void RefillButtonClicked()
     {
-        if(selectedColor != -1 && selectedTemplate != -1){
-            this.parrots[selectedColor].Resetting(selectedTemplate);
-            GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
-            GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        if(selectedColor == -1 || selectedTemplate == -1)
+            return;
+
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question.StartsWith("색상조작"))
+            {
+                string[] temp = TutorialManager.Instance.current_question.Split("-");
+
+                temp[2] = "1";
+
+                TutorialManager.Instance.current_question = string.Join("-", temp);
+
+                if(TutorialManager.Instance.current_question == "색상조작-1-1"){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            }
+            else if(TutorialManager.Instance.current_question.StartsWith("Answer"))
+            {
+                int target = int.Parse(TutorialManager.Instance.current_question.Split("-")[1]);
+                if(selectedTemplate != target)
+                    return;
+
+                int target_value = int.Parse(TutorialManager.Instance.current_question.Split("-")[2]);
+                
+                if(3 == target_value){
+                    TutorialManager.Instance.current_question = "none";
+                    TutorialManager.Instance.is_event_fulfilled = true;
+                    TutorialManager.Instance.NextDialogue();
+                }
+            }else
+                return ;
         }
+
+        this.parrots[selectedColor].Resetting(selectedTemplate);
+        GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
+        
     }
 
     public int GetCurrentScore()
@@ -169,6 +318,14 @@ public class GameManager : MonoBehaviour
     }
     public void AnswerSubmit()
     {
+        if (isTutorial)
+        {
+            if(TutorialManager.Instance.current_question == "tmp")
+            {
+                
+            }else
+                return ;
+        }
         if(AnswerSheet.Instance.Answer.answerType == 0){
             if(processing == 1)
                 return;
@@ -210,7 +367,13 @@ public class GameManager : MonoBehaviour
         parrots[0].ChangeMaterial(0);
         parrots[1].ChangeMaterial(0);
         parrots[2].ChangeMaterial(0);
-        Timer.Instance.Resume();
+
+        if (isTutorial)
+        {
+            TutorialManager.Instance.NextDialogue();
+        }else{
+            Timer.Instance.Resume();
+        }
         processing = 0;
         isAssembling = false;
     }

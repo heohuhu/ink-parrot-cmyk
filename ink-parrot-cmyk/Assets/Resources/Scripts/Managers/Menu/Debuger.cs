@@ -9,6 +9,6 @@ public class Debuger : MonoBehaviour
 
     public void TutorialProcessing()
     {
-        SettingManager.Instance.setting.debuger.isTutorial = !SettingManager.Instance.setting.debuger.isTutorial;
+        SettingManager.Instance.setting.isTutorial = true;
     }
 }

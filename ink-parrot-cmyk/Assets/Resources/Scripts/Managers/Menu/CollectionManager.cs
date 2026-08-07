@@ -18,6 +18,7 @@ public class CollectionManager : MonoBehaviour
     public GameObject [] collection_showcase_parrots = new GameObject[UnitPerPage];
     public GameObject [] collection_showcase_locked = new GameObject[UnitPerPage];
     public GameObject [] page_select = new GameObject[2];
+    public GameObject notification_panel;
     public TextMeshProUGUI PageText;
     void Awake()
     {
@@ -208,9 +209,17 @@ public class CollectionManager : MonoBehaviour
 
     public void pageSelect(int n)
     {
+        if(n == 1)
+        {
+            if(getTotalPage(n) == 0)
+            {
+                notification_panel.SetActive(true);
+                notification_panel.GetComponent<FadeShower>().Play();
+                return;
+            }
+        }
         current_page = n;
         CollectionOn();
-
     }
 
     Coroutine [] fadeRoutine = new Coroutine[UnitPerPage];

@@ -26,9 +26,10 @@ public class GameUiManager : MonoBehaviour
     public void DisableEveryThing()
     {
         HighlightManager.Instance.RegisterFromParent(GameMainScene);
+        HighlightManager.Instance.Activate();
+        HighlightManager.Instance.Setting();
+        HighlightManager.Instance.EnableFromParent(GameMainScene);
         HighlightManager.Instance.AddException(ParrotsRenderImage);
-        HighlightManager.Instance.DisableFromParent(GameMainScene);
-        HighlightManager.Instance.UpdateFromParent(GameMainScene);
     }
     public void PauseMenuOpen()
     {
