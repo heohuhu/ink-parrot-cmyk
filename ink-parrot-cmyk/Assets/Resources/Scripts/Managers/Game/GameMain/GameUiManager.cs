@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Timeline;
 public class GameUiManager : MonoBehaviour
 {
     public static GameUiManager Instance;
@@ -12,6 +13,7 @@ public class GameUiManager : MonoBehaviour
     public GameObject RealReturnMenu;
     public GameObject ParrotsRenderImage;
     private bool isWindowOpened = false;
+    private float rotationSpeed = 115f;
 
     private void Awake()
     {
@@ -21,6 +23,14 @@ public class GameUiManager : MonoBehaviour
     void Start()
     {
         
+    }
+
+    void Update()
+    {
+        if(NewParrotPanel.activeInHierarchy){
+            NewParrotEffect[0].GetComponent<RectTransform>().Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
+            NewParrotEffect[1].GetComponent<RectTransform>().Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+        }
     }
 
     public void DisableEveryThing()
@@ -163,27 +173,41 @@ public class GameUiManager : MonoBehaviour
         {
             GameMainScene.SetActive(false);
             GameEndScene.SetActive(true);
-            GameManager.Instance.GameEndNext();
+            GameManager.Instance.GameEndNext(0);
             GameEndScore.GetComponent<TextMeshProUGUI>().text = "스코어: " + ScoreManager.Instance.score.ToString() + "점";
         }
     }
 
     public GameObject [] NewParrotEffect = new GameObject [2];
-    private Coroutine EffectMoveCoroutine = null;
 
     public void NewParrotPanelOpen()
     {
         NewParrotPanel.SetActive(true);
     }
 
-    private IEnumerator EffectMove()
+    public void NewParrotPanelClose()
     {
-        while (true)
-        {
-            for(int i = 0; i < 2; i++)
-            {
+        NewParrotPanel.SetActive(false);
+        GameManager.Instance.GameEndNext(1);
+    }
 
-            }
+    public GameObject [] TemplateButton = new GameObject [Constants.TemplateSize];
+
+    public void TemplateButtonOutlineSetting()
+    {
+        float x = 5f, y = 5f;
+        for(int i = 0; i < Constants.TemplateSize; i++)
+        {
+            Outline tmp = TemplateButton[i].GetComponent<Outline>();
+            tmp.effectDistance = new Vector2(x, y);
+            tmp.enabled = false;
         }
+    }
+
+    public void TemplateButtonOutlineEnable(int index)
+    {
+        TemplateButtonOutlineSetting();
+        Outline tmp = TemplateButton[index].GetComponent<Outline>();
+        tmp.enabled = true;
     }
 }

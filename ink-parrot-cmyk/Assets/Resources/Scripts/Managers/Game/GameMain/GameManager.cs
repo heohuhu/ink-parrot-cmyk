@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AnswerSheet.Instance.GiveProblem(1);
         Ranking = DataManager.Instance.loadJson<List<Ranking_Type>>("ranking.json");
 
         if(Ranking == null || Ranking.Count == 0)
@@ -34,8 +33,10 @@ public class GameManager : MonoBehaviour
         {
             isTutorial = true;
             TutorialManager.Instance.TutorialStart(0);
-        }else
+        }else {
             Timer.Instance.TimerStart();
+            AnswerSheet.Instance.GiveProblem(1);
+        }
     }
 
     // Update is called once per frame
@@ -102,6 +103,7 @@ public class GameManager : MonoBehaviour
         selectedColor = ColorType;
         StartCoroutine(parrots[ColorType].ObjectSelected());
         GameUiManager.Instance.SelectColor(ColorType);
+        GameUiManager.Instance.TemplateButtonOutlineSetting();
     }
 
     public void unSelectColor()
@@ -149,6 +151,8 @@ public class GameManager : MonoBehaviour
         squeezing = (this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate] == 0 ? 0f : 100f);
         parrots[selectedColor].TemplateUnselected();
         parrots[selectedColor].TemplateSelected(selectedTemplate);
+        
+        GameUiManager.Instance.TemplateButtonOutlineEnable(selectedTemplate);
         GameUiManager.Instance.SelectTemplate(parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
         GameUiManager.Instance.SetLightManagingSlider(this.parrots[selectedColor].BodyTemplatesInk[selectedTemplate]);
     }
@@ -391,21 +395,32 @@ public class GameManager : MonoBehaviour
 
     //진짜 게임 엔드 처리
     Coroutine gameendCoroutine;
-    public void GameEndNext()
+    public void GameEndNext(int index)
     {
-        if(!this.isGameEnd)
-            return;
+        if(index == 0){
+            if(!this.isGameEnd)
+                return;
 
-        AudioManager.Instance.PauseALLBGM();
-        AudioManager.Instance.PlaySFX("게임종료뿅");
+            AudioManager.Instance.PauseALLBGM();
+            AudioManager.Instance.PlaySFX("게임종료뿅");
 
-        if(ScoreManager.Instance.score == 0)
+            if (AnswerSheet.Instance.isNewParrotCollected)
+            {
+                GameUiManager.Instance.NewParrotPanelOpen();
+            }else
+                index = 1;
+        }
+        
+        if(index == 1)
         {
-            targetParent_Object.SetActive(false);
-            return;
-        }else
-            targetParent_Object.SetActive(true);
-        Ranking_Update(ScoreManager.Instance.score);
+            if(ScoreManager.Instance.score == 0)
+            {
+                targetParent_Object.SetActive(false);
+                return;
+            }else
+                targetParent_Object.SetActive(true);
+            Ranking_Update(ScoreManager.Instance.score);
+        }
     }
 
     public void StartCompletedParrotsShow()
@@ -476,6 +491,11 @@ public class GameManager : MonoBehaviour
         {
             StartCompletedParrotsShow();
         }
+    }
+
+    public void AnswerParrotAnswerShower()
+    {
+        GameUiManager.Instance.NewParrotPanelOpen();
     }
 }
 

@@ -34,4 +34,24 @@ public class CustomUIManager : MonoBehaviour
     {
         InputPanel.SetActive(false);
     }
+
+    public GameObject [] TemplateButton = new GameObject [Constants.TemplateSize];
+
+    public void TemplateButtonOutlineSetting()
+    {
+        float x = 5f, y = 5f;
+        for(int i = 0; i < Constants.TemplateSize; i++)
+        {
+            Outline tmp = TemplateButton[i].GetComponent<Outline>();
+            tmp.effectDistance = new Vector2(x, y);
+            tmp.enabled = false;
+        }
+    }
+
+    public void TemplateButtonOutlineEnable(int index)
+    {
+        TemplateButtonOutlineSetting();
+        Outline tmp = TemplateButton[index].GetComponent<Outline>();
+        tmp.enabled = true;
+    }
 }

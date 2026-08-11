@@ -71,6 +71,12 @@ public class SceneController : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
+    public void GameRestart()
+    {
+        SceneManager.LoadScene("MainSystem", LoadSceneMode.Single);
+        LoadSceneAdditiveAsActive("StartMenu");
+    }
+
     //** ActiveScene을 언로드 하기 전에 반드시 Active를 다른 씬에 넘겨주기!
     public void SetActiveScene(string sceneName)
     {

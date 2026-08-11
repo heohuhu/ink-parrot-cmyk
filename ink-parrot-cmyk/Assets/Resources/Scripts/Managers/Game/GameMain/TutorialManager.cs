@@ -305,12 +305,12 @@ public class TutorialManager : MonoBehaviour
         switch (text)
         {
             case "1-0":
-                //ActivateTarget[0].SetActive(true);
+                ActivateTarget[0].SetActive(true);
 
             break;
 
             case "2-0":
-                //ActivateTarget[0].SetActive(false);
+                ActivateTarget[0].SetActive(false);
 
             break;
 
@@ -322,6 +322,7 @@ public class TutorialManager : MonoBehaviour
             case "4-0":
                 current_question = "Color-" + ((int)Constants.ColorType.Magenta).ToString();
                 is_event_fulfilled = false;
+                TutorialUIManager.Instance.SetTextAreaAlignment(true);
 
                 //하이라이트 조절
             break;
@@ -355,6 +356,7 @@ public class TutorialManager : MonoBehaviour
             break;
 
             case "15-0":
+                TutorialUIManager.Instance.SetTextAreaAlignment(false);
                 TutorialUIManager.Instance.SetDialogueButton(true);
             break;
 
@@ -367,6 +369,7 @@ public class TutorialManager : MonoBehaviour
             case "16-0":
                 current_question = "Color-" + ((int)Constants.ColorType.Yellow).ToString();
                 is_event_fulfilled = false;
+                TutorialUIManager.Instance.SetTextAreaAlignment(true);
             break;
 
             case "17-0":
@@ -384,6 +387,7 @@ public class TutorialManager : MonoBehaviour
             break;
 
             case "24-0":
+                TutorialUIManager.Instance.SetTextAreaAlignment(false);
                 TutorialUIManager.Instance.SetDialogueButton(true);
             break;
 
@@ -396,6 +400,7 @@ public class TutorialManager : MonoBehaviour
             case "25-0":
                 current_question = "Color-" + ((int)Constants.ColorType.Cyan).ToString();
                 is_event_fulfilled = false;
+                TutorialUIManager.Instance.SetTextAreaAlignment(true);
             break;
 
             case "26-0":
@@ -413,6 +418,7 @@ public class TutorialManager : MonoBehaviour
             break;
 
             case "33-0":
+                TutorialUIManager.Instance.SetTextAreaAlignment(false);
                 TutorialUIManager.Instance.SetDialogueButton(true);
             break;
 

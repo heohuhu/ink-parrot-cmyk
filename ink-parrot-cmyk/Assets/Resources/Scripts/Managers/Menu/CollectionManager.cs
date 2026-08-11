@@ -11,7 +11,6 @@ public class CollectionManager : MonoBehaviour
     private int[] templateToIndex = {3, 0, 1, 2, 6, 4, 5};
 
     public PageGIFShower collectionGIF;
-    private int ParrotsSize;
     private int [] page = new int[2];
     private int current_page; // 0이면 사전 설정된 앵무새 목록, 1이면 커스텀 앵무새 목록
     public GameObject [] collection_showcase = new GameObject[UnitPerPage];
@@ -40,7 +39,6 @@ public class CollectionManager : MonoBehaviour
 
     public void Reset()
     {
-        ParrotsSize = ParrotDataManager.Instance.getParrotCount();
         page[0] = page[1] = 0;
         current_page = 0;
         isPageUpdating = false;
@@ -114,7 +112,7 @@ public class CollectionManager : MonoBehaviour
         }else if(current_page == 1)
         {
             page[current_page]++;
-            if((page[current_page] * UnitPerPage + Constants.BasicParrotsSize) / UnitPerPage >= Mathf.Ceil((float)ParrotsSize / UnitPerPage))
+            if((page[current_page] * UnitPerPage + Constants.BasicParrotsSize) / UnitPerPage >= Mathf.Ceil((float)ParrotDataManager.Instance.getParrotCount() / UnitPerPage))
                 page[current_page]--;
             else {
                 collectionGIF.SetReversing(false);
@@ -131,7 +129,7 @@ public class CollectionManager : MonoBehaviour
         }
         else
         {
-            return (int)Mathf.Ceil((float)(ParrotsSize - Constants.BasicParrotsSize) / 3);
+            return (int)Mathf.Ceil((float)(ParrotDataManager.Instance.getParrotCount() - Constants.BasicParrotsSize) / 3);
         }
     }
 
@@ -275,5 +273,53 @@ public class CollectionManager : MonoBehaviour
         }
 
         cg.alpha = 0f;
+    }
+
+    public GameObject ParrotDeletePanel;
+    private int deleteTargetIndex = -1;
+
+    public void ParrotSelected(int target_index)
+    {
+        if(current_page == 0)
+            return ;
+
+        int index = Constants.BasicParrotsSize + page[1] * UnitPerPage + target_index;
+
+        if(ParrotDataManager.Instance.isParrotCollected(index) == false)
+        {
+            return ;
+        }
+        else
+        {
+            ParrotDeletePanel.SetActive(true);
+            deleteTargetIndex = index;
+        }
+    }
+
+    public void ParrotDelete()
+    {
+        string tmp_name = ParrotDataManager.Instance.getParrotName(deleteTargetIndex);
+        bool result = ParrotDataManager.Instance.deleteParrot(deleteTargetIndex);
+        ParrotDeletePanel.SetActive(false);
+
+        if(result == false){
+            MenuManager.Instance.PrintNotification("해당 커스텀 앵무새를 삭제하지 못했습니다.");
+            return;
+        }
+        
+        MenuManager.Instance.PrintNotification($"{tmp_name} 이(가) 날아가버렸어... 잘가!", 3.3f);
+        if(getTotalPage(1) == 0) //삭제로 인해 커스텀 앵무새가 아예 없어짐
+        {
+            pageSelect(0);
+        }else if(page[1] >= getTotalPage(1))
+        {
+            PageDown();
+        }else
+            StartPageChange();
+    }
+
+    public void ParrotDeleteCancel()
+    {
+        ParrotDeletePanel.SetActive(false);
     }
 }

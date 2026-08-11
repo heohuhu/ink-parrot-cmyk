@@ -195,5 +195,9 @@ public class DataManager : MonoBehaviour
         return result2;
     }
 
-    
+    // ** 게임 데이터 초기화
+    public void ResetGameData()
+    {
+        ClearAllFiles();
+    }
 }

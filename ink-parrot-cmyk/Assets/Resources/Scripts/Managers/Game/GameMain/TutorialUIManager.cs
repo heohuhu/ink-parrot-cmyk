@@ -44,4 +44,10 @@ public class TutorialUIManager : MonoBehaviour
         ButtonArea.GetComponent<Image>().raycastTarget = isEnabled;
         ButtonArea.GetComponent<Button>().interactable = isEnabled;
     }
+
+    //0이면 왼쪽 정렬, 1이면 오른쪽 정렬
+    public void SetTextAreaAlignment(bool isRight){
+        ButtonArea.GetComponent<RectTransform>().localScale = new Vector3(isRight ? -1 : 1, 1, 1);
+        dialogueArea.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(isRight ? -1 : 1, 1, 1);
+    }
 }

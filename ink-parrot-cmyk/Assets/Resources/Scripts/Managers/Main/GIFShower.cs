@@ -96,6 +96,7 @@ public class GIFShower : MonoBehaviour
     {
         if(isPause)
             return;
+        
         if(AlwaysPlay || isPlaying){
             RemainDelay -= Time.deltaTime;
 
@@ -106,7 +107,7 @@ public class GIFShower : MonoBehaviour
                         isPlaying = false;
                         CurrentIndex = BaseFrameIndex;
                         ChangeImage(CurrentIndex);
-                        return ;
+                        return;
                     }
                 }
                 else
@@ -115,7 +116,7 @@ public class GIFShower : MonoBehaviour
                         isPlaying = false;
                         CurrentIndex = BaseFrameIndex;
                         ChangeImage(CurrentIndex);
-                        return ;
+                        return;
                     }
                 }
 
@@ -147,7 +148,6 @@ public class GIFShower : MonoBehaviour
         }
         else
         {
-            Debug.Log("출력 시도");
             TargetImage.sprite = GifImages[index];
         }
     }

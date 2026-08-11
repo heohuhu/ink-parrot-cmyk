@@ -148,6 +148,35 @@ public class ParrotDataManager : MonoBehaviour
     {
         return ParrotSheet.GetLength(0);
     }
+
+    public bool deleteParrot(int index)
+    {
+        if(index >= Constants.BasicParrotsSize) //커스텀 앵무새 삭제 경우
+        {
+            index = index - Constants.BasicParrotsSize;
+            ParrotsVariable custom_parrot_data = new ParrotsVariable();
+
+            //커스텀 앵무새 정보 불러오기
+            if(!DataManager.Instance.tryLoadJson<ParrotsVariable>("custom-parrots.json", out custom_parrot_data)){
+                Debug.Log("세이브된 커스텀 앵무새 데이터가 없어 새로이 생성합니다.");
+                custom_parrot_data = new ParrotsVariable();
+            }
+            else
+            {
+                Debug.Log("세이브된 커스텀 앵무새 데이터가 있어 불러옵니다.");
+            }
+
+            if(index >= custom_parrot_data.parrot_data.Count)
+                return false;
+            custom_parrot_data.parrot_data.RemoveAt(index);
+            DataManager.Instance.saveJson<ParrotsVariable>("custom-parrots.json", custom_parrot_data);
+            ParrotSheetUpdate();
+
+            return true;
+        }
+
+        return false;
+    }
 }
 
 

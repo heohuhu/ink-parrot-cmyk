@@ -31,6 +31,7 @@ public class CustomManager : MonoBehaviour
         parrotName = "null";
 
         CustomParrotShower.Instance.Reset();
+        CustomUIManager.Instance.TemplateButtonOutlineSetting();
         
         SetButtonColor(Constants.ColorType.Cyan, 3);
         SetButtonColor(Constants.ColorType.Magenta, 3);
@@ -61,6 +62,8 @@ public class CustomManager : MonoBehaviour
     public void TemplateSelected(int template)
     {
         selectedTemplate = template;
+
+        CustomUIManager.Instance.TemplateButtonOutlineEnable(selectedTemplate);
 
         SetButtonColor(Constants.ColorType.Cyan, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Cyan]);
         SetButtonColor(Constants.ColorType.Magenta, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Magenta]);

@@ -24,10 +24,18 @@ public class FadeShower : MonoBehaviour
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
-        currentCoroutine = StartCoroutine(PlayRoutine());
+        currentCoroutine = StartCoroutine(PlayRoutine(stayTime));
     }
 
-    private IEnumerator PlayRoutine()
+    public void Play(float time)
+    {
+        if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);
+
+        currentCoroutine = StartCoroutine(PlayRoutine(time));
+    }
+
+    private IEnumerator PlayRoutine(float time)
     {
         gameObject.SetActive(true);
 
@@ -36,7 +44,7 @@ public class FadeShower : MonoBehaviour
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        yield return new WaitForSeconds(stayTime);
+        yield return new WaitForSeconds(time);
 
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

@@ -10,6 +10,12 @@ public class AnswerSheet : MonoBehaviour
     public GameObject AnswerImageUI;
     public GameObject BodyTemplates_Parents;
     public GameObject [] BodyTemplates = new GameObject[Constants.TemplateSize];
+
+    public GameObject AnswerParrotGIF;
+    public GameObject AnswerParrot_BodyTemplates_Parents;
+    public GameObject [] AnswerParrot_BodyTemplates = new GameObject[Constants.TemplateSize];
+    public GameObject AnswerParrot_ItemImage;
+
     public List<bool> is_corrected = new List<bool>();
     void Awake()
     {
@@ -30,6 +36,10 @@ public class AnswerSheet : MonoBehaviour
         is_corrected = new List<bool>();
         isTouched = false;
         isNewParrotCollected = false;
+        isAnswerParrotPlaying = null;
+        AnswerParrotGIF.GetComponent<GIFShower>().Setting();
+        AnswerParrot_ItemImage.SetActive(false);
+        AnswerParrot_BodyTemplates_Parents.SetActive(false);
 
         for(int i = 0; i < Size; i++)
             is_corrected.Add(false);
@@ -74,6 +84,7 @@ public class AnswerSheet : MonoBehaviour
 
     public void MakeItem()
     {
+        EnableAnswerParrot();
         Answer.answer = Utility.GetRandomInt(0, 2);;
         Answer.answerType = 1;
 
@@ -82,6 +93,7 @@ public class AnswerSheet : MonoBehaviour
 
     public void MakeAnswer()
     {
+        EnableAnswerParrot();
         int size = ParrotDataManager.Instance.ParrotSheet.GetLength(0);
         int randIndex = Utility.GetRandomInt(0, size);
 
@@ -94,6 +106,7 @@ public class AnswerSheet : MonoBehaviour
 
     public void MakeAnswer(int index)
     {
+        EnableAnswerParrot();
         Answer.SetAnswer(ParrotDataManager.Instance.ParrotSheet[index].bodyTemplates);
         Answer.answer = index;
         Answer.answerType = 0;
@@ -152,6 +165,7 @@ public class AnswerSheet : MonoBehaviour
         AnswerImageUI.SetActive(true);
         BodyTemplates_Parents.SetActive(false);
         AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
+        AnswerParrot_ItemImage.GetComponent<Image>().sprite = this.AnswerImages[index];
     }
 
     public void ShowAnswerImage(int index)
@@ -171,8 +185,10 @@ public class AnswerSheet : MonoBehaviour
             Color result = Utility.CombineColor(C, M, Y);
 
             Image spr = this.BodyTemplates[template].GetComponent<Image>();
+            Image spr2 = this.AnswerParrot_BodyTemplates[template].GetComponent<Image>();
 
             spr.color = result;
+            spr2.color = result;
         }
     }
 
@@ -224,6 +240,30 @@ public class AnswerSheet : MonoBehaviour
         }
 
         return result;
+    }
+
+    private Coroutine isAnswerParrotPlaying = null;
+    public void EnableAnswerParrot()
+    {
+        if(isAnswerParrotPlaying != null)
+            StopCoroutine(isAnswerParrotPlaying);
+        
+        isAnswerParrotPlaying = StartCoroutine(AnswerParrotEnableCoroutine());
+    }
+
+    private IEnumerator AnswerParrotEnableCoroutine()
+    {
+        AnswerParrotGIF.GetComponent<GIFShower>().ActivatingPlay();
+        AnswerParrot_BodyTemplates_Parents.SetActive(false);
+        AnswerParrot_ItemImage.SetActive(false);
+
+        while(AnswerParrotGIF.GetComponent<GIFShower>().IsPlaying())
+            yield return null;
+        
+        if(Answer.answerType == 0)
+            AnswerParrot_BodyTemplates_Parents.SetActive(true);
+        else
+            AnswerParrot_ItemImage.SetActive(true);
     }
 }
 
