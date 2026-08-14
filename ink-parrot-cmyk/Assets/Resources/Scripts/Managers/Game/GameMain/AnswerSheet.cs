@@ -135,7 +135,7 @@ public class AnswerSheet : MonoBehaviour
             {
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
                 this.ShowItemImage(4);
-                AudioManager.Instance.PlaySFX("부분정답");
+                AudioManager.Instance.PlaySFX("정답");
             }
             else
             {

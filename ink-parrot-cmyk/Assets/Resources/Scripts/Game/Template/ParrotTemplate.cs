@@ -43,6 +43,7 @@ public class ParrotTemplate : MonoBehaviour
     // 0이면 잉크 없음
     // 1 이상이면 잉크 있음
     public int[] BodyTemplatesInk = new int[Constants.TemplateSize];
+    private int[] TemplatesSiblingIndex = new int[Constants.TemplateSize + 1];
 
     private void Start()
     {
@@ -61,11 +62,14 @@ public class ParrotTemplate : MonoBehaviour
         {
             Outline outline = BodyTemplates[i].GetComponent<Outline>();
             outline.effectDistance = new Vector2(outline_size, outline_size);
+            outline.effectColor = new Color(1f, 0.92f, 0.016f, 1f);
             outline.enabled = false;
 
             BodyTemplatesInk[i] = 3;
+            TemplatesSiblingIndex[i] = BodyTemplates[i].GetComponent<RectTransform>().GetSiblingIndex();
             DrawColor(i);
         }
+        TemplatesSiblingIndex[Constants.TemplateSize] = BodyTemplates[Constants.TemplateSize].GetComponent<RectTransform>().GetSiblingIndex();
     }
 
     public void Init()
@@ -223,10 +227,21 @@ public class ParrotTemplate : MonoBehaviour
             GetComponent<RectTransform>().SetSiblingIndex(baseSiblingIndex);
     }
 
+     //isLast 가 true면 가장 뒤로, isLast가 false면 원래 위치로
+    public void ChangeTemplateSiblingLast(int index, bool isLast)
+    {
+        if(isLast)
+            BodyTemplates[index].GetComponent<RectTransform>().SetAsLastSibling();
+        else
+            BodyTemplates[index].GetComponent<RectTransform>().SetSiblingIndex(TemplatesSiblingIndex[index]);
+    }
+
     public void TemplateSelected(int template)
     {
         Outline outline = BodyTemplates[template].GetComponent<Outline>();
         outline.enabled = true;
+        ChangeTemplateSiblingLast(template, true);
+        ChangeTemplateSiblingLast(Constants.TemplateSize, true);
     }
 
     public void TemplateUnselected()
@@ -234,6 +249,8 @@ public class ParrotTemplate : MonoBehaviour
         for(int template = 0; template < Constants.TemplateSize; template++){
             Outline outline = BodyTemplates[template].GetComponent<Outline>();
             outline.enabled = false;
+            ChangeTemplateSiblingLast(template, false);
         }
+        ChangeTemplateSiblingLast(Constants.TemplateSize, false);
     }
 }

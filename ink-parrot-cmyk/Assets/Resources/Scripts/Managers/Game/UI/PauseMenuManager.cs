@@ -23,17 +23,23 @@ public class PauseMenuManager : MonoBehaviour
         GameManager.Instance.StopTime();
     }
 
-    public void OpenTutorial()
+    public GameObject [] tutorials = new GameObject [2];
+    public void ShowTutorial()
     {
+        tutorials[0].SetActive(true);
+        tutorials[1].SetActive(false);
         TutorialPanel.SetActive(true);
-        GameManager.Instance.StopTime();
-        MenuPanel.SetActive(false);
     }
 
-    public void CloseTutorial()
+    public void UnShowTutorial()
     {
         TutorialPanel.SetActive(false);
-        ResumeUILoad();
+    }
+
+    public void TutorialSwitch(int target)
+    {
+        tutorials[target].SetActive(true);
+        tutorials[target == 0 ? 1 : 0].SetActive(false);
     }
 
     public void ResumeUILoad()

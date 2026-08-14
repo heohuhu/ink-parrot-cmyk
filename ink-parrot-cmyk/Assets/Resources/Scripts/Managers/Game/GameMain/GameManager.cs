@@ -19,14 +19,14 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Ranking = DataManager.Instance.loadJson<List<Ranking_Type>>("ranking.json");
+        Ranking = DataManager.Instance.loadJson<Ranking_Type_List>("ranking.json");
 
-        if(Ranking == null || Ranking.Count == 0)
+        if(Ranking == null || Ranking.ranking.Count == 0)
         {
-            Ranking = new List<Ranking_Type>();
-            Ranking.Add(new Ranking_Type(-1, "null"));
-            Ranking.Add(new Ranking_Type(-1, "null"));
-            Ranking.Add(new Ranking_Type(-1, "null"));
+            Ranking = new Ranking_Type_List();
+            Ranking.ranking.Add(new Ranking_Type(-1, "null"));
+            Ranking.ranking.Add(new Ranking_Type(-1, "null"));
+            Ranking.ranking.Add(new Ranking_Type(-1, "null"));
         }
 
         if (SettingManager.Instance.setting.isTutorial)
@@ -425,6 +425,7 @@ public class GameManager : MonoBehaviour
 
     public void StartCompletedParrotsShow()
     {
+        GameUiManager.Instance.RealGameEndPanelOn();
         gameendCoroutine = StartCoroutine(CompletedParrotsShow());
     }
 
@@ -462,19 +463,19 @@ public class GameManager : MonoBehaviour
     public Transform targetParent;
     public GameObject targetParent_Object;
     public List<GameObject> AnswerParrots;
-    private List<Ranking_Type> Ranking = new List<Ranking_Type>();
+    private Ranking_Type_List Ranking = new Ranking_Type_List();
 
     public void Ranking_Update(int score)
     {
         bool isRankingUpdated = false;
-        for(int i = 0; i < Ranking.Count; i++)
+        for(int i = 0; i < Ranking.ranking.Count; i++)
         {
-            if(score > Ranking[i].score)
+            if(score > Ranking.ranking[i].score)
             {
-                Ranking.Insert(i, new Ranking_Type(score, Utility.GetCurrentDateMMDD()));
+                Ranking.ranking.Insert(i, new Ranking_Type(score, Utility.GetCurrentDateMMDD()));
 
-                if(Ranking.Count > 3)
-                    Ranking.RemoveAt(3);
+                if(Ranking.ranking.Count > 3)
+                    Ranking.ranking.RemoveAt(3);
 
                 isRankingUpdated = true;
                 break;
@@ -484,8 +485,8 @@ public class GameManager : MonoBehaviour
         if (isRankingUpdated)
         {
             StartCoroutine(GameUiManager.Instance.RankingPanelOn());
-            GameUiManager.Instance.RankingShow(this.Ranking);
-            DataManager.Instance.saveJson<List<Ranking_Type>>("ranking.json", Ranking);
+            GameUiManager.Instance.RankingShow(this.Ranking.ranking);
+            DataManager.Instance.saveJson<Ranking_Type_List>("ranking.json", Ranking);
         }
         else
         {
@@ -499,6 +500,17 @@ public class GameManager : MonoBehaviour
     }
 }
 
+[System.Serializable]
+public class Ranking_Type_List
+{
+    public List<Ranking_Type> ranking;
+
+    public Ranking_Type_List()
+    {
+        ranking = new List<Ranking_Type>();
+    }
+}
+[System.Serializable]
 public class Ranking_Type
 {
     public int score;

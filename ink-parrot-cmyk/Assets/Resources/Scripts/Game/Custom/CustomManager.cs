@@ -62,7 +62,8 @@ public class CustomManager : MonoBehaviour
     public void TemplateSelected(int template)
     {
         selectedTemplate = template;
-
+        CustomParrotShower.Instance.TemplateUnselected();
+        CustomParrotShower.Instance.TemplateSelected(selectedTemplate);
         CustomUIManager.Instance.TemplateButtonOutlineEnable(selectedTemplate);
 
         SetButtonColor(Constants.ColorType.Cyan, CustomParrotShower.Instance.ColorData[template, (int)Constants.ColorType.Cyan]);

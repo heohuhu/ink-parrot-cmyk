@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     public GameObject tutorial_ui;
     public GameObject [] tutorials = new GameObject[2];
     public GameObject setting_ui;
-    public GameObject [] settings = new GameObject[2];
+    public GameObject [] setting_panels = new GameObject[2];
     public GameObject collection_ui;
     public GameObject notification_panel;
 
@@ -30,10 +30,12 @@ public class MenuManager : MonoBehaviour
 
     public void GameStart()
     {
+        menu_ui.SetActive(false);
+        tutorial_ui.SetActive(false);
+        setting_ui.SetActive(false);
+        collection_ui.SetActive(false);
         SceneController.Instance.LoadSceneAdditiveAsActive("Game");
         SceneController.Instance.UnloadScene("StartMenu");
-
-        menu_ui.SetActive(true);
     }
 
     public void CustomStart()
@@ -51,6 +53,12 @@ public class MenuManager : MonoBehaviour
         });
         SceneController.Instance.LoadSceneAdditiveAsActive("CustomPage");
         SceneController.Instance.UnloadScene("StartMenu");
+    }
+
+    public void StartTutorial()
+    {
+        SettingManager.Instance.setting.isTutorial = true;
+        GameStart();
     }
 
     public void ShowTutorial()
@@ -87,6 +95,8 @@ public class MenuManager : MonoBehaviour
 
     public void ShowSetting()
     {
+        setting_panels[0].SetActive(true);
+        setting_panels[1].SetActive(false);
         setting_ui.SetActive(true);
     }
 
@@ -97,9 +107,10 @@ public class MenuManager : MonoBehaviour
         Debug.Log($"Master {SettingManager.Instance.setting.sound.Master}\nBGM {SettingManager.Instance.setting.sound.BGM}\nSFX {SettingManager.Instance.setting.sound.SFX}\nUI {SettingManager.Instance.setting.sound.UI}\nColorStrength {SettingManager.Instance.setting.graphicOption.ColorStrength}");
     }
 
-    public void ShowSwitching(int index)
+    public void SettingSwitch(int target)
     {
-        
+        setting_panels[target].SetActive(true);
+        setting_panels[target == 0 ? 1 : 0].SetActive(false);
     }
 
     public void GameReseting()
