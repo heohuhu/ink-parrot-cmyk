@@ -16,6 +16,10 @@ public class AnswerSheet : MonoBehaviour
     public GameObject [] AnswerParrot_BodyTemplates = new GameObject[Constants.TemplateSize];
     public GameObject AnswerParrot_ItemImage;
 
+    public GameObject AnswerShowerPanel;
+    public GameObject AnswerStatusPanel;
+    public GameObject AnswerStatusImage;
+
     public List<bool> is_corrected = new List<bool>();
     void Awake()
     {
@@ -23,6 +27,7 @@ public class AnswerSheet : MonoBehaviour
     }
 
     public Sprite[] AnswerImages;
+    public Sprite[] AnswerStatusImages;
     public bool isTouched = false;
     public AnswerType Answer = new AnswerType();
 
@@ -43,6 +48,9 @@ public class AnswerSheet : MonoBehaviour
 
         for(int i = 0; i < Size; i++)
             is_corrected.Add(false);
+
+        AnswerStatusPanel.SetActive(false);
+        AnswerShowerPanel.SetActive(true);
     }
 
     //option이 1이면 항상 정답만 제시되도록 함
@@ -78,7 +86,7 @@ public class AnswerSheet : MonoBehaviour
     
     private IEnumerator PlaySoundAfterSeconds(float delay, string Name)
     {
-        yield return new WaitForSeconds(delay);
+        yield return GameManager.Instance.WaitForGameTime(delay);
         AudioManager.Instance.Play(Name);
     }
 
@@ -128,18 +136,18 @@ public class AnswerSheet : MonoBehaviour
             if(score == Constants.TemplateSize){ // 모든 부위가 정답일 경우
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
                 this.CorrectAnswer();
-                this.ShowItemImage(2);
+                ShowAnswerStatus(0);
                 AudioManager.Instance.PlaySFX("정답");
             }
             else if(score > 0)
             {
                 ScoreManager.Instance.GetScore(this.GetAnswerScore(score));
-                this.ShowItemImage(4);
+                ShowAnswerStatus(1);
                 AudioManager.Instance.PlaySFX("정답");
             }
             else
             {
-                this.ShowItemImage(3);
+                ShowAnswerStatus(2);
                 AudioManager.Instance.PlaySFX("오답");
             }
             //this.GiveProblem();
@@ -148,7 +156,8 @@ public class AnswerSheet : MonoBehaviour
             switch (Answer.answer)
             {
                 case 0:
-                Timer.Instance.TimeModify(10f);
+                if(!isTouched)
+                    Timer.Instance.TimeModify(10f);
                 break;
 
                 case 1:
@@ -166,6 +175,8 @@ public class AnswerSheet : MonoBehaviour
         BodyTemplates_Parents.SetActive(false);
         AnswerImageUI.GetComponent<Image>().sprite = this.AnswerImages[index];
         AnswerParrot_ItemImage.GetComponent<Image>().sprite = this.AnswerImages[index];
+        AnswerStatusPanel.SetActive(false);
+        AnswerShowerPanel.SetActive(true);
     }
 
     public void ShowAnswerImage(int index)
@@ -190,6 +201,16 @@ public class AnswerSheet : MonoBehaviour
             spr.color = result;
             spr2.color = result;
         }
+
+        AnswerStatusPanel.SetActive(false);
+        AnswerShowerPanel.SetActive(true);
+    }
+
+    public void ShowAnswerStatus(int index)
+    {
+        AnswerStatusImage.GetComponent<Image>().sprite = AnswerStatusImages[index];
+        AnswerShowerPanel.SetActive(false);
+        AnswerStatusPanel.SetActive(true);
     }
 
     public int CompareAnswer(int [] C, int [] M, int [] Y)

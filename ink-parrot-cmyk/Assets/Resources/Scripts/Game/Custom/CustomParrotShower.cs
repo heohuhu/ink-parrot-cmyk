@@ -65,7 +65,7 @@ public class CustomParrotShower : MonoBehaviour
 
     public Color GetColor(int CMYK, int LightType)
     {
-        Color tmp = SettingManager.Instance.GetColor((Constants.ColorType)CMYK);
+        Color tmp = Constants.Instance.GetColor((Constants.ColorType)CMYK);
         float t = Mathf.Clamp01(Constants.Instance.GetLightTypeData(LightType) / 100f);
         tmp = Color.Lerp(Color.white, tmp, t);
 

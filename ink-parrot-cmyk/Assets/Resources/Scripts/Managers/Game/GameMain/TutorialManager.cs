@@ -76,12 +76,12 @@ public class TutorialManager : MonoBehaviour
 
         new List<string>() //8
         {
-            "Head1 : 0"
+            "Head1 : 3"
         },
 
         new List<string>()
         {
-            "Head2 : 3"
+            "Head2 : 0"
         },
 
         new List<string>()
@@ -123,12 +123,12 @@ public class TutorialManager : MonoBehaviour
 
         new  List<string>() //17
         {
-            "Head1 : 3"
+            "Head1 : 0"
         },
 
         new  List<string>()
         {
-            "Head2 : 0"
+            "Head2 : 3"
         },
 
         new  List<string>()
@@ -184,12 +184,12 @@ public class TutorialManager : MonoBehaviour
 
         new  List<string>()
         {
-            "Body1 : 3"
+            "Body1 : 0"
         },
 
         new  List<string>()
         {
-            "Body2 : 0"
+            "Body2 : 3"
         },
 
         new  List<string>()

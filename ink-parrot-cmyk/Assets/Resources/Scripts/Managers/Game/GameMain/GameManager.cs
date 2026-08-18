@@ -45,11 +45,19 @@ public class GameManager : MonoBehaviour
         
     }
     public bool isTimeStopped = false;
+    public bool isGameTimeStopped = false; // Time.timeScale 처럼 동작할 예정
     public bool isTutorial = false;
     public static float GetdeltaTime => Instance.isTimeStopped == true ? 0f : Time.deltaTime;
     public void StopTime()
     {
         isTimeStopped = true;
+        Timer.Instance.Pause();
+    }
+
+    public void StopGameTime()
+    {
+        isGameTimeStopped = true;
+        SceneController.Instance.isGameTimeStopped = isGameTimeStopped;
         Timer.Instance.Pause();
         BackgroundManager.Instance.SetBackgroundStop(true);
         AudioManager.Instance.PauseALLBGM();
@@ -57,10 +65,37 @@ public class GameManager : MonoBehaviour
 
     public void ResumeTime()
     {
-        Timer.Instance.Resume();
         isTimeStopped = false;
+        
+        if(isTimeStopped == false && isGameTimeStopped == false)
+            Timer.Instance.Resume();
+    }
+
+    public void ResumeGameTime()
+    {
+        isGameTimeStopped = false;
+        SceneController.Instance.isGameTimeStopped = isGameTimeStopped;
+
+        if(isTimeStopped == false && isGameTimeStopped == false)
+            Timer.Instance.Resume();
+
         BackgroundManager.Instance.SetBackgroundStop(false);
         AudioManager.Instance.ResumeALLBGM();
+    }
+
+    public IEnumerator WaitForGameTime(float seconds)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < seconds)
+        {
+            if (!isGameTimeStopped)
+            {
+                elapsedTime += Time.deltaTime;
+            }
+
+            yield return null;
+        }
     }
 
     public void ReturnStartMenu()
@@ -253,7 +288,7 @@ public class GameManager : MonoBehaviour
 
     public void InputDetected(int color)
     {
-        if(isTimeStopped)
+        if(isTimeStopped || isGameTimeStopped)
             return ;
         if(selectedColor == -1)
             SelectColor(color);
@@ -359,12 +394,18 @@ public class GameManager : MonoBehaviour
         }
 
         AnswerSheet.Instance.AnswerSubmit();
-        yield return new WaitForSeconds(0.5f);
+        yield return WaitForGameTime(0.5f);
+
+        for(int i = 0; i < 3; i++)
+            parrots[i].hideParrot();
         
         for(int i = 0; i < 3; i++)
         {
             yield return parrots[i].ObjectPositionInit();
         }
+
+        yield return WaitForGameTime(0.8f);
+
         parrots[0].Init();
         parrots[1].Init();
         parrots[2].Init();
@@ -384,13 +425,14 @@ public class GameManager : MonoBehaviour
     }
 
     public bool isGameEnd = false;
+    public Coroutine isGameEndProcessing = null;
     //시간 초과 발생
     public void GameEnd()
     {
         if(this.isGameEnd)
             return ;
         this.isGameEnd = true;
-        StartCoroutine(GameUiManager.Instance.GameEndProcess());
+        isGameEndProcessing = StartCoroutine(GameUiManager.Instance.GameEndProcess());
     }
 
     //진짜 게임 엔드 처리
@@ -416,6 +458,7 @@ public class GameManager : MonoBehaviour
             if(ScoreManager.Instance.score == 0)
             {
                 targetParent_Object.SetActive(false);
+                GameUiManager.Instance.GameEndPanel.SetActive(true);
                 return;
             }else
                 targetParent_Object.SetActive(true);
@@ -470,21 +513,22 @@ public class GameManager : MonoBehaviour
         bool isRankingUpdated = false;
         for(int i = 0; i < Ranking.ranking.Count; i++)
         {
-            if(score > Ranking.ranking[i].score)
+            if(score >= Ranking.ranking[i].score)
             {
                 Ranking.ranking.Insert(i, new Ranking_Type(score, Utility.GetCurrentDateMMDD()));
 
                 if(Ranking.ranking.Count > 3)
                     Ranking.ranking.RemoveAt(3);
 
-                isRankingUpdated = true;
+                if(i == 0)
+                    isRankingUpdated = true;
                 break;
             }
         }
 
         if (isRankingUpdated)
         {
-            StartCoroutine(GameUiManager.Instance.RankingPanelOn());
+            GameUiManager.Instance.RankingHighlightPanelOpen();
             GameUiManager.Instance.RankingShow(this.Ranking.ranking);
             DataManager.Instance.saveJson<Ranking_Type_List>("ranking.json", Ranking);
         }

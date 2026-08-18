@@ -10,6 +10,7 @@ public class GIFShower : MonoBehaviour
     [SerializeField] private int EndingFrameIndex = 0; // GIF 종료 상태 인덱스 지정 (-1: 마지막 프레임)
     [SerializeField] private bool AlwaysPlay = false;
     [SerializeField] private bool PlayReverse = false;
+    [SerializeField] private bool isTimeException = false;
     
     private float RemainDelay;
     private int CurrentIndex;
@@ -94,7 +95,7 @@ public class GIFShower : MonoBehaviour
 
     void Update()
     {
-        if(isPause)
+        if(isPause || (!isTimeException && SceneController.Instance.isGameTimeStopped))
             return;
         
         if(AlwaysPlay || isPlaying){

@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     public GameObject [] tutorials = new GameObject[2];
     public GameObject setting_ui;
     public GameObject [] setting_panels = new GameObject[2];
+    public GameObject tutorial_selector;
     public GameObject collection_ui;
     public GameObject notification_panel;
 
@@ -55,10 +56,26 @@ public class MenuManager : MonoBehaviour
         SceneController.Instance.UnloadScene("StartMenu");
     }
 
-    public void StartTutorial()
+    public void StartTutorial(int index)
     {
-        SettingManager.Instance.setting.isTutorial = true;
-        GameStart();
+        if(index == 0){
+            SettingManager.Instance.setting.isTutorial = true;
+            GameStart();
+        }else if(index == 1)
+        {
+            SettingManager.Instance.setting.isCustomTutorial = true;
+            CustomStart();
+        }
+    }
+
+    public void TutorialSelectorOpen()
+    {
+        tutorial_selector.SetActive(true);
+    }
+
+    public void TutorialSelectorClose()
+    {
+        tutorial_selector.SetActive(false);
     }
 
     public void ShowTutorial()
@@ -97,6 +114,7 @@ public class MenuManager : MonoBehaviour
     {
         setting_panels[0].SetActive(true);
         setting_panels[1].SetActive(false);
+        tutorial_selector.SetActive(false);
         setting_ui.SetActive(true);
     }
 

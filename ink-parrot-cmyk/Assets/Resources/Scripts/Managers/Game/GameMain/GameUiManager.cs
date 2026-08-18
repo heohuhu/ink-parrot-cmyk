@@ -31,6 +31,11 @@ public class GameUiManager : MonoBehaviour
             NewParrotEffect[0].GetComponent<RectTransform>().Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
             NewParrotEffect[1].GetComponent<RectTransform>().Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
         }
+
+        if(RankingHighlighPanel.activeInHierarchy){
+            RankingParrotEffect[0].GetComponent<RectTransform>().Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
+            RankingParrotEffect[1].GetComponent<RectTransform>().Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+        }
     }
 
     public void DisableEveryThing()
@@ -124,7 +129,8 @@ public class GameUiManager : MonoBehaviour
     public GameObject GameMainScene, GameEndScene;
     public GameObject GameOverPanel;
     
-    public GameObject GameEndScore, RankingPanel, NewParrotPanel;
+    public GameObject GameEndScore, RankingPanel, NewParrotPanel, RankingHighlighPanel;
+    public GameObject RankingCanvas;
     public GameObject GameEndPanel;
     public GameObject[] RankingText = new GameObject[3];
     private bool isEndNext = false;
@@ -134,6 +140,8 @@ public class GameUiManager : MonoBehaviour
         GameOverPanel.SetActive(true);
         yield return new WaitForSeconds(1f);
         isEndNext = true;
+        yield return new WaitForSeconds(4f); //총합 5초 경과 시
+        GameEndNext();
     }
 
     public IEnumerator RankingPanelOn()
@@ -164,14 +172,34 @@ public class GameUiManager : MonoBehaviour
         if (isEndNext)
         {
             RankingPanel.SetActive(false);
+            RankingCanvas.SetActive(false);
             GameManager.Instance.StartCompletedParrotsShow();
         }
+    }
+
+    public void RankingHighlightPanelOpen()
+    {
+        RankingPanel.SetActive(false);
+        RankingHighlighPanel.SetActive(true);
+        RankingCanvas.SetActive(true);
+    }
+
+    public void RankingHighlightPanelClose()
+    {
+        RankingHighlighPanel.SetActive(false);
+        StartCoroutine(RankingPanelOn());
     }
 
     public void GameEndNext()
     {
         if (isEndNext)
         {
+            if(GameManager.Instance.isGameEndProcessing != null){
+                StopCoroutine(GameManager.Instance.isGameEndProcessing);
+                GameManager.Instance.isGameEndProcessing = null;
+            }
+
+
             GameMainScene.SetActive(false);
             GameEndScene.SetActive(true);
             GameManager.Instance.GameEndNext(0);
@@ -185,6 +213,7 @@ public class GameUiManager : MonoBehaviour
     }
 
     public GameObject [] NewParrotEffect = new GameObject [2];
+    public GameObject [] RankingParrotEffect = new GameObject [2];
 
     public void NewParrotPanelOpen()
     {

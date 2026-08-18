@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System;
 public interface InputInterface
 {
     public void OnTouch();
@@ -24,6 +25,7 @@ public class InputController: MonoBehaviour
     }
     void Update()
     {
+        try{
     #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -32,7 +34,7 @@ public class InputController: MonoBehaviour
             HandleInput(Input.mousePosition);
             AudioManager.Instance.PlayUI("터치");
         }
-    #else
+#else
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -45,7 +47,13 @@ public class InputController: MonoBehaviour
                 AudioManager.Instance.PlayUI("터치");
             }
         }
-    #endif
+#endif
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return;
+        }
     }
 
     void HandleInput(Vector3 screenPosition)

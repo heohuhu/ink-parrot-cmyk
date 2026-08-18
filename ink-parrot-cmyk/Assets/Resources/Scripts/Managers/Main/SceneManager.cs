@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class SceneController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SceneController : MonoBehaviour
     [Header("Fade Option")]
     [SerializeField] private CanvasGroup fadeCanvas;
     [SerializeField] private float fadeDuration = 0.5f;
+    [SerializeField] public bool isGameTimeStopped = false;
 
     private void Awake()
     {

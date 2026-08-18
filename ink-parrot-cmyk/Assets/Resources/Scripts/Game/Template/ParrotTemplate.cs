@@ -25,6 +25,8 @@ public class ParrotTemplate : MonoBehaviour
 
     [SerializeField] private GameObject selectedAreaTarget;
     [SerializeField] private GameObject assembledAreaTarget;
+    [SerializeField] private GameObject comingGIF;
+    [SerializeField] private GameObject body;
 
     // 0이 가장 기본 material
     [SerializeField] private List<Material> target_Materials = new List<Material>();
@@ -70,6 +72,12 @@ public class ParrotTemplate : MonoBehaviour
             DrawColor(i);
         }
         TemplatesSiblingIndex[Constants.TemplateSize] = BodyTemplates[Constants.TemplateSize].GetComponent<RectTransform>().GetSiblingIndex();
+
+        Image comingGIFImage = comingGIF.GetComponent<Image>();
+        comingGIFImage.color = Constants.Instance.GetColor((Constants.ColorType)CMYK, 3);
+
+        body.SetActive(true);
+        comingGIF.SetActive(false);
     }
 
     public void Init()
@@ -143,9 +151,12 @@ public class ParrotTemplate : MonoBehaviour
 
     public IEnumerator ObjectPositionInit()
     {
-        yield return MoveCoroutine(
-            basePosition,
-            0.2f);
+        rectTransform.localPosition = basePosition;
+        PlayComingGIF();
+        yield return null;
+        //yield return MoveCoroutine(
+        //    basePosition,
+        //    0.2f);
     }
 
     private IEnumerator MoveCoroutine(Vector2 targetPosition, float duration)
@@ -156,7 +167,7 @@ public class ParrotTemplate : MonoBehaviour
 
         while (elapsed < duration)
         {
-            if(GameManager.Instance.isTimeStopped) {
+            if(GameManager.Instance.isGameTimeStopped) {
                 yield return null;
                 continue;
             }
@@ -181,7 +192,7 @@ public class ParrotTemplate : MonoBehaviour
 
         while (elapsed < duration)
         {
-            if(GameManager.Instance.isTimeStopped) {
+            if(GameManager.Instance.isGameTimeStopped) {
                 yield return null;
                 continue;
             }
@@ -252,5 +263,28 @@ public class ParrotTemplate : MonoBehaviour
             ChangeTemplateSiblingLast(template, false);
         }
         ChangeTemplateSiblingLast(Constants.TemplateSize, false);
+    }
+
+    public void PlayComingGIF()
+    {
+        body.SetActive(false);
+        comingGIF.GetComponent<GIFShower>().Setting();
+        comingGIF.SetActive(true);
+        StartCoroutine(PlayComingGIFProcess());
+    }
+
+    private IEnumerator PlayComingGIFProcess()
+    {
+        comingGIF.GetComponent<GIFShower>().ActivatingPlay();
+        yield return GameManager.Instance.WaitForGameTime(0.8f); //GIF 끝날 시간쯤??
+
+        comingGIF.SetActive(false);
+        body.SetActive(true);
+    }
+
+    public void hideParrot()
+    {
+        comingGIF.SetActive(false);
+        body.SetActive(false);
     }
 }

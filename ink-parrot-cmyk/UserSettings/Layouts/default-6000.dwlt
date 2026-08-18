@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -276,8 +276,8 @@ MonoBehaviour:
     y: 0
     width: 396
     height: 716.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -892,9 +892,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 879.6018, y: 1406.693, z: -6.652735}
+    m_Target: {x: -627.2397, y: 610.3332, z: 289.20203}
     speed: 2
-    m_Value: {x: 915.129, y: 1406.4454, z: -5.9545665}
+    m_Value: {x: -627.681, y: 610.06537, z: 273.15375}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -944,9 +944,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1621.2954
+    m_Target: 8.640005
     speed: 2
-    m_Value: 1551.4789
+    m_Value: 8.267947
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1377,114 +1377,31 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 156620
+      - m_Data: 38304
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -53906
-      - m_Data: -53436
-      - m_Data: -52594
-      - m_Data: -51808
-      - m_Data: -47262
-      - m_Data: -44964
-      - m_Data: -44152
-      - m_Data: -43698
-      - m_Data: -42896
-      - m_Data: -40268
-      - m_Data: -40052
-      - m_Data: -39252
-      - m_Data: -27636
-      - m_Data: -27610
-      - m_Data: -27590
-      - m_Data: -26934
-      - m_Data: -26680
-      - m_Data: -23394
-      - m_Data: -21614
-      - m_Data: -19006
-      - m_Data: -18656
-      - m_Data: -18452
-      - m_Data: -18084
-      - m_Data: -17016
-      - m_Data: -15704
-      - m_Data: -15442
-      - m_Data: -13868
-      - m_Data: -13772
-      - m_Data: -13486
-      - m_Data: -12672
-      - m_Data: -11884
-      - m_Data: -11338
-      - m_Data: -8390
-      - m_Data: -4654
-      - m_Data: -4642
-      - m_Data: -3628
-      - m_Data: -3136
-      - m_Data: -2884
-      - m_Data: -2638
+      - m_Data: -4136
+      - m_Data: -2344
+      - m_Data: -2112
       - m_Data: -1318
-      - m_Data: 53464
-      - m_Data: 53772
-      - m_Data: 54098
-      - m_Data: 54236
-      - m_Data: 54488
-      - m_Data: 54782
-      - m_Data: 55720
-      - m_Data: 55892
-      - m_Data: 55906
-      - m_Data: 56102
-      - m_Data: 56120
-      - m_Data: 56306
-      - m_Data: 66846
-      - m_Data: 67028
-      - m_Data: 67330
-      - m_Data: 71182
-      - m_Data: 71248
-      - m_Data: 73696
-      - m_Data: 75090
-      - m_Data: 75218
-      - m_Data: 79226
-      - m_Data: 82832
-      - m_Data: 86714
-      - m_Data: 90726
-      - m_Data: 102858
-      - m_Data: 103120
-      - m_Data: 103688
-      - m_Data: 104524
-      - m_Data: 104572
-      - m_Data: 132006
-      - m_Data: 132540
-      - m_Data: 133512
-      - m_Data: 133640
-      - m_Data: 134266
-      - m_Data: 135188
-      - m_Data: 135254
-      - m_Data: 140376
-      - m_Data: 140616
-      - m_Data: 140634
-      - m_Data: 140688
-      - m_Data: 141400
-      - m_Data: 141622
-      - m_Data: 141672
-      - m_Data: 141738
-      - m_Data: 144776
-      - m_Data: 145088
-      - m_Data: 146022
-      - m_Data: 146072
-      - m_Data: 146138
-      - m_Data: 149176
-      - m_Data: 149434
-      - m_Data: 149792
-      - m_Data: 150388
-      - m_Data: 150422
-      - m_Data: 150472
-      - m_Data: 150538
-      - m_Data: 154068
-      - m_Data: 154654
-      - m_Data: 154964
-      - m_Data: 155040
+      - m_Data: 52048
+      - m_Data: 52130
+      - m_Data: 52376
+      - m_Data: 52720
+      - m_Data: 52858
+      - m_Data: 52952
+      - m_Data: 53120
+      - m_Data: 53146
+      - m_Data: 53348
+      - m_Data: 53362
+      - m_Data: 53460
+      - m_Data: 53514
+      - m_Data: 53716
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Parrot_template
+        m_OriginalName: Parrot_template
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -1492,10 +1409,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 0
+          m_Data: 52464
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 8}
@@ -1578,9 +1495,9 @@ MonoBehaviour:
     m_TextWithWhitespace: "Animator\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 348
+    x: 313.6
     y: 79.200005
-    width: 910.80005
+    width: 824.4
     height: 477.2
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1715,18 +1632,18 @@ MonoBehaviour:
       y: 21
       width: 824.4
       height: 456.2
-    m_Scale: {x: 0.24163139, y: 0.24163137}
-    m_Translation: {x: 412.2, y: 228.09999}
+    m_Scale: {x: 0.24163136, y: 0.24163136}
+    m_Translation: {x: 412.2, y: 228.1}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1705.9043
-      y: -943.9999
-      width: 3411.8086
-      height: 1887.9999
+      x: -1705.9044
+      y: -944
+      width: 3411.8088
+      height: 1888
     m_MinimalGUI: 1
   m_defaultScale: 0.24163136
   m_LastWindowPixelSize: {x: 1030.5, y: 596.5}
@@ -1785,7 +1702,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Assets/animation/Parrots Flying
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1795,21 +1712,20 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 46
   m_LastFolders:
-  - Assets/Resources/Assets/animation/Parrots Flying
+  - Assets/Scenes
   m_LastFoldersGridSize: 46
   m_LastProjectPath: D:\unity\Projects\ink_parrot_cmyk\ink-parrot-cmyk
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 56.400024}
+    scrollPos: {x: 0, y: 668.4}
     m_SelectedIDs:
-    - m_Data: 156616
+    - m_Data: 50482
     m_LastClickedID:
-      m_Data: 156616
+      m_Data: 50482
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49258
     - m_Data: 49260
     - m_Data: 49262
     - m_Data: 49264
@@ -1846,6 +1762,11 @@ MonoBehaviour:
     - m_Data: 49326
     - m_Data: 49328
     - m_Data: 49330
+    - m_Data: 49332
+    - m_Data: 49334
+    - m_Data: 49336
+    - m_Data: 49338
+    - m_Data: 49340
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1879,7 +1800,6 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49258
     - m_Data: 49260
     - m_Data: 49262
     - m_Data: 49264
@@ -1916,6 +1836,11 @@ MonoBehaviour:
     - m_Data: 49326
     - m_Data: 49328
     - m_Data: 49330
+    - m_Data: 49332
+    - m_Data: 49334
+    - m_Data: 49336
+    - m_Data: 49338
+    - m_Data: 49340
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1943,8 +1868,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 156620
-    m_LastClickedInstanceID: 156620
+    - m_Data: 38304
+    m_LastClickedInstanceID: 38304
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 49606
@@ -2092,6 +2017,11 @@ MonoBehaviour:
     - m_Data: 49584
     - m_Data: 49588
     - m_Data: 156620
+    - m_Data: 50038
+    - m_Data: 50138
+    - m_Data: 50730
+    - m_Data: 49878
+    - m_Data: 49822
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
