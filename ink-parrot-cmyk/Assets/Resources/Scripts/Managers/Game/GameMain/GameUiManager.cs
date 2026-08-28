@@ -12,6 +12,8 @@ public class GameUiManager : MonoBehaviour
     public GameObject ReturnMenu;
     public GameObject RealReturnMenu;
     public GameObject ParrotsRenderImage;
+    public GameObject PauseButton;
+    public Sprite[] PauseButtonSprites = new Sprite[2];
     private bool isWindowOpened = false;
     private float rotationSpeed = 115f;
 
@@ -22,7 +24,22 @@ public class GameUiManager : MonoBehaviour
 
     void Start()
     {
-        
+        GameMainScene.SetActive(false);
+        GameEndScene.SetActive(false);
+    }
+
+    public void Setting()
+    {
+        GameMainScene.SetActive(true);
+        GameEndScene.SetActive(false);
+        if (GameManager.Instance.isTutorial)
+        {
+            PauseButton.GetComponent<Image>().sprite = PauseButtonSprites[1];
+        }
+        else
+        {
+            PauseButton.GetComponent<Image>().sprite = PauseButtonSprites[0];
+        }
     }
 
     void Update()
@@ -50,6 +67,9 @@ public class GameUiManager : MonoBehaviour
     {
         if(isWindowOpened)
             return;
+
+        if(GameManager.Instance.isTutorial)
+            return ;
         isWindowOpened = true;
         PauseMenu.SetActive(true);
         PauseMenuManager.Instance.OpenMenu();

@@ -30,7 +30,6 @@ public class AnswerSheet : MonoBehaviour
     public Sprite[] AnswerStatusImages;
     public bool isTouched = false;
     public AnswerType Answer = new AnswerType();
-
     void Start()
     {
         Setting();

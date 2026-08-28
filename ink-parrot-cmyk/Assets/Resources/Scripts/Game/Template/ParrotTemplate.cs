@@ -167,10 +167,6 @@ public class ParrotTemplate : MonoBehaviour
 
         while (elapsed < duration)
         {
-            if(GameManager.Instance.isGameTimeStopped) {
-                yield return null;
-                continue;
-            }
             elapsed += GameManager.GetdeltaTime;
 
             float t = elapsed / duration;
@@ -192,10 +188,6 @@ public class ParrotTemplate : MonoBehaviour
 
         while (elapsed < duration)
         {
-            if(GameManager.Instance.isGameTimeStopped) {
-                yield return null;
-                continue;
-            }
             elapsed += GameManager.GetdeltaTime;
 
             float t = elapsed / duration;
@@ -286,5 +278,12 @@ public class ParrotTemplate : MonoBehaviour
     {
         comingGIF.SetActive(false);
         body.SetActive(false);
+    }
+
+    public Color getTemplateColor(int template)
+    {
+        return Constants.Instance.GetColor(
+            (Constants.ColorType)CMYK,
+            BodyTemplatesInk[template]);
     }
 }

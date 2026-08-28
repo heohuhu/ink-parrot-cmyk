@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
             Timer.Instance.TimerStart();
             AnswerSheet.Instance.GiveProblem(1);
         }
+
+        GameUiManager.Instance.Setting();
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
     public bool isTimeStopped = false;
     public bool isGameTimeStopped = false; // Time.timeScale 처럼 동작할 예정
     public bool isTutorial = false;
-    public static float GetdeltaTime => Instance.isTimeStopped == true ? 0f : Time.deltaTime;
+    public static float GetdeltaTime => Instance.isGameTimeStopped == true ? 0f : Time.deltaTime;
     public void StopTime()
     {
         isTimeStopped = true;
@@ -110,6 +112,7 @@ public class GameManager : MonoBehaviour
     //-1 : 없는 상태, 0 : Cyan, 1 : Magenta, 2 : Yellow
     ParrotTemplate [] parrots = new ParrotTemplate[3];
     public GameObject [] parrots_objects = new GameObject[3];
+    public GameObject answerParrotFlyerGIFObject;
     public int selectedColor = -1;
     int selectedTemplate = -1;
     float squeezing = 100f;
@@ -388,7 +391,7 @@ public class GameManager : MonoBehaviour
         
         for(int i = 0; i < 3; i++)
         {
-            Timer.Instance.Pause();
+            StopTime();
             parrots[i].ChangeMaterial(1);
             yield return parrots[i].ObjectAssembled();
         }
@@ -398,6 +401,27 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < 3; i++)
             parrots[i].hideParrot();
+
+        //GIF Init & Play
+        {
+            AnswerParrotFlyerGIFShower gIFShower = answerParrotFlyerGIFObject.GetComponent<AnswerParrotFlyerGIFShower>();
+            gIFShower.Setting();
+
+            for(int i = 0; i < Constants.TemplateSize; i++)
+            {
+                Color C = parrots[(int)Constants.ColorType.Cyan].getTemplateColor(i);
+                Color M = parrots[(int)Constants.ColorType.Magenta].getTemplateColor(i);
+                Color Y = parrots[(int)Constants.ColorType.Yellow].getTemplateColor(i);
+
+                Color result = Utility.CombineColor(C, M, Y);
+
+                gIFShower.SetColor(i, result);
+            }
+
+            answerParrotFlyerGIFObject.SetActive(true);
+            yield return gIFShower.ActivatingPlayOnce();
+            answerParrotFlyerGIFObject.SetActive(false);
+        }
         
         for(int i = 0; i < 3; i++)
         {
@@ -417,7 +441,7 @@ public class GameManager : MonoBehaviour
         {
             TutorialManager.Instance.NextDialogue();
         }else{
-            Timer.Instance.Resume();
+            ResumeTime();
             AnswerSheet.Instance.GiveProblem();
         }
         processing = 0;
