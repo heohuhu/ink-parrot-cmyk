@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
         this.isGameEnd = false;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    public void StartLoad()
     {
         Ranking = DataManager.Instance.loadJson<Ranking_Type_List>("ranking.json");
 

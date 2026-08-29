@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour
         tutorial_ui.SetActive(false);
         setting_ui.SetActive(false);
         collection_ui.SetActive(false);
+
+        SceneController.Instance.PreloadScene("Game");
     }
 
     public void GameStart()
@@ -35,8 +37,10 @@ public class MenuManager : MonoBehaviour
         tutorial_ui.SetActive(false);
         setting_ui.SetActive(false);
         collection_ui.SetActive(false);
-        SceneController.Instance.LoadSceneAdditiveAsActive("Game");
-        SceneController.Instance.UnloadScene("StartMenu");
+        //SceneController.Instance.LoadSceneAdditiveAsActive("Game");
+        //SceneController.Instance.UnloadScene("StartMenu");
+        SceneController.Instance.ChangeScene("Game");
+        MainGameLoader.Instacne.StartLoader();
     }
 
     public void CustomStart()

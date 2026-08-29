@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class SceneController : MonoBehaviour
 {
@@ -75,8 +76,20 @@ public class SceneController : MonoBehaviour
 
     public void GameRestart()
     {
-        SceneManager.LoadScene("MainSystem", LoadSceneMode.Single);
-        LoadSceneAdditiveAsActive("StartMenu");
+        StartCoroutine(GameRestartCoroutine());
+    }
+
+    private IEnumerator GameRestartCoroutine()
+    {
+        AsyncOperation loadOp =
+            SceneManager.LoadSceneAsync(
+                "MainSystem",
+                LoadSceneMode.Single
+            );
+
+        yield return loadOp;
+
+        yield return ChangeSceneCoroutine("StartMenu");
     }
 
     //** ActiveScene을 언로드 하기 전에 반드시 Active를 다른 씬에 넘겨주기!
@@ -100,6 +113,9 @@ public class SceneController : MonoBehaviour
 
         Scene mainScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(mainScene);
+
+        if(sceneName == "Game")
+            MainGameLoader.Instacne.StartLoader();
     }
 
     /* =====================
@@ -167,5 +183,76 @@ public class SceneController : MonoBehaviour
     public int GetCurrentSceneIndex()
     {
         return SceneManager.GetActiveScene().buildIndex;
+    }
+
+    private Dictionary<string, AsyncOperation> loadingScenes = new Dictionary<string, AsyncOperation>();
+
+    public void PreloadScene(string sceneName)
+    {
+        StartCoroutine(PreloadSceneCoroutine(sceneName));
+    }
+
+    private IEnumerator PreloadSceneCoroutine(string sceneName)
+    {
+        Scene scene = SceneManager.GetSceneByName(sceneName);
+
+        // 이미 로드됨
+        if (scene.isLoaded)
+            yield break;
+
+        // 이미 로딩 중
+        if (loadingScenes.ContainsKey(sceneName))
+            yield break;
+
+        AsyncOperation loadOp =
+            SceneManager.LoadSceneAsync(
+                sceneName,
+                LoadSceneMode.Additive
+            );
+
+        loadingScenes.Add(sceneName, loadOp);
+
+        yield return loadOp;
+
+        loadingScenes.Remove(sceneName);
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        StartCoroutine(ChangeSceneCoroutine(sceneName));
+    }
+
+    private IEnumerator ChangeSceneCoroutine(string sceneName)
+    {
+        Scene previousScene =
+            SceneManager.GetActiveScene();
+
+        Scene targetScene =
+            SceneManager.GetSceneByName(sceneName);
+
+        // 아직 로드되지 않았다면 로드
+        if (!targetScene.isLoaded)
+        {
+            AsyncOperation loadOp =
+                SceneManager.LoadSceneAsync(
+                    sceneName,
+                    LoadSceneMode.Additive
+                );
+
+            yield return loadOp;
+
+            targetScene =
+                SceneManager.GetSceneByName(sceneName);
+        }
+
+        // 새 씬 활성화
+        SceneManager.SetActiveScene(targetScene);
+
+        // 이전 Scene 제거
+        if (previousScene.name != "MainSystem")
+        {
+            yield return SceneManager
+                .UnloadSceneAsync(previousScene);
+        }
     }
 }

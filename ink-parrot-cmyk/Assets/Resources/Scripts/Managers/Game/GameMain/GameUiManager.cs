@@ -20,12 +20,13 @@ public class GameUiManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        GameMainScene.SetActive(false);
+        GameEndScene.SetActive(false);
     }
 
     void Start()
     {
-        GameMainScene.SetActive(false);
-        GameEndScene.SetActive(false);
+        
     }
 
     public void Setting()
@@ -57,11 +58,12 @@ public class GameUiManager : MonoBehaviour
 
     public void DisableEveryThing()
     {
-        HighlightManager.Instance.RegisterFromParent(GameMainScene);
-        HighlightManager.Instance.Activate();
-        HighlightManager.Instance.Setting();
-        HighlightManager.Instance.EnableFromParent(GameMainScene);
-        HighlightManager.Instance.AddException(ParrotsRenderImage);
+        return ;
+        //HighlightManager.Instance.RegisterFromParent(GameMainScene);
+        //HighlightManager.Instance.Activate();
+        //HighlightManager.Instance.Setting();
+        //HighlightManager.Instance.EnableFromParent(GameMainScene);
+        //HighlightManager.Instance.AddException(ParrotsRenderImage);
     }
     public void PauseMenuOpen()
     {

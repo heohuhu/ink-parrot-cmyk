@@ -32,7 +32,7 @@ public class AnswerSheet : MonoBehaviour
     public AnswerType Answer = new AnswerType();
     void Start()
     {
-        Setting();
+        //Setting();
     }
     public void Setting()
     {
